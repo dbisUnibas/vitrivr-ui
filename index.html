@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cineast – DBIS @ UniBas</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link rel="shortcut icon" href="favicon.ico">
+
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/materialdesignicons.css" media="all"/>
+		<link type="text/css" rel="stylesheet" href="css/material-icons.css" media="all"/>
+		<link type="text/css" rel="stylesheet" href="css/spectrum.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/context.standalone.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/nouislider.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="video-js.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+
+		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/interact.min.js"></script>
+		<script type="text/javascript" src="js/context.js"></script>
+		<script type="text/javascript" src="js/oboe-browser.js"></script>
+		<script type="text/javascript" src="js/motionCanvas.js"></script>
+		<script type="text/javascript" src="js/sketchCanvas.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/spectrum.js"></script>
+		<script type="text/javascript" src="js/nouislider.js"></script>
+		<script type="text/javascript" src="js/tinysort.js"></script>
+		<script type="text/javascript" src="video.js"></script>
+		<script type="text/javascript" src="js/recorder.js"></script>
+		<script type="text/javascript" src="js/Fr.voice.js"></script>
+		
+
+		<script type="text/javascript" src="js/search.js"></script>
+		<script type="text/javascript" src="js/ui_util.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
+
+	</head>
+
+	<body class="cbp-spmenu-push">
+		<div id="video-modal" class="modal modal-fixed-footer">
+			<div class="modal-content">
+				<video id="videoPlayer"
+				class="video-js vjs-default-skin center-block" controls
+				preload="auto" width="720" height="576" data-setup="{}"></video>
+			</div>
+			<div class="modal-footer">
+		        <button id="replay-at-position-button" class="modal-action waves-effect btn-flat "><i class="material-icons left">replay</i>Replay at position</button>
+			</div>
+		</div>
+		<div id="topbar">
+			<div class="weight-slider-box">
+				<div class="weight-slider">
+					<label for="global-color-weight">Global Color:</label>
+					<div id="global-color-weight" ></div>
+				</div>
+				<div class="weight-slider">
+					<label for="local-color-weight">Local Color:</label>
+					<div id="local-color-weight" ></div>
+				</div>
+				<div class="weight-slider">
+					<label for="edge-weight">Edge:</label>
+					<div id="edge-weight" ></div>
+				</div>
+				<div class="weight-slider">
+					<label for="motion-weight">Motion:</label>
+					<div id="motion-weight" ></div>
+				</div>
+			</div>
+		</div>
+		<div class="progress" id="loading">
+			<div class="determinate" style="width: 0%"></div>
+      		<div class="indeterminate"></div>
+  		</div>
+		<button id="btnShowTopbar" class="btn waves-effect waves-light red">
+			<i class="material-icons">settings</i>
+		</button>
+
+		<div id="sidebar" class="side-nav">
+			<ul id="modechoice" class="pagination">
+				<li class="active">
+					<span id="colorsketchbutton"><i class="mdi mdi-brush"> </i></span>
+				</li>
+				<li>
+					<span id="motionsketchbutton"><i class="mdi mdi-run"> </i></span>
+				</li>
+				<li>
+					<span id="filterbutton"><i class="mdi mdi-filter"> </i></span>
+				</li>
+			</ul>
+			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+				<i class="material-icons left">search</i>Search
+			</button>
+			
+			<button id="rf-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+				<i class="material-icons left">youtube_searched_for</i>Relevance Feedback
+			</button>
+			
+			<button id="sequence-segmentation-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+				<i class="material-icons left">settings_ethernet</i>Split video into sequences
+			</button>
+
+			<div class="tool-pane" id="color-tool-pane" style="display: block; margin: 10px; height: 40px;">
+				<div style="width: calc(100% - 60px - 10px); margin-right: 10px; float: left;">
+					<label for="draw-radius">Pen Size:</label>
+					<div id="draw-radius" ></div>
+				</div>
+				<div>
+					<input type='text' id="colorInput" />
+				</div>
+			</div>
+			<div id="query-container-pane" ></div>
+			<button id="btnAddCanvas" class="btn-floating btn-large waves-effect waves-light red">
+				<i class="material-icons">add</i>
+			</button>
+		</div>
+
+		<div id="sidebarextension" class="side-nav z-depth-4">
+			<div id="filter-selection">
+				<div id="resultset-filter-selection">
+					
+					<p><input class="with-gap" name="result-set" type="radio" id="no-filter"  checked/>
+      				<label for="no-filter">No Filter</label></p>
+					
+				</div>
+			        <div class="input-field">
+          				<input id="new_filter" type="text" pattern="[0-9]+(-[0-9]+)*" required>
+         				 <label for="new_filter">New Filter</label>
+        		</div>
+			<button id="new-filter-button" class="btn red">Add new filter</button>
+
+			</div>
+		</div>
+
+		<div>
+			<button id="btnShowSidebar" class="btn waves-effect waves-light red">
+				<i class="material-icons">create</i>
+			</button>
+			<div id="results">
+
+			</div>
+
+		</div>
+	</body>
+
+</html>
