@@ -5,37 +5,28 @@ function queryAPI($jsonQuery) {
 	$service_port = 12345;
 	$address = "localhost";
 
+	$msg = "{\n   \"array\": [\n";
+	echo $msg;
+	
 	$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 	if ($socket === false) {
-		echo "connection error: " . socket_strerror(socket_last_error()) . "n";
-		return "";
+		die('{"type" : "error", "msg" : "connection error: ' . socket_strerror(socket_last_error()) . '"}]}');
 	}
 
 	$result = socket_connect($socket, $address, $service_port);
 	if ($result === false) {
-		echo "connection error: ($result) " . socket_strerror(socket_last_error($socket)) . "n";
-		return "";
+		die('{"type" : "error", "msg" : "connection error: ' . socket_strerror(socket_last_error($socket)) . '"}]}');
 	}
 
 	$in = stripslashes($jsonQuery);
 	socket_write($socket, $in, strlen($in));
 	socket_write($socket, ';', 1);
 
-	// Other ini stuff
-	//@ini_set('output_buffering', 'Off');
-	//@ini_set('output_handler', '');
-
-	#JSON Array header
-	//$msg = "{\n [\n";
-	$msg = "{\n   \"array\": [\n";
-	echo $msg;
+	
 
 	$buffer = "";
 	while ($out = socket_read($socket, 2048)) {
-		//print_r($out);
 		echo $out;
-		//maybe str_pad isn't needed?
-		//echo str_pad($out, 2048, " ");
 		ob_flush();
 		flush();
 	}
@@ -48,12 +39,10 @@ function queryAPI($jsonQuery) {
 	flush();
 	socket_close($socket);
 
-	return "";
 }
 
 /* actual logic */
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
+error_reporting(0);
 
 if (!empty($_POST)) {
 	try {
@@ -75,17 +64,12 @@ if (!empty($_POST)) {
 		} else {
 			$json = json_encode($queryObject);
 			queryAPI($json);
-			//echo "{\n \"type\":\"error\"\n}";
-			//echo PHP_EOL;
-			//ob_flush();
-			//flush();
+
 		}
 	} catch (Exception $e) {
-		die($e -> getMessage());
-		echo "{\n \"type\":\"error\"\n}";
-		echo PHP_EOL;
-		ob_flush();
-		flush();
+
+		die( '{ "type":"error", "msg" : "' . $e -> getMessage() . '"}]}"');
+		
 	}
 
 }

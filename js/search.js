@@ -190,6 +190,12 @@ function oboerequest(query, noContext) {
 				
 				break;
 				
+			case "error" :
+			
+				console.error('Error from API: ' + data.msg);
+				
+				break;
+				
 			case "batch":
 				
 				switch(data.inner){
