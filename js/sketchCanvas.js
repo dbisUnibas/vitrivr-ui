@@ -2,6 +2,8 @@ function sketchCanvas(canvas) {
 
 	this.erase = false;
 	
+	var strokeCounter = 0;
+	
 	this.setErase = function(erase) {
 		if (erase) {
 			ctx.globalCompositeOperation = "destination-out";
@@ -20,6 +22,20 @@ function sketchCanvas(canvas) {
 	ctx.lineJoin = ctx.lineCap = 'round';
 
 	var isDrawing, lastPoint;
+	
+	var image = new Image();
+	image.onload = function(){
+		ctx.drawImage(this, 0, 0, el.width, el.height);
+	};
+	image.onerror = function(e){
+		console.warn(e);
+	};
+
+	this.loadImageFromUrl = function(url){
+		image.src = url;
+	};
+	
+	var loadImageFromUrl = this.loadImageFromUrl;
 
 	el.onmousedown = function(e) {
 		isDrawing = true;
@@ -52,7 +68,11 @@ function sketchCanvas(canvas) {
 		lastPoint = currentPoint;
 	};
 
-	el.onmouseup = el.onmouseout = function() {
+	el.onmouseup = function() {
+		isDrawing = false;
+	};
+	
+	el.onmouseout = function() {
 		isDrawing = false;
 	};
 
@@ -64,23 +84,25 @@ function sketchCanvas(canvas) {
 	el.ondrop = function(e) {
 		e.preventDefault();
 
-		var image = new Image();
-		image.onload = function(){
-			ctx.drawImage(this, 0, 0, el.width, el.height);
-		};
-
+		
 		var file = e.dataTransfer.files[0];
 		if ( typeof file === "undefined") {
-			image.src = e.dataTransfer.getData("URL");
+			//image.src = e.dataTransfer.getData("URL");
+			loadImageFromUrl(e.dataTransfer.getData("URL"));
 		} else {
 			var reader = new FileReader();
 			reader.onloadend = function(event) {
-				image.src = event.target.result;
+				loadImageFromUrl(event.target.result);
 			};
 			reader.readAsDataURL(file);
 		}
 		return false;
 	};
+	/*
+	this.drawDOMImage = function(img){
+		console.log(img);
+		ctx.drawImage(img, 0, 0, el.width, el.height);
+	};*/
 
 	this.setLineWidth = function(width) {
 		ctx.lineWidth = width;
