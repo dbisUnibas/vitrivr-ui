@@ -2,7 +2,7 @@ if (annyang) {
 
   var voiceSearch = function(tag) {
 
-     console.log("query: "+tag);
+     $("#voiceQuery").html(tag);
      
   }
 

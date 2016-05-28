@@ -60,6 +60,14 @@ body {
 	left: 0px;
 }
 
+#voiceQuery {
+	border:1px; border-style:solid; 
+	border-color:#FF0000; 
+	padding: 0.1em;
+	width: 100%;
+	word-wrap: break-word;
+}
+
 #sidebarextension {
 	position: fixed;
 	width: 600px;
