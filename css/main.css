@@ -63,9 +63,10 @@ body {
 #voiceQuery {
 	border:1px; border-style:solid; 
 	border-color:#F44336; 
-	padding: 0.1em;
+	padding: 0.5em;
 	width: 100%;
 	word-wrap: break-word;
+	overflow:auto;
 }
 
 #sidebarextension {
