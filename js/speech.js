@@ -6,9 +6,20 @@ if (annyang) {
      
   }
 
+  var toggleTopbar = function(){
+        $('body').toggleClass('push-tobottom');
+        $('#btnShowTopbar').toggleClass('topOpen');
+        $('#btnShowSidebar').toggleClass('topOpen');
+        $('#sidebarextension').toggleClass('topOpen');
+        $('#topbar').toggleClass('open');
+  }
+
   // Add commands to annyang
   annyang.addCommands({
+      
       'voice search *tag': voiceSearch,
+      'toggle top bar': toggleTopbar,
+
   });
 
   // set langauge English(UK)
