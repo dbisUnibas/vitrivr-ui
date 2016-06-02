@@ -1,8 +1,32 @@
 if (annyang) {
 
-  var voiceSearch = function(tag) {
+  var _notRecognizedSentence = function(sentences) {
+       if (Array.isArray(sentences)) {
+           sentences = sentences[0];
+        }
+    
+        $('#voiceQuery').val($('#voiceQuery').val() +" "+sentences);
 
-     $('#voiceQuery').val($('#voiceQuery').val() +" "+tag);
+  };
+
+var _recognizedSentence = function(phrase,command) {
+      
+        if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
+    
+            $('#voiceQuery').val(phrase);
+      
+        }
+  };
+
+  var voiceSearch_2 = function(tag1,tag2) {
+        
+        $('#voiceQuery').val(tag2);
+     
+  }
+
+  var voiceSearch_1 = function(tag) {
+      
+        $('#voiceQuery').val(tag);
      
   }
 
@@ -17,8 +41,9 @@ if (annyang) {
   // Add commands to annyang
   annyang.addCommands({
       
-      'voice search *tag': voiceSearch,
-      'toggle top bar': toggleTopbar,
+        'voice search *tag':voiceSearch_1,
+        '*tag1 voice search *tag2': voiceSearch_2,
+        'toggle top bar': toggleTopbar,
 
   });
 
@@ -28,7 +53,13 @@ if (annyang) {
   // to print recognized speech in console
   annyang.debug(true);
   
-  SpeechKITT.annyang();
+  SpeechKITT.setStartCommand(annyang.start);
+  SpeechKITT.setAbortCommand(annyang.abort);
+  annyang.addCallback('start', SpeechKITT.onStart);
+  annyang.addCallback('end', SpeechKITT.onEnd);
+
+  annyang.addCallback('resultNoMatch', _notRecognizedSentence);
+  annyang.addCallback('resultMatch', _recognizedSentence);
 
   SpeechKITT.setInstructionsText("Say 'voice search' followed by your Query");
 

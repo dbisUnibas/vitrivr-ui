@@ -65,7 +65,9 @@ body {
 	border-color:#F44336; 
 	padding: 0.5em;
 	width: 100%;
+	max-width: 100%;
 	word-wrap: break-word;
+	height: 50px;
 }
 
 #sidebarextension {
