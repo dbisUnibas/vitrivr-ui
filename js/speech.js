@@ -6,6 +6,7 @@ if (annyang) {
         }
     
         $('#voiceQuery').val($('#voiceQuery').val() +" "+sentences);
+        $('#voiceQuery').css('color','#000000');
 
   };
 
@@ -14,20 +15,20 @@ var _recognizedSentence = function(phrase,command) {
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
             $('#voiceQuery').val(phrase);
-      
+            $('#voiceQuery').css('color','#F44336');
         }
   };
 
   var voiceSearch_2 = function(tag1,tag2) {
         
         $('#voiceQuery').val(tag2);
-     
+        $('#voiceQuery').css('color','#F44336');
   }
 
   var voiceSearch_1 = function(tag) {
       
         $('#voiceQuery').val(tag);
-     
+        $('#voiceQuery').css('color','#F44336');
   }
 
   var toggleTopbar = function(){
