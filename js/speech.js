@@ -48,12 +48,17 @@ if (annyang) {
         $('#topbar').toggleClass('open');
   }
 
+  var searchCanvas = function(){
+        search();
+  }
+
   // Add commands to annyang
   annyang.addCommands({
       
         'voice search *tag':voiceSearch_1,
         '*tag1 voice search *tag2': voiceSearch_2,
         'toggle top bar': toggleTopbar,
+        'search canvas': searchCanvas,
 
   });
 
