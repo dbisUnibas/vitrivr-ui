@@ -1,5 +1,11 @@
 if (annyang) {
 
+  var scrollTextBox = function(){
+        var textarea = $('#voiceQuery');
+        if(textarea.length)
+            textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
+  }
+
   var _notRecognizedSentence = function(sentences) {
        if (Array.isArray(sentences)) {
            sentences = sentences[0];
@@ -7,28 +13,31 @@ if (annyang) {
     
         $('#voiceQuery').val($('#voiceQuery').val() +" "+sentences);
         $('#voiceQuery').css('color','#000000');
+        scrollTextBox();
+  }
 
-  };
-
-var _recognizedSentence = function(phrase,command) {
+  var _recognizedSentence = function(phrase,command) {
       
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
             $('#voiceQuery').val(phrase);
             $('#voiceQuery').css('color','#F44336');
+            scrollTextBox();
         }
-  };
+  }
 
   var voiceSearch_2 = function(tag1,tag2) {
         
         $('#voiceQuery').val(tag2);
         $('#voiceQuery').css('color','#F44336');
+        scrollTextBox();
   }
 
   var voiceSearch_1 = function(tag) {
       
         $('#voiceQuery').val(tag);
         $('#voiceQuery').css('color','#F44336');
+        scrollTextBox();
   }
 
   var toggleTopbar = function(){
@@ -61,6 +70,7 @@ var _recognizedSentence = function(phrase,command) {
 
   annyang.addCallback('resultNoMatch', _notRecognizedSentence);
   annyang.addCallback('resultMatch', _recognizedSentence);
+
 
   SpeechKITT.setInstructionsText("Say 'voice search' followed by your Query");
 
