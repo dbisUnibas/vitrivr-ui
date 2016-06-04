@@ -52,6 +52,10 @@ if (annyang) {
         search();
   }
 
+  var addCanvas = function(){
+        newShotInput();
+  }
+
   // Add commands to annyang
   annyang.addCommands({
       
@@ -59,6 +63,7 @@ if (annyang) {
         '*tag1 voice search *tag2': voiceSearch_2,
         'toggle top bar': toggleTopbar,
         'search canvas': searchCanvas,
+        'add canvas': addCanvas,
 
   });
 
