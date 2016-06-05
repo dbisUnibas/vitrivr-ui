@@ -1,5 +1,7 @@
 if (annyang) {
 
+  var errorMessage = false;
+
   var scrollTextBox = function(){
         var textarea = $('#voiceQuery');
         if(textarea.length)
@@ -20,8 +22,13 @@ if (annyang) {
       
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
-            $('#voiceQuery').val(phrase);
-            $('#voiceQuery').css('color','#F44336');
+            if(!errorMessage){
+                $('#voiceQuery').val(phrase);
+                $('#voiceQuery').css('color','#F44336');
+            }
+            else{
+                errorMessage = false;
+            }
             scrollTextBox();
         }
   }
@@ -56,6 +63,35 @@ if (annyang) {
         newShotInput();
   }
 
+  var splitVideo = function(){
+    
+        var resultDisplayed = $(".videocontainer");
+        if(searchRunning){
+
+            errorMessage = true;
+            $('#voiceQuery').css('color','#000000');
+            $('#voiceQuery').val("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+            if(!splitVideoExecuted){
+              
+                sequenceSegmentation();
+              }
+            else{
+
+                errorMessage = true;
+                $('#voiceQuery').css('color','#000000');
+                $('#voiceQuery').val("Query already executed");
+            }
+        }
+        else{
+
+            errorMessage = true;
+            $('#voiceQuery').css('color','#000000');
+            $('#voiceQuery').val("Query not executed as there is no video results retrieved");
+        }
+  }
+
   // Add commands to annyang
   annyang.addCommands({
       
@@ -64,6 +100,7 @@ if (annyang) {
         'toggle top bar': toggleTopbar,
         'search canvas': searchCanvas,
         'add canvas': addCanvas,
+        'split video': splitVideo,
 
   });
 

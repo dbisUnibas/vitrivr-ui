@@ -5,6 +5,8 @@ var Scores = {};
 var rf_positive = new Array();
 var rf_negative = new Array();
 
+var splitVideoExecuted;
+
 function getCategories(){
 	var categories = [];
 	if(ScoreWeights.globalcolor > 0){
@@ -184,6 +186,8 @@ function oboerequest(query, noContext) {
 			
 			sortVideos();
 				$('#sequence-segmentation-button').show();
+				splitVideoExecuted = false;
+
 				hideProgress();
 
 			searchRunning = false;

@@ -291,6 +291,7 @@ function updateScores(segmentedVideos) {
 
 function sequenceSegmentation(){
 	$('#sequence-segmentation-button').hide();
+	splitVideoExecuted = true;
 	for(var key in Videos){
 		var videoId = Videos[key].videoid;
 		var ids = new Array();
