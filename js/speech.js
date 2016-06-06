@@ -55,6 +55,17 @@ if (annyang) {
         $('#topbar').toggleClass('open');
   }
 
+  var toggleSidebar = function(){
+        if($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
+            
+            $('#sidebarextension').removeClass('open');
+            $('#btnShowSidebar').removeClass('open');
+
+        } 
+        $('#sidebar').toggleClass('open');
+        $('body').toggleClass('push-toright');
+  }
+
   var searchCanvas = function(){
         search();
   }
@@ -101,6 +112,7 @@ if (annyang) {
         'search canvas': searchCanvas,
         'add canvas': addCanvas,
         'split video': splitVideo,
+        'toggle sidebar': toggleSidebar,
 
   });
 
