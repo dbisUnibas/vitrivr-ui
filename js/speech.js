@@ -2,13 +2,13 @@ if (annyang) {
 
   var errorMessage = false;
 
-  var scrollTextBox = function(){
+  function scrollTextBox() {
         var textarea = $('#voiceQuery');
         if(textarea.length)
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
   }
 
-  var _notRecognizedSentence = function(sentences) {
+  function notRecognizedSentence(sentences) {
        if (Array.isArray(sentences)) {
            sentences = sentences[0];
         }
@@ -18,7 +18,7 @@ if (annyang) {
         scrollTextBox();
   }
 
-  var _recognizedSentence = function(phrase,command) {
+  function recognizedSentence(phrase,command) {
       
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
@@ -33,21 +33,21 @@ if (annyang) {
         }
   }
 
-  var voiceSearch_2 = function(tag1,tag2) {
+  function voiceSearch_2(tag1,tag2) {
         
         $('#voiceQuery').val(tag2);
         $('#voiceQuery').css('color','#F44336');
         scrollTextBox();
   }
 
-  var voiceSearch_1 = function(tag) {
+  function voiceSearch_1(tag) {
       
         $('#voiceQuery').val(tag);
         $('#voiceQuery').css('color','#F44336');
         scrollTextBox();
   }
 
-  var toggleTopbar = function(){
+  function toggleTopbar(){
         $('body').toggleClass('push-tobottom');
         $('#btnShowTopbar').toggleClass('topOpen');
         $('#btnShowSidebar').toggleClass('topOpen');
@@ -55,7 +55,7 @@ if (annyang) {
         $('#topbar').toggleClass('open');
   }
 
-  var toggleSidebar = function(){
+  function toggleSidebar(){
         if($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
             
             $('#sidebarextension').removeClass('open');
@@ -66,15 +66,15 @@ if (annyang) {
         $('body').toggleClass('push-toright');
   }
 
-  var searchCanvas = function(){
+  function searchCanvas(){
         search();
   }
 
-  var addCanvas = function(){
+  function addCanvas(){
         newShotInput();
   }
 
-  var splitVideo = function(){
+  function splitVideo(){
     
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
@@ -128,8 +128,8 @@ if (annyang) {
   annyang.addCallback('start', SpeechKITT.onStart);
   annyang.addCallback('end', SpeechKITT.onEnd);
 
-  annyang.addCallback('resultNoMatch', _notRecognizedSentence);
-  annyang.addCallback('resultMatch', _recognizedSentence);
+  annyang.addCallback('resultNoMatch', notRecognizedSentence);
+  annyang.addCallback('resultMatch', recognizedSentence);
 
 
   SpeechKITT.setInstructionsText("Say 'voice search' followed by your Query");
