@@ -77,7 +77,13 @@ if (annyang) {
   var splitVideo = function(){
     
         var resultDisplayed = $(".videocontainer");
-        if(searchRunning){
+        if(resultDisplayed.length == 0){
+
+            errorMessage = true;
+            $('#voiceQuery').css('color','#000000');
+            $('#voiceQuery').val("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
 
             errorMessage = true;
             $('#voiceQuery').css('color','#000000');
@@ -95,12 +101,7 @@ if (annyang) {
                 $('#voiceQuery').val("Query already executed");
             }
         }
-        else{
-
-            errorMessage = true;
-            $('#voiceQuery').css('color','#000000');
-            $('#voiceQuery').val("Query not executed as there is no video results retrieved");
-        }
+        
   }
 
   // Add commands to annyang
