@@ -8,6 +8,11 @@ if (annyang) {
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
   }
 
+  function displayErrorMessage(message) {
+
+        Materialize.toast(message, 4000);
+  }
+
   function notRecognizedSentence(sentences) {
        if (Array.isArray(sentences)) {
            sentences = sentences[0];
@@ -80,14 +85,12 @@ if (annyang) {
         if(resultDisplayed.length == 0){
 
             errorMessage = true;
-            $('#voiceQuery').css('color','#000000');
-            $('#voiceQuery').val("Query not executed as there is no video results retrieved");
+            displayErrorMessage("Query not executed as there is no video results retrieved");
         }
         else if(searchRunning){
 
             errorMessage = true;
-            $('#voiceQuery').css('color','#000000');
-            $('#voiceQuery').val("Please wait till search is in progress");
+            displayErrorMessage("Please wait till search is in progress");
         }
         else if(resultDisplayed.length > 0){
             if(!splitVideoExecuted){
@@ -97,8 +100,7 @@ if (annyang) {
             else{
 
                 errorMessage = true;
-                $('#voiceQuery').css('color','#000000');
-                $('#voiceQuery').val("Query already executed");
+                displayErrorMessage("Query already executed");
             }
         }
         
