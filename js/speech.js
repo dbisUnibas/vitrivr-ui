@@ -1,6 +1,11 @@
 if (annyang) {
 
+ // to display error Message errorMessage value set to true 
   var errorMessage = false;
+
+/**
+ * Scroll the textbox whenever it overflows due to display of recognized words/sentences
+ */
 
   function scrollTextBox() {
         var textarea = $('#voiceQuery');
@@ -8,10 +13,23 @@ if (annyang) {
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
   }
 
+/**
+ * pop up the error message as a toast
+ *
+ * @param {string} message The error to be displayed
+ */
+
   function displayErrorMessage(message) {
 
         Materialize.toast(message, 4000);
   }
+
+/**
+ * This function prints the sentence with black font in the text box
+ * The sentence printed here is the one which is not a voice query 
+ *
+ * @param {(string|string[])} sentences Array of probable recognized sentences
+ */  
 
   function notRecognizedSentence(sentences) {
        if (Array.isArray(sentences)) {
@@ -21,7 +39,14 @@ if (annyang) {
         $('#voiceQuery').val($('#voiceQuery').val() +" "+sentences);
         $('#voiceQuery').css('color','#000000');
         scrollTextBox();
-  }
+  
+/**
+ * This function prints voice query given by user except the "voice search" query
+ * The query printed in text box has #F44336 font color
+ *
+ * @param {string} phrase Recognized voice query
+ * @param {string} command The command executed for recognized voice query
+ */ 
 
   function recognizedSentence(phrase,command) {
       
@@ -38,12 +63,26 @@ if (annyang) {
         }
   }
 
+/**
+ * This function currently just ignore the speech before saying "voice search"
+ * The query printed in text box is the speech after saying "voice search"
+ *
+ * @param {string} tag1 String before "voice search"; Ignored
+ * @param {string} tag2 String after "voice search"; Will be used for voice search
+ */
+
   function voiceSearch_2(tag1,tag2) {
         
         $('#voiceQuery').val(tag2);
         $('#voiceQuery').css('color','#F44336');
         scrollTextBox();
   }
+
+/**
+ * The fuction currently just print the speech query after saying "voice query" 
+ *
+ * @param {string} tag String after "voice search"; Will be used for voice search
+ */
 
   function voiceSearch_1(tag) {
       
@@ -52,6 +91,11 @@ if (annyang) {
         scrollTextBox();
   }
 
+/**
+ * Toggle the top bar
+ * voice query - "toggle top bar"
+ */
+
   function toggleTopbar(){
         $('body').toggleClass('push-tobottom');
         $('#btnShowTopbar').toggleClass('topOpen');
@@ -59,6 +103,11 @@ if (annyang) {
         $('#sidebarextension').toggleClass('topOpen');
         $('#topbar').toggleClass('open');
   }
+
+/**
+ * Toggle the sidebar
+ * voice query - "toggle sidebar"
+ */
 
   function toggleSidebar(){
         if($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
@@ -71,13 +120,30 @@ if (annyang) {
         $('body').toggleClass('push-toright');
   }
 
+/**
+ * Searches the canvas
+ * voice query - "search canvas"
+ */
+
   function searchCanvas(){
         search();
   }
 
+/**
+ * Adds a new canvas
+ * voice query - "add canvas"
+ */
+
   function addCanvas(){
         newShotInput();
   }
+
+/**
+ * Use to split video into sequences
+ * Works when video results are completed retrieved
+ * Can be executed once after every search
+ * voice query - "split video"
+ */
 
   function splitVideo(){
     
