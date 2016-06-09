@@ -3,12 +3,15 @@ if (annyang) {
  // to display error Message errorMessage value set to true 
   var errorMessage = false;
 
+// declaring constants
+  const VOICE_TEXTBOX = "#voiceTextbox";
+
 /**
  * Scroll the textbox whenever it overflows due to display of recognized words/sentences
  */
 
   function scrollTextBox() {
-        var textarea = $('#voiceQuery');
+        var textarea = $(VOICE_TEXTBOX);
         if(textarea.length)
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
   }
@@ -36,9 +39,10 @@ if (annyang) {
            sentences = sentences[0];
         }
     
-        $('#voiceQuery').val($('#voiceQuery').val() +" "+sentences);
-        $('#voiceQuery').css('color','#000000');
+        $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
+        $(VOICE_TEXTBOX).css('color','#000000');
         scrollTextBox();
+  }
   
 /**
  * This function prints voice query given by user except the "voice search" query
@@ -53,8 +57,8 @@ if (annyang) {
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
             if(!errorMessage){
-                $('#voiceQuery').val(phrase);
-                $('#voiceQuery').css('color','#F44336');
+                $(VOICE_TEXTBOX).val(phrase);
+                $(VOICE_TEXTBOX).css('color','#F44336');
             }
             else{
                 errorMessage = false;
@@ -73,8 +77,8 @@ if (annyang) {
 
   function voiceSearch_2(tag1,tag2) {
         
-        $('#voiceQuery').val(tag2);
-        $('#voiceQuery').css('color','#F44336');
+        $(VOICE_TEXTBOX).val(tag2);
+        $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
   }
 
@@ -86,8 +90,8 @@ if (annyang) {
 
   function voiceSearch_1(tag) {
       
-        $('#voiceQuery').val(tag);
-        $('#voiceQuery').css('color','#F44336');
+        $(VOICE_TEXTBOX).val(tag);
+        $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
   }
 
