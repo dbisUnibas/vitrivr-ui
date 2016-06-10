@@ -1,7 +1,7 @@
 if (annyang) {
 
- // to display error Message errorMessage value set to true 
-  var errorMessage = false;
+  var actionVariable = null;
+  var actionOccured = false;
 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
@@ -56,13 +56,9 @@ if (annyang) {
       
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
-            if(!errorMessage){
-                $(VOICE_TEXTBOX).val(phrase);
-                $(VOICE_TEXTBOX).css('color','#F44336');
-            }
-            else{
-                errorMessage = false;
-            }
+            $(VOICE_TEXTBOX).val(phrase);
+            $(VOICE_TEXTBOX).css('color','#F44336');
+            
             scrollTextBox();
         }
   }
@@ -154,26 +150,70 @@ if (annyang) {
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
 
-            errorMessage = true;
             displayErrorMessage("Query not executed as there is no video results retrieved");
         }
         else if(searchRunning){
 
-            errorMessage = true;
             displayErrorMessage("Please wait till search is in progress");
         }
         else if(resultDisplayed.length > 0){
             if(!splitVideoExecuted){
               
                 sequenceSegmentation();
-              }
+            }
             else{
 
-                errorMessage = true;
                 displayErrorMessage("Query already executed");
             }
         }
         
+  }
+
+// Below are the functions used for speech + mouse in combination
+
+  function checkActionOccured(){
+
+        if(!actionOccured){
+
+            actionVariable = null;
+            displayErrorMessage("User has not clicked any video");      
+        }        
+  }
+
+  function decideAction(event){
+
+        switch( actionVariable ) {
+
+            case null:
+                displayErrorMessage("Please say an action query");
+                break;
+
+            case "play" :
+                actionVariable = null;
+                actionOccured = true;
+                playShot($(this));
+
+        }
+  }
+
+
+  function playVideo(){
+
+        var resultDisplayed = $(".videocontainer");
+        if(resultDisplayed.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+
+            actionVariable = "play";
+            actionOccured = false;
+            setTimeout(checkActionOccured , 5000);
+        }
   }
 
   // Add commands to annyang
@@ -186,6 +226,7 @@ if (annyang) {
         'add canvas': addCanvas,
         'split video': splitVideo,
         'toggle sidebar': toggleSidebar,
+        'play this video': playVideo,
 
   });
 

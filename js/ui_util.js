@@ -179,14 +179,14 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'<div class="shotbox" id="s' + shotInfo.shotid + '" data-startframe="' + shotInfo.start + '" data-endframe="' + shotInfo.start + '">' + 
 		'<span class="preview">' +
 		'<img class="thumbnail" src="' + thumbnailHost + '' + shotInfo.videoid + '/' + shotInfo.shotid + '.' + thumbnailFileType + '" />' + //see config.js
-		'<div class="tophoverbox">' +
+	/*	'<div class="tophoverbox">' +
 		'<span class="material-icons searchbutton">search</span>' +
 		'<span class="material-icons playbutton">play_arrow</span>' +
 		'<span class="material-icons relevanceFeedback relevanceFeedback-add">add</span>' +
 		'<span class="material-icons relevanceFeedback">remove</span>' +
 	//	'<span class="material-icons showid">textsms</span>' +
 	//	'<span class="material-icons load_video">movie</span>' +
-		'</div>' +
+		'</div>' +*/
 		'<div class="bottomhoverbox">' +
 		'<span class="score"> 0% </span>' +
 		'<span class="position"> ' + shotInfo.start + ' - ' + shotInfo.end + ' </span>' +
@@ -201,6 +201,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
+	$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);
 }
 
 function updateScoreInShotContainer(id, score){
@@ -321,8 +322,8 @@ function sequenceSegmentation(){
 	
 }
 
-function playShot(event){
-	var shotBox = $(this).parent().parent().parent();
+function playShot(object){
+	var shotBox = object.parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var videoInfo = Videos[shotInfo.videoid];
