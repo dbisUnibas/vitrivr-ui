@@ -196,11 +196,12 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		
 	);
 	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
-	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
-	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
-	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
+	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
+	//$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
+	//$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
+	
 	$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);
 }
 
