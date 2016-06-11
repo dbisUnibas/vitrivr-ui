@@ -169,6 +169,29 @@ if (annyang) {
         
   }
 
+  function incresePenSize(){
+
+        var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
+        
+        if(size == 100){
+            displayErrorMessage("Size of pen can not be increase");
+        }
+        else if(size<=95){
+            for (el in shotInputs) {
+                shotInputs[el].color.setLineWidth(size + 5);
+            }
+            $('#draw-radius').get(0).noUiSlider.set(size + 5);
+        }
+        else{
+
+            for (el in shotInputs) {
+                shotInputs[el].color.setLineWidth(100);
+            }
+            $('#draw-radius').get(0).noUiSlider.set(100);
+        }
+      
+  }
+
 // Below are the functions used for speech + mouse in combination
 
   function checkActionOccured(){
@@ -251,6 +274,7 @@ if (annyang) {
         'add canvas': addCanvas,
         'split video': splitVideo,
         'toggle sidebar': toggleSidebar,
+        'increase radius':incresePenSize,
         
         'play this video': playVideo,
         'search this video': searchById,
