@@ -169,14 +169,14 @@ if (annyang) {
         
   }
 
-  function incresePenSize(){
+  function increasePenSize(){
 
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
         if(size == 100){
             displayErrorMessage("Size of pen can not be increase");
         }
-        else if(size<=95){
+        else if(size <= 95){
             for (el in shotInputs) {
                 shotInputs[el].color.setLineWidth(size + 5);
             }
@@ -188,6 +188,29 @@ if (annyang) {
                 shotInputs[el].color.setLineWidth(100);
             }
             $('#draw-radius').get(0).noUiSlider.set(100);
+        }
+      
+  }
+
+  function decreasePenSize(){
+
+        var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
+        
+        if(size == 1){
+            displayErrorMessage("Size of pen can not be decrease");
+        }
+        else if(size >= 5){
+            for (el in shotInputs) {
+                shotInputs[el].color.setLineWidth(size - 5);
+            }
+            $('#draw-radius').get(0).noUiSlider.set(size - 5);
+        }
+        else{
+
+            for (el in shotInputs) {
+                shotInputs[el].color.setLineWidth(1);
+            }
+            $('#draw-radius').get(0).noUiSlider.set(1);
         }
       
   }
@@ -274,7 +297,8 @@ if (annyang) {
         'add canvas': addCanvas,
         'split video': splitVideo,
         'toggle sidebar': toggleSidebar,
-        'increase radius':incresePenSize,
+        'increase radius':increasePenSize,
+        'decrease radius':decreasePenSize,
         
         'play this video': playVideo,
         'search this video': searchById,
