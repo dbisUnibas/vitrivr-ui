@@ -344,8 +344,8 @@ function playShot(object){
   });
 }
 
-function similaritySearch(event){
-	var shotBox = $(this).parent().parent().parent();
+function similaritySearch(object){
+	var shotBox = object.parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	search(shotId);
 }
