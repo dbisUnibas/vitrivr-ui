@@ -371,17 +371,20 @@ function relevanceFeedback(object){
 			rf_positive.push(shotId);
 			document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
 		}
-	}else{//negative
+	}
+	else if(actionVariable == "removeVideo"){//negative
+
 		if($.inArray(shotId, rf_negative) >= 0){ //remove
-			_this.css('color', 'white');
+			document.getElementById(shotBox.attr('id')).style.border = "";
 			remove_element(rf_negative,shotId);
-		}else{ //add
+		}
+		else{ //add
 			if($.inArray(shotId, rf_positive) >= 0){
+		
 				remove_element(rf_positive,shotId);
-				_this.prev().css('color', 'white');
 			}
 			rf_negative.push(shotId);
-			_this.css('color', 'red');
+			document.getElementById(shotBox.attr('id')).style.border = "medium solid red";
 		}
 	}
 	

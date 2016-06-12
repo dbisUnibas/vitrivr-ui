@@ -250,6 +250,11 @@ if (annyang) {
                 actionOccured = true;
                 relevanceFeedback($(this));
                 break;
+
+            case "removeVideo" :
+                actionOccured = true;
+                relevanceFeedback($(this));
+                break;
         }
   }
 
@@ -311,7 +316,24 @@ if (annyang) {
         }
   }
 
+  function negativeFeedback(){
 
+        var resultDisplayed = $(".videocontainer");
+        if(resultDisplayed.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+
+            actionVariable = "removeVideo";
+            actionOccured = false;
+            setTimeout(checkActionOccured , 5000);
+        }
+  }
 
 
   // Add commands to annyang
@@ -330,6 +352,7 @@ if (annyang) {
         'play this video': playVideo,
         'search this video': searchById,
         'include this video': positiveFeedback,
+        'remove this video': negativeFeedback,
 
   });
 
