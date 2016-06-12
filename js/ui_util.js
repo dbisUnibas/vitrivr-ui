@@ -360,7 +360,7 @@ function relevanceFeedback(object){
 	if(actionVariable == "addVideo"){
 
 		if($.inArray(shotId, rf_positive) >= 0){ //remove
-			document.getElementById(shotBox.attr('id')).style.border = "medium solid white";
+			document.getElementById(shotBox.attr('id')).style.border = "";
 			remove_element(rf_positive,shotId);
 		}
 		else{ //add

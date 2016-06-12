@@ -329,7 +329,7 @@ if (annyang) {
         
         'play this video': playVideo,
         'search this video': searchById,
-        'add this video': positiveFeedback,
+        'include this video': positiveFeedback,
 
   });
 
