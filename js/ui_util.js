@@ -352,23 +352,24 @@ function similaritySearch(object){
 }
 
 
-function relevanceFeedback(event){
-	var _this = $(this);
-	var shotBox = _this.parent().parent().parent();
-	var shotId = parseInt(shotBox.attr('id').substring(1));
-	var positive = _this.hasClass('relevanceFeedback-add');
+function relevanceFeedback(object){
 	
-	if(positive){
+	var shotBox = object.parent().parent();
+	var shotId = parseInt(shotBox.attr('id').substring(1));
+	
+	if(actionVariable == "addVideo"){
+
 		if($.inArray(shotId, rf_positive) >= 0){ //remove
-			_this.css('color', 'white');
+			document.getElementById(shotBox.attr('id')).style.border = "medium solid white";
 			remove_element(rf_positive,shotId);
-		}else{ //add
+		}
+		else{ //add
 			if($.inArray(shotId, rf_negative) >= 0){
+				
 				remove_element(rf_negative,shotId);
-				_this.next().css('color', 'white');
 			}
 			rf_positive.push(shotId);
-			_this.css('color', 'green');
+			document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
 		}
 	}else{//negative
 		if($.inArray(shotId, rf_negative) >= 0){ //remove
