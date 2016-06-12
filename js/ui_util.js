@@ -323,8 +323,8 @@ function sequenceSegmentation(){
 	
 }
 
-function playShot(object){
-	var shotBox = object.parent().parent();
+function playShot(event){
+	var shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var videoInfo = Videos[shotInfo.videoid];
@@ -399,8 +399,8 @@ function relevanceFeedback(object){
 	console.log(rf_negative);
 }
 
-function prepare_playback(event){
-	var shotBox = $(this).parent().parent().parent();
+function prepare_playback(object){
+	var shotBox = object.parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var frame = Math.floor((shotInfo.start + shotInfo.end) / 2);

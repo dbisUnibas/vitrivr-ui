@@ -237,7 +237,7 @@ if (annyang) {
             case "play" :
                 actionVariable = null;
                 actionOccured = true;
-                playShot($(this));
+                prepare_playback($(this));
                 break;
 
             case "search" :
@@ -255,11 +255,16 @@ if (annyang) {
                 actionOccured = true;
                 relevanceFeedback($(this));
                 break;
+
+            case "dropImage" :
+                actionVariable = null;
+                actionOccured = true;
+                addImageCanvas($(this));
+                break;
         }
   }
 
-
-  function playVideo(){
+  function checkUseCases(action){
 
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
@@ -272,68 +277,61 @@ if (annyang) {
         }
         else if(resultDisplayed.length > 0){
 
-            actionVariable = "play";
+            actionVariable = action;
             actionOccured = false;
             setTimeout(checkActionOccured , 5000);
         }
+  }
+
+  function addImageCanvas(thumbnail){
+
+        var url = thumbnail.attr('src');
+  
+        var len=0;
+        for (el in shotInputs) {
+            len++;
+        } 
+        shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
+  }
+
+  function playVideo(){
+
+        checkUseCases("play");
   }
 
   function searchById(){
 
-        var resultDisplayed = $(".videocontainer");
-        if(resultDisplayed.length == 0){
-
-            displayErrorMessage("Query not executed as there is no video results retrieved");
-        }
-        else if(searchRunning){
-
-            displayErrorMessage("Please wait till search is in progress");
-        }
-        else if(resultDisplayed.length > 0){
-
-            actionVariable = "search";
-            actionOccured = false;
-            setTimeout(checkActionOccured , 5000);
-        }
+        checkUseCases("search");
   }
 
   function positiveFeedback(){
 
-        var resultDisplayed = $(".videocontainer");
-        if(resultDisplayed.length == 0){
-
-            displayErrorMessage("Query not executed as there is no video results retrieved");
-        }
-        else if(searchRunning){
-
-            displayErrorMessage("Please wait till search is in progress");
-        }
-        else if(resultDisplayed.length > 0){
-
-            actionVariable = "addVideo";
-            actionOccured = false;
-            setTimeout(checkActionOccured , 5000);
-        }
+        checkUseCases("addVideo");
   }
 
   function negativeFeedback(){
 
-        var resultDisplayed = $(".videocontainer");
-        if(resultDisplayed.length == 0){
+        checkUseCases("removeVideo");
+  }
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+  function dropOnCanvas(){
+
+        checkUseCases("dropImage");
+  }
+
+  function searchFeedback(){
+
+        if(rf_positive.length > 0){
+
+            actionVariable = null;
+            search(-1, rf_positive, rf_negative);
         }
-        else if(searchRunning){
+        else{
 
-            displayErrorMessage("Please wait till search is in progress");
-        }
-        else if(resultDisplayed.length > 0){
-
-            actionVariable = "removeVideo";
-            actionOccured = false;
-            setTimeout(checkActionOccured , 5000);
+            displayErrorMessage("There must be atleast one video added as positive feedback");
         }
   }
+
 
 
   // Add commands to annyang
@@ -353,6 +351,8 @@ if (annyang) {
         'search this video': searchById,
         'include this video': positiveFeedback,
         'remove this video': negativeFeedback,
+        'search my feedback': searchFeedback,
+        'drop it on canvas': dropOnCanvas,
 
   });
 
