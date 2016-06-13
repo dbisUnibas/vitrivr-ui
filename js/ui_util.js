@@ -258,6 +258,11 @@ function sortVideos(){
 function updateScores(segmentedVideos) {
 	readSliders();
 	var weightSum = sumWeights();
+
+	// below three lines are to reset browsing row when top sliders are changed
+	var containerArray = $(".videocontainer");
+	document.getElementById(containerArray[row].id).style = "";
+	row=0;
 	
 	for (var key in Shots) {
 		var shotId = Shots[key].shotid;

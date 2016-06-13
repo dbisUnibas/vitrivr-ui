@@ -2,6 +2,7 @@ if (annyang) {
 
   var actionVariable = null;
   var actionOccured = false;
+  var row = 0;
 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
@@ -215,6 +216,27 @@ if (annyang) {
       
   }
 
+  function browseNext() {
+
+        var containerArray = $(".videocontainer");
+        if(containerArray.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(containerArray.length > 0){
+
+            document.getElementById(containerArray[row].id).style = "";
+
+            row++;
+            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 1000);
+            document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+        }
+  }
+
 // Below are the functions used for speech + mouse in combination
 
   function checkActionOccured(){
@@ -347,6 +369,7 @@ if (annyang) {
         'toggle sidebar': toggleSidebar,
         'increase radius':increasePenSize,
         'decrease radius':decreasePenSize,
+        'next': browseNext,
         
         'play this video': playVideo,
         'search this video': searchById,
