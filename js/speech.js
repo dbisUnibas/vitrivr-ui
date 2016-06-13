@@ -264,6 +264,17 @@ if (annyang) {
         }
   }
 
+   function addImageCanvas(thumbnail){
+
+        var url = thumbnail.attr('src');
+  
+        var len=0;
+        for (el in shotInputs) {
+            len++;
+        } 
+        shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
+  }
+
   function checkUseCases(action){
 
         var resultDisplayed = $(".videocontainer");
@@ -283,16 +294,6 @@ if (annyang) {
         }
   }
 
-  function addImageCanvas(thumbnail){
-
-        var url = thumbnail.attr('src');
-  
-        var len=0;
-        for (el in shotInputs) {
-            len++;
-        } 
-        shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
-  }
 
   function playVideo(){
 
