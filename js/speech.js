@@ -232,10 +232,33 @@ if (annyang) {
             document.getElementById(containerArray[row].id).style = "";
 
             row++;
-            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 1500);
+            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
   }
+
+  function browsePrevious() {
+
+        var containerArray = $(".videocontainer");
+        if(containerArray.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if( containerArray.length > 0 && row >= 1 ){
+
+            document.getElementById(containerArray[row].id).style = "";
+
+            row--;
+            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
+            document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+        }
+  }
+
+
 
 // Below are the functions used for speech + mouse in combination
 
@@ -370,6 +393,7 @@ if (annyang) {
         'increase radius':increasePenSize,
         'decrease radius':decreasePenSize,
         'next': browseNext,
+        'previous': browsePrevious,
         
         'play this video': playVideo,
         'search this video': searchById,
