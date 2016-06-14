@@ -227,12 +227,12 @@ if (annyang) {
 
             displayErrorMessage("Please wait till search is in progress");
         }
-        else if(containerArray.length > 0){
+        else if( containerArray.length > 0 && row < containerArray.length-1 ){
 
             document.getElementById(containerArray[row].id).style = "";
 
             row++;
-            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 1000);
+            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 1500);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
   }
