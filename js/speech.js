@@ -170,6 +170,12 @@ if (annyang) {
         
   }
 
+/**
+ * Increse pen size upto 100 units
+ * Pen size is increased by 5 units on each call
+ * voice query - "increase radius"
+ */
+
   function increasePenSize(){
 
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
@@ -192,6 +198,12 @@ if (annyang) {
         }
       
   }
+
+/**
+ * Decrese pen size till 1 unit
+ * Pen size is decreased by 5 units on each call
+ * voice query - "decrease radius"
+ */
 
   function decreasePenSize(){
 
@@ -216,6 +228,12 @@ if (annyang) {
       
   }
 
+/**
+ * Scrolls down the window to the next video container
+ * The video container that comes up on scroll is highlighted by #F44336 color border
+ * voice query - "next"
+ */
+
   function browseNext() {
 
         var containerArray = $(".videocontainer");
@@ -236,6 +254,12 @@ if (annyang) {
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
   }
+
+ /**
+ * Scrolls up the window to the previous video container
+ * The video container that comes up on scroll is highlighted by #F44336 color border
+ * voice query - "previous"
+ */ 
 
   function browsePrevious() {
 
@@ -262,6 +286,12 @@ if (annyang) {
 
 // Below are the functions used for speech + mouse in combination
 
+/**
+ * Checks  if user has clicked on video thumbnail
+ * Function is called after 5 seconds of action voice query 
+ * If action/click is not occured than it sets actionVariable to null
+ */
+
   function checkActionOccured(){
 
         if(!actionOccured){
@@ -270,6 +300,12 @@ if (annyang) {
             displayErrorMessage("User has not clicked any video");      
         }        
   }
+
+/**
+ * Gives control to the necessary function, depending on the value of actionVariable
+ * decideAction function is called when user click on video thumbnail
+ * @param {Object} thumbnail image element
+ */
 
   function decideAction(event){
 
@@ -309,6 +345,12 @@ if (annyang) {
         }
   }
 
+/**
+ * Adds the thumbnail image on the canvas
+ * The image is added always on last canvas (in case of single canvas last will the only present one)
+ * @param {Object} thumbnail image element
+ */
+
    function addImageCanvas(thumbnail){
 
         var url = thumbnail.attr('src');
@@ -319,6 +361,15 @@ if (annyang) {
         } 
         shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
   }
+
+/**
+ * Checks for cases when the action query is made
+ * Cases includes: 1) No video is retrieved
+ *                 2) search is in progress
+ *                 3) videos retrieved  
+ * 
+ * @param {String} action that will be performed after click on thumbnail image
+ */  
 
   function checkUseCases(action){
 
@@ -339,31 +390,61 @@ if (annyang) {
         }
   }
 
+/**
+ * Called when action query to play video is made
+ * voice query - 'play this video'
+ */
 
   function playVideo(){
 
         checkUseCases("play");
   }
 
+/**
+ * Called when action query to search video by ID is made
+ * voice query - 'search this video'
+ */
+
   function searchById(){
 
         checkUseCases("search");
   }
+
+/**
+ * Called when action query to add video to positive feedback is made
+ * voice query - 'include this video'
+ */
 
   function positiveFeedback(){
 
         checkUseCases("addVideo");
   }
 
+/**
+ * Called when action query to add video to negative feedback is made
+ * voice query - 'remove this video'
+ */
+
   function negativeFeedback(){
 
         checkUseCases("removeVideo");
   }
 
+/**
+ * Called when action query to add thumbnail image on the canvas is made
+ * voice query - 'drop it on canvas'
+ */
+
   function dropOnCanvas(){
 
         checkUseCases("dropImage");
   }
+
+/**
+ * Called when action query to search relevance feedback is made
+ * There must be atleast one video added as positive feedback
+ * voice query - 'search my feedback'
+ */
 
   function searchFeedback(){
 
