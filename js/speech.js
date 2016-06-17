@@ -1,8 +1,9 @@
 if (annyang) {
 
-  var actionVariable = null;
-  var actionOccured = false;
-  var row = 0;
+  var actionVariable = null;    // used to set action
+  var actionOccured = false;    // used to check if action has occurred or not
+  var row = 0;                  // used for browsing video conatiners 
+  var factor = 0;
 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
@@ -39,7 +40,9 @@ if (annyang) {
        if (Array.isArray(sentences)) {
            sentences = sentences[0];
         }
-    
+        
+        factor = 0;
+
         $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
         $(VOICE_TEXTBOX).css('color','#000000');
         scrollTextBox();
@@ -54,7 +57,12 @@ if (annyang) {
  */ 
 
   function recognizedSentence(phrase,command) {
-      
+        
+        if(phrase != "even more"){
+            SpeechKITT.setRecognizedSentence(phrase);
+            factor = 1;
+        }
+
         if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
     
             $(VOICE_TEXTBOX).val(phrase);
@@ -176,18 +184,22 @@ if (annyang) {
  * voice query - "increase radius"
  */
 
-  function increasePenSize(){
-
+  function increasePenSize(unit){
+        
+        if(unit == undefined){
+            unit = 5;
+           
+        }
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
         if(size == 100){
             displayErrorMessage("Size of pen can not be increase");
         }
-        else if(size <= 95){
+        else if(size <= 100-unit){
             for (el in shotInputs) {
-                shotInputs[el].color.setLineWidth(size + 5);
+                shotInputs[el].color.setLineWidth(size + unit);
             }
-            $('#draw-radius').get(0).noUiSlider.set(size + 5);
+            $('#draw-radius').get(0).noUiSlider.set(size + unit);
         }
         else{
 
@@ -205,18 +217,22 @@ if (annyang) {
  * voice query - "decrease radius"
  */
 
-  function decreasePenSize(){
-
+  function decreasePenSize(unit){
+        
+        if(unit == undefined){
+            unit = 5;
+            
+        }
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
         if(size == 1){
             displayErrorMessage("Size of pen can not be decrease");
         }
-        else if(size >= 5){
+        else if(size >= unit){
             for (el in shotInputs) {
-                shotInputs[el].color.setLineWidth(size - 5);
+                shotInputs[el].color.setLineWidth(size - unit);
             }
-            $('#draw-radius').get(0).noUiSlider.set(size - 5);
+            $('#draw-radius').get(0).noUiSlider.set(size - unit);
         }
         else{
 
@@ -228,13 +244,45 @@ if (annyang) {
       
   }
 
+  function followBack() {
+        
+        if(factor == 0){
+            displayErrorMessage("First say some query");
+            return;
+        }
+
+        var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+        //console.log(lastRecognized);
+        factor++;
+        switch (lastRecognized){
+              case "increase radius":
+                  increasePenSize(5*factor);
+                  break;
+              case "decrease radius":
+                  decreasePenSize(5*factor);
+                  break;
+              case "next":
+                  browseNext(2*factor);
+                  break;
+              case "previous":
+                  browsePrevious(2*factor);
+                  break;
+              default:
+                  displayErrorMessage("This command doesn't work after query: "+lastRecognized);
+                  
+        }
+  }
+
+
 /**
  * Scrolls down the window to the next video container
  * The video container that comes up on scroll is highlighted by #F44336 color border
  * voice query - "next"
  */
 
-  function browseNext() {
+  function browseNext(unit) {
+        if(unit == undefined)
+            unit = 0;
 
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
@@ -245,12 +293,12 @@ if (annyang) {
 
             displayErrorMessage("Please wait till search is in progress");
         }
-        else if( containerArray.length > 0 && row < containerArray.length-1 ){
+        else if( containerArray.length > 0 && (row+unit) < containerArray.length-1 ){
 
-            document.getElementById(containerArray[row].id).style = "";
+            document.getElementById(containerArray[row+unit].id).style = "";
 
             row++;
-            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
+            $('html, body').animate({scrollTop: $("#"+containerArray[row+unit].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
   }
@@ -261,8 +309,10 @@ if (annyang) {
  * voice query - "previous"
  */ 
 
-  function browsePrevious() {
-
+  function browsePrevious(unit) {u
+        if(unit == undefined)
+            unit = 0;
+        factor = 1;
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
 
@@ -482,6 +532,8 @@ if (annyang) {
         'remove this video': negativeFeedback,
         'search my feedback': searchFeedback,
         'drop it on canvas': dropOnCanvas,
+
+         'even more': followBack,
 
   });
 
