@@ -532,8 +532,8 @@ var commands = {
         'add (a) (new) canvas (sheet)': addCanvas,
         'split (video) (into sequences)': splitVideo,
         '(toggle) (open) (close) sidebar': toggleSidebar,
-        'increase (radius) (size) (of pen) (of brush)':increasePenSize,
-        'decrease (radius) (size) (of pen) (of brush)':decreasePenSize,
+        'increase size (of pen) (of brush)':increasePenSize,
+        'decrease size (of pen) (of brush)':decreasePenSize,
         '(move to) next (video) (container)': browseNext,
         '(move to) previous (video) (container)': browsePrevious,
         
