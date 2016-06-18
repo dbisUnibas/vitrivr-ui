@@ -4,7 +4,7 @@ if (annyang) {
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
-
+ 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
 
@@ -94,7 +94,7 @@ if (annyang) {
  */
 
   function voiceSearch_1(tag) {
-      
+     
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
@@ -262,10 +262,10 @@ if (annyang) {
                   decreasePenSize(5*factor);
                   break;
               case "next":
-                  browseNext(2*factor);
+                  browseNext(2*(factor-1));
                   break;
               case "previous":
-                  browsePrevious(2*factor);
+                  browsePrevious(2*(factor-1));
                   break;
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
@@ -281,8 +281,9 @@ if (annyang) {
  */
 
   function browseNext(unit) {
+
         if(unit == undefined)
-            unit = 0;
+            unit = 1;
 
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
@@ -293,12 +294,18 @@ if (annyang) {
 
             displayErrorMessage("Please wait till search is in progress");
         }
-        else if( containerArray.length > 0 && (row+unit) < containerArray.length-1 ){
+        else if( containerArray.length > 0 ){
 
-            document.getElementById(containerArray[row+unit].id).style = "";
+            document.getElementById(containerArray[row].id).style = "";
+            if(row < containerArray.length-unit){
+                row += unit;
+            }
+            else{
+                row = containerArray.length-1;
+                displayErrorMessage("You are at the bottom");
+            }
 
-            row++;
-            $('html, body').animate({scrollTop: $("#"+containerArray[row+unit].id).offset().top  }, 800);
+            $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
   }
@@ -309,10 +316,11 @@ if (annyang) {
  * voice query - "previous"
  */ 
 
-  function browsePrevious(unit) {u
+  function browsePrevious(unit) {
+        
         if(unit == undefined)
-            unit = 0;
-        factor = 1;
+            unit = 1;
+  
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
 
@@ -322,11 +330,17 @@ if (annyang) {
 
             displayErrorMessage("Please wait till search is in progress");
         }
-        else if( containerArray.length > 0 && row >= 1 ){
+        else if( containerArray.length > 0 ){
 
             document.getElementById(containerArray[row].id).style = "";
+            if(row >= unit){
+                row = row - unit;
+            }
+            else{
+                row = 0;
+                displayErrorMessage("You are at the top");
+            }
 
-            row--;
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
         }
