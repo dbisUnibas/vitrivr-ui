@@ -523,33 +523,34 @@ if (annyang) {
         }
   }
 
-
-
-  // Add commands to annyang
-  annyang.addCommands({
+var commands = {
       
         'voice search *tag':voiceSearch_1,
         '*tag1 voice search *tag2': voiceSearch_2,
-        'toggle top bar': toggleTopbar,
-        'search canvas': searchCanvas,
-        'add canvas': addCanvas,
-        'split video': splitVideo,
-        'toggle sidebar': toggleSidebar,
-        'increase radius':increasePenSize,
-        'decrease radius':decreasePenSize,
-        'next': browseNext,
-        'previous': browsePrevious,
+        '(toggle) (open) (close) top bar': toggleTopbar,
+        'search (the) (my) (canvas) (sketch) (painting)': searchCanvas,
+        'add (a) (new) canvas (sheet)': addCanvas,
+        'split (video) (into sequences)': splitVideo,
+        '(toggle) (open) (close) sidebar': toggleSidebar,
+        'increase (radius) (size) (of pen) (of brush)':increasePenSize,
+        'decrease (radius) (size) (of pen) (of brush)':decreasePenSize,
+        '(move to) next (video) (container)': browseNext,
+        '(move to) previous (video) (container)': browsePrevious,
         
-        'play this video': playVideo,
-        'search this video': searchById,
-        'include this video': positiveFeedback,
-        'remove this video': negativeFeedback,
-        'search my feedback': searchFeedback,
-        'drop it on canvas': dropOnCanvas,
+        'play (this) (my) (video) (clip)': playVideo,
+        'search (this) (my) (video) (clip) id': searchById,
+        'include (this) (video) (clip)': positiveFeedback,
+        'remove (this) (video) (clip)': negativeFeedback,
+        'search (my) (this) feedback': searchFeedback,
+        '(put) (drop) (it) (image) (this) on canvas': dropOnCanvas,
 
-         'even more': followBack,
+        '(even) more': followBack,
 
-  });
+  };
+
+  // Add commands to annyang
+  annyang.addCommands(commands);
+
 
   // set langauge English(UK)
   annyang.setLanguage('en-GB');
