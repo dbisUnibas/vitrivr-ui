@@ -244,36 +244,6 @@ if (annyang) {
       
   }
 
-  function followBack() {
-        
-        if(factor == 0){
-            displayErrorMessage("First say some query");
-            return;
-        }
-
-        var lastRecognized = SpeechKITT.getLastRecognizedSentence();
-        //console.log(lastRecognized);
-        factor++;
-        switch (lastRecognized){
-              case "increase radius":
-                  increasePenSize(5*factor);
-                  break;
-              case "decrease radius":
-                  decreasePenSize(5*factor);
-                  break;
-              case "next":
-                  browseNext(2*(factor-1));
-                  break;
-              case "previous":
-                  browsePrevious(2*(factor-1));
-                  break;
-              default:
-                  displayErrorMessage("This command doesn't work after query: "+lastRecognized);
-                  
-        }
-  }
-
-
 /**
  * Scrolls down the window to the next video container
  * The video container that comes up on scroll is highlighted by #F44336 color border
@@ -343,6 +313,60 @@ if (annyang) {
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+        }
+  }
+
+
+  function followBack() {
+        
+        if(factor == 0){
+            displayErrorMessage("First say some query");
+            return;
+        }
+
+        var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+        //console.log(lastRecognized);
+        factor++;
+
+        var lastRecognizedArray = lastRecognized.split(" ");
+        var a,b,c,d;
+        a=0;
+        b=0;
+        c=0;
+        d=0;
+        var queryA = 'increase size (of pen) (of brush)';
+        var queryB = 'decrease size (of pen) (of brush)';
+        var queryC = '(move to) next (video) (container)';
+        var queryD = '(move to) previous (video) (container)';   
+
+        for(var i=0 ; i < lastRecognizedArray.length ; i++) {
+            var word = lastRecognizedArray[i];
+            
+            if(queryA.includes(word))
+                a++;
+            if(queryB.includes(word))
+                b++;
+            if(queryC.includes(word))
+                c++;
+            if(queryD.includes(word))
+                d++;
+        }
+                  
+        switch (lastRecognizedArray.length){
+              case a:
+                  increasePenSize(5*factor);
+                  break;
+              case b:
+                  decreasePenSize(5*factor);
+                  break;
+              case c:
+                  browseNext(2*(factor-1));
+                  break;
+              case d:
+                  browsePrevious(2*(factor-1));
+                  break;
+              default:
+                  displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
   }
 
