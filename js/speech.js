@@ -329,15 +329,17 @@ if (annyang) {
         factor++;
 
         var lastRecognizedArray = lastRecognized.split(" ");
-        var a,b,c,d;
+        var a,b,c,d,e;
         a=0;
         b=0;
         c=0;
         d=0;
+        e=0;
         var queryA = 'increase size (of pen) (of brush)';
         var queryB = 'decrease size (of pen) (of brush)';
         var queryC = '(move to) next (video) (container)';
-        var queryD = '(move to) previous (video) (container)';   
+        var queryD = '(move to) previous (video) (container)'; 
+        var queryE = 'add (a) (new) Canvas (sheet)';  
 
         for(var i=0 ; i < lastRecognizedArray.length ; i++) {
             var word = lastRecognizedArray[i];
@@ -350,8 +352,10 @@ if (annyang) {
                 c++;
             if(queryD.includes(word))
                 d++;
+            if(queryE.includes(word))
+                e++;
         }
-                  
+            
         switch (lastRecognizedArray.length){
               case a:
                   increasePenSize(5*factor);
@@ -364,6 +368,9 @@ if (annyang) {
                   break;
               case d:
                   browsePrevious(2*(factor-1));
+                  break;
+              case e:
+                  addCanvas();
                   break;
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
@@ -553,7 +560,7 @@ var commands = {
         '*tag1 voice search *tag2': voiceSearch_2,
         '(toggle) (open) (close) top bar': toggleTopbar,
         'search (the) (my) (canvas) (sketch) (painting)': searchCanvas,
-        'add (a) (new) canvas (sheet)': addCanvas,
+        'add (a) (new) Canvas (sheet)': addCanvas,
         'split (video) (into sequences)': splitVideo,
         '(toggle) (open) (close) sidebar': toggleSidebar,
         'increase size (of pen) (of brush)':increasePenSize,
