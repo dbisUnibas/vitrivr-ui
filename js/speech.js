@@ -1,4 +1,5 @@
-
+if (annyang) {
+  
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
@@ -324,7 +325,7 @@
         }
 
         var lastRecognized = SpeechKITT.getLastRecognizedSentence();
-        console.log(lastRecognized);
+        //console.log(lastRecognized);
         factor++;
 
         var lastRecognizedArray = lastRecognized.split(" ");
@@ -574,3 +575,4 @@
 
   });
 
+}
