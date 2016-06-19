@@ -1,4 +1,3 @@
-if (annyang) {
 
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
@@ -58,7 +57,7 @@ if (annyang) {
 
   function recognizedSentence(phrase,command) {
         
-        if(phrase != "even more"){
+        if(phrase != COMMAND_1 && phrase != COMMAND_2){
             SpeechKITT.setRecognizedSentence(phrase);
             factor = 1;
         }
@@ -71,6 +70,7 @@ if (annyang) {
             scrollTextBox();
         }
   }
+
 
 /**
  * This function currently just ignore the speech before saying "voice search"
@@ -316,7 +316,6 @@ if (annyang) {
         }
   }
 
-
   function followBack() {
         
         if(factor == 0){
@@ -325,7 +324,7 @@ if (annyang) {
         }
 
         var lastRecognized = SpeechKITT.getLastRecognizedSentence();
-        //console.log(lastRecognized);
+        console.log(lastRecognized);
         factor++;
 
         var lastRecognizedArray = lastRecognized.split(" ");
@@ -335,24 +334,19 @@ if (annyang) {
         c=0;
         d=0;
         e=0;
-        var queryA = 'increase size (of pen) (of brush)';
-        var queryB = 'decrease size (of pen) (of brush)';
-        var queryC = '(move to) next (video) (container)';
-        var queryD = '(move to) previous (video) (container)'; 
-        var queryE = 'add (a) (new) Canvas (sheet)';  
 
         for(var i=0 ; i < lastRecognizedArray.length ; i++) {
             var word = lastRecognizedArray[i];
             
-            if(queryA.includes(word))
+            if(QUERY_A.includes(word))
                 a++;
-            if(queryB.includes(word))
+            if(QUERY_B.includes(word))
                 b++;
-            if(queryC.includes(word))
+            if(QUERY_C.includes(word))
                 c++;
-            if(queryD.includes(word))
+            if(QUERY_D.includes(word))
                 d++;
-            if(queryE.includes(word))
+            if(QUERY_E.includes(word))
                 e++;
         }
             
@@ -376,8 +370,6 @@ if (annyang) {
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
   }
-
-
 
 // Below are the functions used for speech + mouse in combination
 
@@ -553,61 +545,32 @@ if (annyang) {
             displayErrorMessage("There must be atleast one video added as positive feedback");
         }
   }
-
-var commands = {
-      
-        'voice search *tag':voiceSearch_1,
-        '*tag1 voice search *tag2': voiceSearch_2,
-        '(toggle) (open) (close) top bar': toggleTopbar,
-        'search (the) (my) (canvas) (sketch) (painting)': searchCanvas,
-        'add (a) (new) Canvas (sheet)': addCanvas,
-        'split (video) (into sequences)': splitVideo,
-        '(toggle) (open) (close) sidebar': toggleSidebar,
-        'increase size (of pen) (of brush)':increasePenSize,
-        'decrease size (of pen) (of brush)':decreasePenSize,
-        '(move to) next (video) (container)': browseNext,
-        '(move to) previous (video) (container)': browsePrevious,
-        
-        'play (this) (my) (video) (clip)': playVideo,
-        'search (this) (my) (video) (clip) id': searchById,
-        'include (this) (video) (clip)': positiveFeedback,
-        'remove (this) (video) (clip)': negativeFeedback,
-        'search (my) (this) feedback': searchFeedback,
-        '(put) (drop) (it) (image) (this) on canvas': dropOnCanvas,
-
-        '(even) more': followBack,
-
-  };
-
-  // Add commands to annyang
-  annyang.addCommands(commands);
-
-
-  // set langauge English(UK)
-  annyang.setLanguage('en-GB');
-
-  // to print recognized speech in console
-  annyang.debug(true);
   
-  SpeechKITT.setStartCommand(annyang.start);
-  SpeechKITT.setAbortCommand(annyang.abort);
-  annyang.addCallback('start', SpeechKITT.onStart);
-  annyang.addCallback('end', SpeechKITT.onEnd);
-
-  annyang.addCallback('resultNoMatch', notRecognizedSentence);
-  annyang.addCallback('resultMatch', recognizedSentence);
-
-
-  SpeechKITT.setInstructionsText("Say 'voice search' followed by your Query");
-
-  // Define a stylesheet for KITT to use
-  SpeechKITT.setStylesheet('css/flat-pomegranate.css');
-
-  // Render KITT's interface
   $(document).ready(function (){
+ 
+      annyang.setLanguage(LANGUAGE);
 
+      // Add commands to annyang
+      annyang.addCommands(commands);
+
+      // to print recognized speech in console
+      annyang.debug(true);
+
+      SpeechKITT.setStartCommand(annyang.start);
+      SpeechKITT.setAbortCommand(annyang.abort);
+      annyang.addCallback('start', SpeechKITT.onStart);
+      annyang.addCallback('end', SpeechKITT.onEnd);
+
+      annyang.addCallback('resultNoMatch', notRecognizedSentence);
+      annyang.addCallback('resultMatch', recognizedSentence);
+
+      SpeechKITT.setInstructionsText(INSTRUCTION); 
+
+      // Define a stylesheet for KITT to use
+      SpeechKITT.setStylesheet('css/flat-pomegranate.css');
+
+      // Render KITT's interface
       SpeechKITT.vroom();
 
   });
-  
-}
+
