@@ -7,7 +7,7 @@ if (annyang) {
   var voiceText;
 
   var dictionary={};
-  var id=[];
+  var commandID=[];
 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
@@ -46,7 +46,16 @@ if (annyang) {
         }
         
         factor = 0;
-        
+        var feedbackCommand = userInterfaceFeedback(sentences);
+
+        if(feedbackCommand == undefined){
+             displayErrorMessage("Sorry I haven't understood you");
+        }
+        else{
+
+            displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
+        }
+
         $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
         $(VOICE_TEXTBOX).css('color','#000000');
         scrollTextBox();
@@ -558,10 +567,10 @@ if (annyang) {
         for(var phrase in commands){
 
             phrase = phrase.replace(/[()]/g, '');
-            id[phrase] = number;
+            commandID[phrase] = number;
             number++;
         }
-        for(var phrase in id){
+        for(var phrase in commandID){
 
             var words = phrase.split(" ");
             for(var i=0;i < words.length;i++){
@@ -579,18 +588,59 @@ if (annyang) {
   function giveIDArray(key){
 
         var IDArray=[];
-        for(var phrase in id){
+        for(var phrase in commandID){
 
             var words = phrase.split(" ");
             if(words.indexOf(key) != -1){
                 
-                IDArray.push(id[phrase]);
+                IDArray.push(commandID[phrase]);
             }
         }
         return IDArray;     
   }
 
+  function userInterfaceFeedback(sentence){
+       
+        sentence = sentence.trim();
+        var notRecognizedWords = sentence.split(" ");
+        var frequencyCommand = [];
+        for(var phrase in commandID){
 
+            var id =commandID[phrase];
+            frequencyCommand[id] = 0;
+        }
+        
+        for(var i=0;i < notRecognizedWords.length;i++){
+
+            var key = notRecognizedWords[i];
+            if(dictionary[key]){
+
+                var IDArray = dictionary[key];
+                for(var j=0;j < IDArray.length;j++){
+
+                    var id = IDArray[j];
+                    frequencyCommand[id]++;
+                }
+            }
+        }
+
+        var maximumFrequency = 0;
+        var feedbackCommand;
+        for(var phrase in commands){
+
+            var processedPhrase = phrase.replace(/[()]/g, '');
+            var id = commandID[processedPhrase];
+
+            if(maximumFrequency < frequencyCommand[id]){
+
+                maximumFrequency = frequencyCommand[id];
+                feedbackCommand = phrase;
+            }
+        }
+
+        return feedbackCommand;
+  }
+  
   $(document).ready(function (){
  
       annyang.setLanguage(LANGUAGE);

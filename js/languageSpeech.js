@@ -36,6 +36,31 @@
 
   };
 
+  var baseCommands = {
+    
+      'voice search *tag'                                 : 'voice search:______',
+      '*tag1 voice search *tag2'                          : 'voice search:______',
+      '(toggle) (open) (close) top bar'                   : 'toggle top bar',
+      'search (the) (my) (Canvas) (sketch) (painting)'    : 'search my Canvas',
+      'add (a) (new) Canvas (sheet)'                      : 'add new Canvas',
+      'split (video) (into sequences)'                    : 'split video into sequences',
+      '(toggle) (open) (close) sidebar'                   : 'toggle sidebar',
+      'increase size (of pen) (of brush)'                 : 'increase size of pen',
+      'decrease size (of pen) (of brush)'                 : 'decrease size of pen',
+      '(move to) next (video) (container)'                : 'next video container',
+      '(move to) previous (video) (container)'            : 'previous video container',
+      
+      'play (this) (my) (video) (clip)'                   : 'play this video',
+      'search (this) (my) (video) (clip) id'              : 'search this video',
+      'include (this) (video) (clip)'                     : 'include this video',
+      'remove (this) (video) (clip)'                      : 'remove this video',
+      'search (my) (this) feedback'                       : 'search my feedback',
+      '(put) (drop) (it) (image) (this) on Canvas'        : 'drop image on Canvas',
+
+      '(even) more'                                       : 'even more',
+
+  };
+
 /** 
 
 Languages and there respective code to be added as a parameter in  annyang.setLanguage(parameter)
