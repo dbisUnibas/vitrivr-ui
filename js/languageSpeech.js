@@ -9,7 +9,7 @@
   const QUERY_D = '(move to) previous (video) (container)'; 
   const QUERY_E = 'add (a) (new) Canvas (sheet)';  	
 
-  const FOLLOWBACK_COMMAND = 'even more';
+  const FOLLOWUP_COMMAND = 'even more';
 
   var commands = {
       
@@ -32,7 +32,7 @@
         'search (my) (this) feedback': searchFeedback,
         '(put) (drop) (it) (image) (this) on Canvas': dropOnCanvas,
 
-        '(even) more': followBack,
+        '(even) more': followUp,
 
   };
 

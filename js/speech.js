@@ -71,7 +71,7 @@ if (annyang) {
 
   function recognizedSentence(phrase,command) {
         
-        if(!(FOLLOWBACK_COMMAND.includes(phrase))){
+        if(!(FOLLOWUP_COMMAND.includes(phrase))){
             SpeechKITT.setRecognizedSentence(phrase);
             factor = 1;
         }
@@ -116,7 +116,6 @@ if (annyang) {
 
 /**
  * Toggle the top bar
- * voice query - "toggle top bar"
  */
 
   function toggleTopbar(){
@@ -129,7 +128,6 @@ if (annyang) {
 
 /**
  * Toggle the sidebar
- * voice query - "toggle sidebar"
  */
 
   function toggleSidebar(){
@@ -145,7 +143,6 @@ if (annyang) {
 
 /**
  * Searches the canvas
- * voice query - "search canvas"
  */
 
   function searchCanvas(){
@@ -154,7 +151,6 @@ if (annyang) {
 
 /**
  * Adds a new canvas
- * voice query - "add canvas"
  */
 
   function addCanvas(){
@@ -165,7 +161,6 @@ if (annyang) {
  * Use to split video into sequences
  * Works when video results are completed retrieved
  * Can be executed once after every search
- * voice query - "split video"
  */
 
   function splitVideo(){
@@ -194,8 +189,8 @@ if (annyang) {
 
 /**
  * Increse pen size upto 100 units
- * Pen size is increased by 5 units on each call
- * voice query - "increase radius"
+ * unit of increase is decided by follow up command
+ * @param {Integer} increase in radius of pen
  */
 
   function increasePenSize(unit){
@@ -226,9 +221,9 @@ if (annyang) {
   }
 
 /**
- * Decrese pen size till 1 unit
- * Pen size is decreased by 5 units on each call
- * voice query - "decrease radius"
+ * Decrease pen size till 1 unit
+ * unit of decrease is decided by follow up command
+ * @param {Integer} decrease in radius of pen
  */
 
   function decreasePenSize(unit){
@@ -261,7 +256,6 @@ if (annyang) {
 /**
  * Scrolls down the window to the next video container
  * The video container that comes up on scroll is highlighted by #F44336 color border
- * voice query - "next"
  */
 
   function browseNext(unit) {
@@ -297,7 +291,6 @@ if (annyang) {
  /**
  * Scrolls up the window to the previous video container
  * The video container that comes up on scroll is highlighted by #F44336 color border
- * voice query - "previous"
  */ 
 
   function browsePrevious(unit) {
@@ -330,7 +323,13 @@ if (annyang) {
         }
   }
 
-  function followBack() {
+ /**
+ * Performs the last action with more degree of extent 
+ * Works for changing pen size, browsing container and adding new Canvas
+ * voice query - "even more"/"more"
+ */ 
+
+  function followUp() {
         
         if(factor == 0){
             displayErrorMessage("First say some query");
@@ -493,7 +492,6 @@ if (annyang) {
 
 /**
  * Called when action query to play video is made
- * voice query - 'play this video'
  */
 
   function playVideo(){
@@ -503,7 +501,6 @@ if (annyang) {
 
 /**
  * Called when action query to search video by ID is made
- * voice query - 'search this video'
  */
 
   function searchById(){
@@ -513,7 +510,6 @@ if (annyang) {
 
 /**
  * Called when action query to add video to positive feedback is made
- * voice query - 'include this video'
  */
 
   function positiveFeedback(){
@@ -523,7 +519,6 @@ if (annyang) {
 
 /**
  * Called when action query to add video to negative feedback is made
- * voice query - 'remove this video'
  */
 
   function negativeFeedback(){
@@ -533,7 +528,6 @@ if (annyang) {
 
 /**
  * Called when action query to add thumbnail image on the canvas is made
- * voice query - 'drop it on canvas'
  */
 
   function dropOnCanvas(){
@@ -544,7 +538,6 @@ if (annyang) {
 /**
  * Called when action query to search relevance feedback is made
  * There must be atleast one video added as positive feedback
- * voice query - 'search my feedback'
  */
 
   function searchFeedback(){
@@ -559,6 +552,11 @@ if (annyang) {
             displayErrorMessage("There must be atleast one video added as positive feedback");
         }
   }
+
+/**
+ * Builds a dictionary using the words of commands
+ * Each word is mapped to an array of IDs of commands containing that word
+ */  
 
   function buildDictionary(){
 
@@ -585,6 +583,12 @@ if (annyang) {
         }
   }
 
+/**
+ * Creates an array of IDs of commands conating key 
+ * @param {String} key used in dictionary
+ * @return {Integer[]} Array of IDs of matched commands
+ */
+
   function giveIDArray(key){
 
         var IDArray=[];
@@ -598,6 +602,14 @@ if (annyang) {
         }
         return IDArray;     
   }
+
+/**
+ * Computes frequency of each command using dictionary 
+ * Command with maximum frequency is used as a feedback
+ * Frequency here signifies the number of words contained from unrecognized sentence
+ * @param {String} unrecognized sentence of user
+ * @return {String} Feedback command
+ */
 
   function userInterfaceFeedback(sentence){
        
