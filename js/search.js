@@ -29,13 +29,15 @@ var ScoreWeights = {
 	localcolor: 0.6,
 	edge: 0.3,
 	motion: 0,
+	meta: 0.5,
 };
 
 function sumWeights(){
 	var sum = parseInt(ScoreWeights.globalcolor) + 
 		parseInt(ScoreWeights.localcolor) + 
 		parseInt(ScoreWeights.edge) + 
-		parseInt(ScoreWeights.motion);
+		parseInt(ScoreWeights.motion)+
+		parseInt(ScoreWeights.meta);
 		return sum > 0 ? sum : 1;
 }
 
@@ -48,6 +50,7 @@ function normalizeScoreWeights(){
 		ScoreWeights.localcolor /= sum;
 		ScoreWeights.edge /= sum;
 		ScoreWeights.motion /= sum;
+		ScoreWeights.meta /= sum;
 	}
 }
 
@@ -141,6 +144,7 @@ function buildQuery(){ //TODO categories from sketch complete
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
 		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
 		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
+		query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
 		query += "\"id\": " + 0 + "\n";
 		query += "},";
 	}

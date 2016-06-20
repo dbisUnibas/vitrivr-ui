@@ -1,10 +1,10 @@
 if (annyang) {
-  
+
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
- 
+  var voiceText;
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
 
@@ -95,7 +95,7 @@ if (annyang) {
  */
 
   function voiceSearch_1(tag) {
-     
+        voiceText = tag.split(" ");
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();

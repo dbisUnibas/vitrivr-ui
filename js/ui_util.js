@@ -261,8 +261,10 @@ function updateScores(segmentedVideos) {
 
 	// below three lines are to reset browsing row when top sliders are changed
 	var containerArray = $(".videocontainer");
-	document.getElementById(containerArray[row].id).style = "";
-	row=0;
+	if(containerArray.length>0){
+		document.getElementById(containerArray[row].id).style = "";
+		row=0;
+	}
 	
 	for (var key in Shots) {
 		var shotId = Shots[key].shotid;
