@@ -9,15 +9,14 @@
   const QUERY_D = '(move to) previous (video) (container)'; 
   const QUERY_E = 'add (a) (new) Canvas (sheet)';  	
 
-  const COMMAND_1 = 'even more';
-  const COMMAND_2 = 'more';
+  const FOLLOWBACK_COMMAND = 'even more';
 
   var commands = {
       
         'voice search *tag':voiceSearch_1,
         '*tag1 voice search *tag2': voiceSearch_2,
         '(toggle) (open) (close) top bar': toggleTopbar,
-        'search (the) (my) (canvas) (sketch) (painting)': searchCanvas,
+        'search (the) (my) (Canvas) (sketch) (painting)': searchCanvas,
         'add (a) (new) Canvas (sheet)': addCanvas,
         'split (video) (into sequences)': splitVideo,
         '(toggle) (open) (close) sidebar': toggleSidebar,
@@ -31,7 +30,7 @@
         'include (this) (video) (clip)': positiveFeedback,
         'remove (this) (video) (clip)': negativeFeedback,
         'search (my) (this) feedback': searchFeedback,
-        '(put) (drop) (it) (image) (this) on canvas': dropOnCanvas,
+        '(put) (drop) (it) (image) (this) on Canvas': dropOnCanvas,
 
         '(even) more': followBack,
 

@@ -5,6 +5,10 @@ if (annyang) {
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
   var voiceText;
+
+  var dictionary={};
+  var id=[];
+
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
 
@@ -42,7 +46,7 @@ if (annyang) {
         }
         
         factor = 0;
-
+        
         $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
         $(VOICE_TEXTBOX).css('color','#000000');
         scrollTextBox();
@@ -58,7 +62,7 @@ if (annyang) {
 
   function recognizedSentence(phrase,command) {
         
-        if(phrase != COMMAND_1 && phrase != COMMAND_2){
+        if(!(FOLLOWBACK_COMMAND.includes(phrase))){
             SpeechKITT.setRecognizedSentence(phrase);
             factor = 1;
         }
@@ -546,7 +550,47 @@ if (annyang) {
             displayErrorMessage("There must be atleast one video added as positive feedback");
         }
   }
-  
+
+  function buildDictionary(){
+
+        var number=1; 
+        var present=[];
+        for(var phrase in commands){
+
+            phrase = phrase.replace(/[()]/g, '');
+            id[phrase] = number;
+            number++;
+        }
+        for(var phrase in id){
+
+            var words = phrase.split(" ");
+            for(var i=0;i < words.length;i++){
+
+                var key = words[i];
+                if(!present[key]){
+
+                    dictionary[key] = giveIDArray(key);
+                    present[key] = true;  
+                }
+            }
+        }
+  }
+
+  function giveIDArray(key){
+
+        var IDArray=[];
+        for(var phrase in id){
+
+            var words = phrase.split(" ");
+            if(words.indexOf(key) != -1){
+                
+                IDArray.push(id[phrase]);
+            }
+        }
+        return IDArray;     
+  }
+
+
   $(document).ready(function (){
  
       annyang.setLanguage(LANGUAGE);
@@ -572,6 +616,8 @@ if (annyang) {
 
       // Render KITT's interface
       SpeechKITT.vroom();
+
+      buildDictionary();
 
   });
 
