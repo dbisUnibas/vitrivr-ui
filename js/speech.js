@@ -4,7 +4,7 @@ if (annyang) {
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
-  var voiceText;
+  var voiceText= new Array();
 
   var dictionary={};
   var commandID=[];
@@ -96,6 +96,7 @@ if (annyang) {
 
   function voiceSearch_2(tag1,tag2) {
         
+        voiceText = new Array(tag2);
         $(VOICE_TEXTBOX).val(tag2);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
@@ -108,7 +109,8 @@ if (annyang) {
  */
 
   function voiceSearch_1(tag) {
-        voiceText = tag.split(" ");
+       
+        voiceText = new Array(tag);
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
