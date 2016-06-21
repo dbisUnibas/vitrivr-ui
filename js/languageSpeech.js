@@ -51,7 +51,7 @@
       '(move to) previous (video) (container)'            : 'previous video container',
       
       'play (this) (my) (video) (clip)'                   : 'play this video',
-      'search (this) (my) (video) (clip) id'              : 'search this video',
+      'search (this) (my) (video) (clip) id'              : 'search this video id',
       'include (this) (video) (clip)'                     : 'include this video',
       'remove (this) (video) (clip)'                      : 'remove this video',
       'search (my) (this) feedback'                       : 'search my feedback',

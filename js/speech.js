@@ -654,32 +654,33 @@ if (annyang) {
   }
   
   $(document).ready(function (){
- 
-      annyang.setLanguage(LANGUAGE);
 
-      // Add commands to annyang
-      annyang.addCommands(commands);
+        // Apply the language set in languageSpeech.js
+        annyang.setLanguage(LANGUAGE);
 
-      // to print recognized speech in console
-      annyang.debug(true);
+        // Add commands to annyang
+        annyang.addCommands(commands);
 
-      SpeechKITT.setStartCommand(annyang.start);
-      SpeechKITT.setAbortCommand(annyang.abort);
-      annyang.addCallback('start', SpeechKITT.onStart);
-      annyang.addCallback('end', SpeechKITT.onEnd);
+        // to print recognized speech in console
+        annyang.debug(true);
 
-      annyang.addCallback('resultNoMatch', notRecognizedSentence);
-      annyang.addCallback('resultMatch', recognizedSentence);
+        SpeechKITT.setStartCommand(annyang.start);
+        SpeechKITT.setAbortCommand(annyang.abort);
+        annyang.addCallback('start', SpeechKITT.onStart);
+        annyang.addCallback('end', SpeechKITT.onEnd);
 
-      SpeechKITT.setInstructionsText(INSTRUCTION); 
+        annyang.addCallback('resultNoMatch', notRecognizedSentence);
+        annyang.addCallback('resultMatch', recognizedSentence);
 
-      // Define a stylesheet for KITT to use
-      SpeechKITT.setStylesheet('css/flat-pomegranate.css');
+        SpeechKITT.setInstructionsText(INSTRUCTION); 
 
-      // Render KITT's interface
-      SpeechKITT.vroom();
+        // Define a stylesheet for KITT to use
+        SpeechKITT.setStylesheet('css/flat-pomegranate.css');
 
-      buildDictionary();
+        // Render KITT's interface
+        SpeechKITT.vroom();
+
+        buildDictionary();
 
   });
 
