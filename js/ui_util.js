@@ -535,6 +535,7 @@ function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		
 		updateScores(true);
