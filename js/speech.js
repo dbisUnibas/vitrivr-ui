@@ -345,7 +345,7 @@ if (annyang) {
  * voice query - "even more"/"more"
  */ 
 
-  function followUp() {
+  function followUpPenSize() {
         
         if(factor == 0){
             displayErrorMessage("First say some query");
@@ -353,16 +353,12 @@ if (annyang) {
         }
 
         var lastRecognized = SpeechKITT.getLastRecognizedSentence();
-        //console.log(lastRecognized);
         factor++;
 
         var lastRecognizedArray = lastRecognized.split(" ");
-        var a,b,c,d,e;
+        var a,b;
         a=0;
         b=0;
-        c=0;
-        d=0;
-        e=0;
 
         for(var i=0 ; i < lastRecognizedArray.length ; i++) {
             var word = lastRecognizedArray[i];
@@ -371,12 +367,6 @@ if (annyang) {
                 a++;
             if(QUERY_B.includes(word))
                 b++;
-            if(QUERY_C.includes(word))
-                c++;
-            if(QUERY_D.includes(word))
-                d++;
-            if(QUERY_E.includes(word))
-                e++;
         }
             
         switch (lastRecognizedArray.length){
@@ -386,19 +376,51 @@ if (annyang) {
               case b:
                   decreasePenSize(5*factor);
                   break;
+              default:
+                  displayErrorMessage("This command doesn't work after query: "+lastRecognized);
+        }
+  }
+
+  function followUpBrowsing() {
+        
+        if(factor == 0){
+            displayErrorMessage("First say some query");
+            return;
+        }
+
+        var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+        factor++;
+
+        var lastRecognizedArray = lastRecognized.split(" ");
+        var c,d;
+        c=0;
+        d=0;
+
+        for(var i=0 ; i < lastRecognizedArray.length ; i++) {
+            var word = lastRecognizedArray[i];
+            
+            if(QUERY_C.includes(word))
+                c++;
+            if(QUERY_D.includes(word))
+                d++;
+        }
+            
+        switch (lastRecognizedArray.length){
               case c:
                   browseNext(2*(factor-1));
                   break;
               case d:
                   browsePrevious(2*(factor-1));
                   break;
-              case e:
+             /* case e:
                   addCanvas();
-                  break;
+                  break;*/
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
   }
+
+
 
 // Below are the functions used for speech + mouse in combination
 

@@ -32,7 +32,8 @@
         'search (my) (this) feedback': searchFeedback,
         '(put) (drop) (it) (image) (this) on Canvas': dropOnCanvas,
 
-        '(even) more': followUp,
+        '(even) more': followUpPenSize,
+        '(even) further': followUpBrowsing,
 
   };
 
