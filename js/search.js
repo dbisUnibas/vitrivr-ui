@@ -80,14 +80,27 @@ function search(id, positive, negative){
 
 function buildIdQuery(id) {
 
-	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
+/*	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
 
 	query += "{\"categories\":" + JSON.stringify(getCategories()) + ",\n";	//see config.js
 	query += "\"id\": \"" + id + "\"}\n";
 
 	query += "]}";
 
-	return query;
+	return query;*/
+
+	var query = {
+		queryType: "query",
+		query:[
+			{
+				id: id.toString(),
+				categories: getCategories()
+			}
+		]
+	};
+
+
+	return JSON.stringify(query);
 
 }
 
@@ -109,20 +122,22 @@ function buildRFQuery() {
 
 	for(var shotid in rf_positive){
 		elements.push({
-			id: shotid,
-			weight: 1
+			id: shotid.toString(),
+			weight: 1,
+			categories: getCategories()
 		});
 	}
 
 	for(var shotid in rf_negative){
 		elements.push({
-			id: shotid,
-			weight: -1
+			id: shotid.toString(),
+			weight: -1,
+			categories: getCategories()
 		});
 	}
 
 	query.query = elements;
-
+	console.log(JSON.stringify(query));
 	return JSON.stringify(query);
 
 }
@@ -146,21 +161,11 @@ function buildContextQuery() {
 }
 
 function buildVideoQuery(shotid){
-/*	var query = "{\"queryType\":\"video\", \"query\":";
+	var query = "{\"queryType\":\"video\", \"query\":";
 		query += "{\"shotid\": \"" + shotid + "\"";
-		query += "}}";*/
+		query += "}}";
 
-		var query = {
-			queryType: "query",
-			query:[
-				{
-					id: shotid
-				}
-			]
-		};
-
-
-		return JSON.stringify(query);
+return query;
 
 }
 
