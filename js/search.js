@@ -93,13 +93,37 @@ function buildIdQuery(id) {
 
 function buildRFQuery() {
 
-	var query = "{\"queryType\":\"relevanceFeedback\", \"query\":";
+/*	var query = "{\"queryType\":\"relevanceFeedback\", \"query\":";
 		query += "{\"positive\": " + JSON.stringify(rf_positive) + ",\n";
 		query += "\"negative\": " + JSON.stringify(rf_negative) + ",\n";
 		query += "\"categories\":" + JSON.stringify(getCategories()) + "\n";	//see config.js
 		query += "}}";
 
-	return query;
+	return query;*/
+
+	var query = {
+		queryType: "query"
+	};
+
+	var elements = new Array();
+
+	for(var shotid in rf_positive){
+		elements.push({
+			id: shotid,
+			weight: 1
+		});
+	}
+
+	for(var shotid in rf_negative){
+		elements.push({
+			id: shotid,
+			weight: -1
+		});
+	}
+
+	query.query = elements;
+
+	return JSON.stringify(query);
 
 }
 
@@ -117,36 +141,30 @@ function buildContextQuery() {
 
 	return query;
 
+
+
 }
 
 function buildVideoQuery(shotid){
-	var query = "{\"queryType\":\"video\", \"query\":";
+/*	var query = "{\"queryType\":\"video\", \"query\":";
 		query += "{\"shotid\": \"" + shotid + "\"";
-		query += "}}";
+		query += "}}";*/
 
-	return query;
+		var query = {
+			queryType: "query",
+			query:[
+				{
+					id: shotid
+				}
+			]
+		};
+
+
+		return JSON.stringify(query);
 
 }
 
-function buildQuery(){ //TODO categories from sketch complete
-
-	/*var query = "{\"queryType\":\"multiSketch\", \"query\":[";
-
-	for(var key in shotInputs){
-		var shotInput = shotInputs[key];
-
-		query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
-		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
-		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
-		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + " \n";
-	//	query += "\"id\": " + 0 + "\n";
-		query += "},";
-	}
-
-	query = query.slice(0, -1);
-	query += "],";
-	query += "\"resultname\":\"" + getResultName() + "\"}";
-	console.log(query);*/
+function buildQuery(){
 
 var query = {
 	queryType: "query",
@@ -171,9 +189,7 @@ for(var key in shotInputs){
 
 query.query = containers;
 
-var _return = JSON.stringify(query);
-console.log(_return);
-	return _return;
+return JSON.stringify(query);
 
 }
 
