@@ -9,7 +9,7 @@
   const QUERY_D = '(move to) previous (video) (container)'; 
   const QUERY_E = 'add (a) (new) Canvas (sheet)';  	
 
-  const FOLLOWUP_COMMAND = 'even more';
+  var followUpCommands = ['even more','more','even further','further','one more','again one more','One More'];
 
   var commands = {
       
@@ -34,6 +34,8 @@
 
         '(even) more': followUpPenSize,
         '(even) further': followUpBrowsing,
+        '(again) one more': followUpCanvas,
+        'One More': followUpCanvas,
 
   };
 

@@ -73,7 +73,7 @@ if (annyang) {
 
   function recognizedSentence(phrase,command) {
         
-        if(!(FOLLOWUP_COMMAND.includes(phrase))){
+        if(followUpCommands.indexOf(phrase) == -1){
             SpeechKITT.setRecognizedSentence(phrase);
             factor = 1;
         }
@@ -420,7 +420,32 @@ if (annyang) {
         }
   }
 
+  function followUpCanvas() {
+        
+        if(factor == 0){
+            displayErrorMessage("First say some query");
+            return;
+        }
 
+        var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+        factor++;
+
+        var lastRecognizedArray = lastRecognized.split(" ");
+        var e=0;
+
+        for(var i=0 ; i < lastRecognizedArray.length ; i++) {
+            var word = lastRecognizedArray[i];
+            
+            if(QUERY_E.includes(word))
+                e++;
+        }
+            
+        if (e == lastRecognizedArray.length)
+            addCanvas();
+        else
+            displayErrorMessage("This command doesn't work after query: "+lastRecognized);
+        
+  }
 
 // Below are the functions used for speech + mouse in combination
 
