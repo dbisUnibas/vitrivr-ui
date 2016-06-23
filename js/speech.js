@@ -46,6 +46,11 @@ if (annyang) {
         }
         
         factor = 0;
+        
+        $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
+        $(VOICE_TEXTBOX).css('color','#000000');
+        scrollTextBox();
+        sentences = preProcess(sentences);
         var feedbackCommand = userInterfaceFeedback(sentences);
 
         if(feedbackCommand == undefined){
@@ -56,9 +61,6 @@ if (annyang) {
             displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
         }
 
-        $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
-        $(VOICE_TEXTBOX).css('color','#000000');
-        scrollTextBox();
   }
   
 /**
@@ -85,6 +87,18 @@ if (annyang) {
         }
   }
 
+  function preProcess(str){
+
+        var before = str.split(" ");
+        var after="";
+        for(var i=0;i < before.length;i++){
+
+            if(stopwords.indexOf(before[i]) == -1){
+                after += before[i]+" ";
+            }
+        }
+        return after.trim();
+  }
 
 /**
  * This function currently just ignore the speech before saying "voice search"
