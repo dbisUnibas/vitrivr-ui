@@ -179,14 +179,14 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'<div class="shotbox" id="s' + shotInfo.shotid + '" data-startframe="' + shotInfo.start + '" data-endframe="' + shotInfo.start + '">' + 
 		'<span class="preview">' +
 		'<img class="thumbnail" src="' + thumbnailHost + '' + shotInfo.videoid + '/' + shotInfo.shotid + '.' + thumbnailFileType + '" />' + //see config.js
-	/*	'<div class="tophoverbox">' +
+		'<div class="tophoverbox">' +
 		'<span class="material-icons searchbutton">search</span>' +
 		'<span class="material-icons playbutton">play_arrow</span>' +
 		'<span class="material-icons relevanceFeedback relevanceFeedback-add">add</span>' +
 		'<span class="material-icons relevanceFeedback">remove</span>' +
 	//	'<span class="material-icons showid">textsms</span>' +
 	//	'<span class="material-icons load_video">movie</span>' +
-		'</div>' +*/
+		'</div>' +
 		'<div class="bottomhoverbox">' +
 		'<span class="score"> 0% </span>' +
 		'<span class="position"> ' + shotInfo.start + ' - ' + shotInfo.end + ' </span>' +
@@ -196,13 +196,15 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		
 	);
 	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
-	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
-	//$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
-	//$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
+	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
+	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
+    $('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
-	
-	$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);
+	if(voiceMode){
+		$(".tophoverbox").hide();
+		$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);
+	}
 }
 
 function updateScoreInShotContainer(id, score){
@@ -261,7 +263,7 @@ function updateScores(segmentedVideos) {
 
 	// below three lines are to reset browsing row when top sliders are changed
 	var containerArray = $(".videocontainer");
-	if(containerArray.length>0){
+	if(containerArray.length>0 && voiceMode){
 		document.getElementById(containerArray[row].id).style = "";
 		row=0;
 	}
@@ -353,45 +355,45 @@ function playShot(event){
 }
 
 function similaritySearch(object){
-	var shotBox = object.parent().parent();
+	var shotBox;
+	if(voiceMode)
+		shotBox = object.parent().parent();
+	else
+		shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	search(shotId);
 }
 
 
-function relevanceFeedback(object){
-	
-	var shotBox = object.parent().parent();
+function relevanceFeedback(event){
+	var _this = $(this);
+	var shotBox = _this.parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
+	var positive = _this.hasClass('relevanceFeedback-add');
 	
-	if(actionVariable == "addVideo"){
-
+	if(positive){
 		if($.inArray(shotId, rf_positive) >= 0){ //remove
-			document.getElementById(shotBox.attr('id')).style.border = "";
+			_this.css('color', 'white');
 			remove_element(rf_positive,shotId);
-		}
-		else{ //add
+		}else{ //add
 			if($.inArray(shotId, rf_negative) >= 0){
-				
 				remove_element(rf_negative,shotId);
+				_this.next().css('color', 'white');
 			}
 			rf_positive.push(shotId);
-			document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
+			_this.css('color', 'green');
 		}
-	}
-	else if(actionVariable == "removeVideo"){//negative
-
+	}else{//negative
 		if($.inArray(shotId, rf_negative) >= 0){ //remove
-			document.getElementById(shotBox.attr('id')).style.border = "";
+			_this.css('color', 'white');
 			remove_element(rf_negative,shotId);
-		}
-		else{ //add
+		}else{ //add
 			if($.inArray(shotId, rf_positive) >= 0){
-		
 				remove_element(rf_positive,shotId);
+				_this.prev().css('color', 'white');
 			}
 			rf_negative.push(shotId);
-			document.getElementById(shotBox.attr('id')).style.border = "medium solid red";
+			_this.css('color', 'red');
 		}
 	}
 	
@@ -407,7 +409,11 @@ function relevanceFeedback(object){
 }
 
 function prepare_playback(object){
-	var shotBox = object.parent().parent();
+	var shotBox;
+	if(voiceMode)
+		shotBox = object.parent().parent();
+	else
+		shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var frame = Math.floor((shotInfo.start + shotInfo.end) / 2);

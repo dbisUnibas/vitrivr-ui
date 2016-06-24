@@ -147,7 +147,10 @@ function buildQuery(){ //TODO categories from sketch complete
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
 		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
 		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
-		query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
+	
+		if(voiceMode)
+			query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
+	
 		query += "\"id\": " + 0 + "\n";
 		query += "},";
 	}
@@ -155,7 +158,7 @@ function buildQuery(){ //TODO categories from sketch complete
 	query = query.slice(0, -1);
 	query += "],";
 	query += "\"resultname\":\"" + getResultName() + "\"}";
-	
+
 	voiceText = new Array();
 	return query;
 	

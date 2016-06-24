@@ -5,3 +5,4 @@ const thumbnailHost = "http://localhost/vitrivr/thumbnails/";
 const videoHost = "http://localhost/vitrivr/osvc_1.0/";
 const thumbnailFileType = "jpg";
 const maxFrameGap = 250;
+const voiceMode = true;

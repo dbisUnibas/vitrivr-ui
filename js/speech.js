@@ -1,4 +1,4 @@
-if (annyang) {
+if (voiceMode) {
 
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
@@ -464,6 +464,55 @@ if (annyang) {
         }        
   }
 
+
+  function relevanceFeedbackVoice(object){
+  
+        var shotBox = object.parent().parent();
+        var shotId = parseInt(shotBox.attr('id').substring(1));
+        
+        if(actionVariable == "addVideo"){
+
+          if($.inArray(shotId, rf_positive) >= 0){ //remove
+            document.getElementById(shotBox.attr('id')).style.border = "";
+            remove_element(rf_positive,shotId);
+          }
+          else{ //add
+            if($.inArray(shotId, rf_negative) >= 0){
+              
+              remove_element(rf_negative,shotId);
+            }
+            rf_positive.push(shotId);
+            document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
+          }
+        }
+        else if(actionVariable == "removeVideo"){//negative
+
+            if($.inArray(shotId, rf_negative) >= 0){ //remove
+
+              document.getElementById(shotBox.attr('id')).style.border = "";
+              remove_element(rf_negative,shotId);
+            }
+            else{ //add
+              if($.inArray(shotId, rf_positive) >= 0){
+            
+                  remove_element(rf_positive,shotId);
+              }
+
+              rf_negative.push(shotId);
+              document.getElementById(shotBox.attr('id')).style.border = "medium solid red";
+            }
+        }
+        
+        if(rf_positive.length > 0){
+            $('#rf-button').show();
+        }else{
+            $('#rf-button').hide();
+        }
+      
+        console.log(rf_positive);
+        console.log(rf_negative);
+  }
+
 /**
  * Gives control to the necessary function, depending on the value of actionVariable
  * decideAction function is called when user click on video thumbnail
@@ -492,12 +541,12 @@ if (annyang) {
 
             case "addVideo" :
                 actionOccured = true;
-                relevanceFeedback($(this));
+                relevanceFeedbackVoice($(this));
                 break;
 
             case "removeVideo" :
                 actionOccured = true;
-                relevanceFeedback($(this));
+                relevanceFeedbackVoice($(this));
                 break;
 
             case "dropImage" :
@@ -747,4 +796,11 @@ if (annyang) {
 
   });
 
+}
+else{
+
+    $(document).ready(function (){
+        ScoreWeights.meta = 0;
+        $('.voice').hide();
+    });
 }
