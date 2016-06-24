@@ -132,23 +132,27 @@ function buildContextQuery() {
 		shotids.push(Shots[key].shotid);
 	}
 
-	var query = "{\"queryType\":\"context\", \"query\":";
-		query += "{\"shotidlist\": " + JSON.stringify(shotids);
-		query += "}}";
+	var query = {
+		queryType: "context",
+		query: {
+			shotidlist: shotids;
+		}
+	};
 
-	return query;
-
-
+	return JSON.stringify(query);
 
 }
 
 function buildVideoQuery(shotid){
-	var query = "{\"queryType\":\"video\", \"query\":";
-		query += "{\"shotid\": \"" + shotid + "\"";
-		query += "}}";
 
-return query;
+	var query = {
+		queryType: "video",
+		query: {
+			shotid: shotid.toString();
+		}
+	};
 
+	return JSON.stringify(query);
 }
 
 function buildQuery(){
