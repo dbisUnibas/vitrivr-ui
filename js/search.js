@@ -80,15 +80,6 @@ function search(id, positive, negative){
 
 function buildIdQuery(id) {
 
-/*	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
-
-	query += "{\"categories\":" + JSON.stringify(getCategories()) + ",\n";	//see config.js
-	query += "\"id\": \"" + id + "\"}\n";
-
-	query += "]}";
-
-	return query;*/
-
 	var query = {
 		queryType: "query",
 		query:[
@@ -106,38 +97,29 @@ function buildIdQuery(id) {
 
 function buildRFQuery() {
 
-/*	var query = "{\"queryType\":\"relevanceFeedback\", \"query\":";
-		query += "{\"positive\": " + JSON.stringify(rf_positive) + ",\n";
-		query += "\"negative\": " + JSON.stringify(rf_negative) + ",\n";
-		query += "\"categories\":" + JSON.stringify(getCategories()) + "\n";	//see config.js
-		query += "}}";
-
-	return query;*/
-
 	var query = {
 		queryType: "query"
 	};
 
 	var elements = new Array();
 
-	for(var shotid in rf_positive){
+	for(var key in rf_positive){
 		elements.push({
-			id: shotid.toString(),
+			id: rf_positive[key].toString(),
 			weight: 1,
 			categories: getCategories()
 		});
 	}
 
-	for(var shotid in rf_negative){
+	for(var key in rf_negative){
 		elements.push({
-			id: shotid.toString(),
+			id: rf_negative[key].toString(),
 			weight: -1,
 			categories: getCategories()
 		});
 	}
 
 	query.query = elements;
-	console.log(JSON.stringify(query));
 	return JSON.stringify(query);
 
 }
