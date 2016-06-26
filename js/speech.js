@@ -686,14 +686,25 @@ if (voiceMode) {
             for(var i=0;i < words.length;i++){
 
                 var key = words[i];
-                if(!present[key]){
+                if(!present[key]){          // for adding words into dictionary with IDs
 
                     dictionary[key] = giveIDArray(key);
                     present[key] = true;  
                 }
+
+                for(var j=0;j<key.length-2;j++){
+                    var trigram = key.substring(j,j+3);
+                    if(!present[trigram]){    // for adding trigrams of words in dictionary with IDs
+
+                        dictionary[trigram] = giveIDArray(key);
+                        present[trigram] = true;  
+                    }
+                }
             }
         }
+       // console.log(dictionary);
   }
+
 
 /**
  * Creates an array of IDs of commands conating key 
@@ -724,7 +735,7 @@ if (voiceMode) {
  */
 
   function userInterfaceFeedback(sentence){
-       
+    
         sentence = sentence.trim();
         var notRecognizedWords = sentence.split(" ");
         var frequencyCommand = [];
@@ -737,8 +748,8 @@ if (voiceMode) {
         for(var i=0;i < notRecognizedWords.length;i++){
 
             var key = notRecognizedWords[i];
-            if(dictionary[key]){
-
+            if(dictionary[key]){            
+                                             // for words of unrecognized sentence
                 var IDArray = dictionary[key];
                 for(var j=0;j < IDArray.length;j++){
 
@@ -746,6 +757,21 @@ if (voiceMode) {
                     frequencyCommand[id]++;
                 }
             }
+
+            for(var j=0;j<key.length-2;j++){
+                var trigram = key.substring(j,j+3);
+                if(dictionary[trigram]){    // for trigrams of words of unrecognized sentence
+                   
+                    var IDArrayTrigram = dictionary[trigram];
+                   
+                    for(var k=0;k < IDArrayTrigram.length;k++){
+
+                        var id = IDArrayTrigram[k];
+                        frequencyCommand[id]++;
+                    }  
+                }
+            }
+
         }
 
         var maximumFrequency = 0;
@@ -761,7 +787,7 @@ if (voiceMode) {
                 feedbackCommand = phrase;
             }
         }
-
+       
         return feedbackCommand;
   }
   
