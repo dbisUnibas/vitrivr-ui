@@ -68,6 +68,7 @@ function newShotInput() {
 		action : function(e) {
 			e.preventDefault();
 			shotInputs[id].motion.clearPaths();
+            shotInputs[id].motion.clearBgPaths();
 		}
 	}, {
 		divider : true
@@ -78,6 +79,14 @@ function newShotInput() {
 		action : function(e) {
 			e.preventDefault();
 			destroyCanvas(id);
+		}
+	}, {
+		header : 'Switch'
+	}, {
+		text : 'Fg/Bg',
+		action : function(e) {
+			e.preventDefault();
+			shotInputs[id].motion.switchFgBg();
 		}
 	}
 	]);
