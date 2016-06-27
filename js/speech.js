@@ -743,7 +743,7 @@ if (voiceMode) {
                 }
             }
         }
-       // console.log(dictionary);
+       //console.log(dictionary);
   }
 
 
@@ -789,18 +789,20 @@ if (voiceMode) {
         for(var i=0;i < notRecognizedWords.length;i++){
 
             var key = notRecognizedWords[i];
-            if(dictionary[key]){            
-                                             // for words of unrecognized sentence
-                var IDArray = dictionary[key];
-                for(var j=0;j < IDArray.length;j++){
 
-                    var id = IDArray[j];
-                    frequencyCommand[id]++;
-                }
-            }
+            for(var j=-2;j<key.length;j++){
+                var trigram;
+                if(j == -2)
+                        trigram = "  "+key.charAt(j+2);
+                    else if(j==-1)
+                        trigram = " "+key.substring(0,2);
+                    else if(j == key.length-2)
+                        trigram = key.substring(j,j+2)+" ";
+                    else if(j == key.length-1)
+                        trigram = key.charAt(j)+"  ";
+                    else
+                        trigram = key.substring(j,j+3);
 
-            for(var j=0;j<key.length-2;j++){
-                var trigram = key.substring(j,j+3);
                 if(dictionary[trigram]){    // for trigrams of words of unrecognized sentence
                    
                     var IDArrayTrigram = dictionary[trigram];
@@ -814,7 +816,7 @@ if (voiceMode) {
             }
 
         }
-
+      
         var maximumFrequency = 0;
         var feedbackCommand;
         for(var phrase in commands){
@@ -859,7 +861,7 @@ if (voiceMode) {
         // Render KITT's interface
         SpeechKITT.vroom();
 
-        buildDictionary();
+        buildDictionary();  
 
   });
 
