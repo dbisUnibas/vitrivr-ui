@@ -165,6 +165,37 @@ if (voiceMode) {
         search();
   }
 
+  function searchParticularCanvas(tag){
+        var arr = tag.split(" ");
+        console.log("starting sketch-based search");
+        removeItem = "and";
+        arr = $.grep(arr, function(value) {
+           return value != removeItem;
+        });
+        clearResults();
+        var query = "{\"queryType\":\"multiSketch\", \"query\":[";
+  
+        for(var index in arr){
+          var voiceKey = "shotInput_"+(arr[index]-1);
+          console.log(voiceKey);
+          var shotInput = shotInputs[voiceKey];
+
+          query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
+          query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
+          query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
+          query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
+          query += "\"id\": " + 0 + "\n";
+          query += "},";
+        }
+        
+        query = query.slice(0, -1);
+        query += "],";
+        query += "\"resultname\":\"" + getResultName() + "\"}";
+          
+        oboerequest(query);
+
+  }
+
 /**
  * Adds a new canvas
  */

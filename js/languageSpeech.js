@@ -24,6 +24,7 @@
         'decrease size (of pen) (of brush)':decreasePenSize,
         '(move to) next (video) (container)': browseNext,
         '(move to) previous (video) (container)': browsePrevious,
+        'search Canvas *tag': searchParticularCanvas,
         
         'play (this) (my) (video) (clip)': playVideo,
         'search (this) (my) (video) (clip) id': searchById,
