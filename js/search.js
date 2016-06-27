@@ -135,7 +135,7 @@ function buildContextQuery() {
 	var query = {
 		queryType: "context",
 		query: {
-			shotidlist: shotids;
+			shotidlist: shotids.toString()
 		}
 	};
 
@@ -148,7 +148,7 @@ function buildVideoQuery(shotid){
 	var query = {
 		queryType: "video",
 		query: {
-			shotid: shotid.toString();
+			shotid: shotid.toString()
 		}
 	};
 
