@@ -702,7 +702,7 @@ if (voiceMode) {
  */  
 
   function buildDictionary(){
-
+      
         var number=1; 
         var present=[];
         for(var phrase in commands){
@@ -712,23 +712,33 @@ if (voiceMode) {
             number++;
         }
         for(var phrase in commandID){
-
+        
+            var id = commandID[phrase];
             var words = phrase.split(" ");
             for(var i=0;i < words.length;i++){
 
                 var key = words[i];
-                if(!present[key]){          // for adding words into dictionary with IDs
 
-                    dictionary[key] = giveIDArray(key);
-                    present[key] = true;  
-                }
+                for(var j=-2;j<key.length;j++){
+                    var trigram;
+                    if(j==-2)
+                        trigram = "  "+key.charAt(j+2);
+                    else if(j==-1)
+                        trigram = " "+key.substring(0,2);
+                    else if(j == key.length-2)
+                        trigram = key.substring(j,j+2)+" ";
+                    else if(j == key.length-1)
+                        trigram = key.charAt(j)+"  ";
+                    else
+                        trigram = key.substring(j,j+3);
 
-                for(var j=0;j<key.length-2;j++){
-                    var trigram = key.substring(j,j+3);
-                    if(!present[trigram]){    // for adding trigrams of words in dictionary with IDs
+                    if(!dictionary[trigram]){    // for adding trigrams of words in dictionary with IDs
 
-                        dictionary[trigram] = giveIDArray(key);
-                        present[trigram] = true;  
+                        dictionary[trigram] = [id];
+                    }
+                    else{
+                        if(dictionary[trigram].indexOf(id)==-1)
+                            dictionary[trigram].push(id);
                     }
                 }
             }
