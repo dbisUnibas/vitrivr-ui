@@ -53,7 +53,7 @@ if (voiceMode) {
         scrollTextBox();
         sentences = preProcess(sentences);
         var feedbackCommand = userInterfaceFeedback(sentences);
-
+       // console.log(sentences);
         if(feedbackCommand == undefined){
              displayErrorMessage("Sorry I haven't understood you");
         }
@@ -94,7 +94,7 @@ if (voiceMode) {
  * @param {string} str Unrecognized voice query
  */ 
 
-  function preProcepreProcesssspreProcess(str){
+  function preProcess(str){
 
         var before = str.split(" ");
         var after="";
