@@ -36,6 +36,7 @@ if (voiceMode) {
 /**
  * This function prints the sentence with black font in the text box
  * The sentence printed here is the one which is not a voice query 
+ * Unrecognized sentence after pre processing is given to feedback system
  *
  * @param {(string|string[])} sentences Array of probable recognized sentences
  */  
@@ -87,7 +88,13 @@ if (voiceMode) {
         }
   }
 
-  function preProcess(str){
+/**
+ * Filters out the stop words from unrecognized sentence
+ *
+ * @param {string} str Unrecognized voice query
+ */ 
+
+  function preProcepreProcesssspreProcess(str){
 
         var before = str.split(" ");
         var after="";
@@ -164,6 +171,13 @@ if (voiceMode) {
   function searchCanvas(){
         search();
   }
+
+/**
+ * Searches any particular canvas or combination of Canvas
+ * Example- tag ="1 2 and 3" will search for first,second and third canvas 
+ *
+ * @param {string} tag Integers string seprated by spaces and containing "and" in between
+ */ 
 
   function searchParticularCanvas(tag){
         var arr = tag.split(" ");
@@ -372,7 +386,7 @@ if (voiceMode) {
 
  /**
  * Performs the last action with more degree of extent 
- * Works for changing pen size, browsing container and adding new Canvas
+ * Works for changing pen size
  * voice query - "even more"/"more"
  */ 
 
@@ -412,6 +426,12 @@ if (voiceMode) {
         }
   }
 
+/**
+ * Performs the last action with more degree of extent 
+ * Works for browsing container
+ * voice query - "even further"/"further"
+ */ 
+
   function followUpBrowsing() {
         
         if(factor == 0){
@@ -450,6 +470,13 @@ if (voiceMode) {
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
   }
+
+/**
+ * Performs the last action with more degree of extent 
+ * Works for adding a new Canvas
+ * voice query - "one more"/"again one more"
+ */ 
+
 
   function followUpCanvas() {
         
@@ -495,6 +522,12 @@ if (voiceMode) {
         }        
   }
 
+/**
+ * Works according to actionVariable value 
+ * actionValue="addVideo" -> adds video to positive feedback on click over video thumbnail
+ * actionValue="addVideo" -> adds video to positive feedback on click over video thumbnail
+ * @param {Object} object thumbnail image element
+ */  
 
   function relevanceFeedbackVoice(object){
   
@@ -697,8 +730,8 @@ if (voiceMode) {
   }
 
 /**
- * Builds a dictionary using the words of commands
- * Each word is mapped to an array of IDs of commands containing that word
+ * Builds a dictionary using the 3-grams words of commands
+ * Each 3-gram is mapped to an array of IDs of commands containing that 3-gram
  */  
 
   function buildDictionary(){
@@ -866,7 +899,7 @@ if (voiceMode) {
   });
 
 }
-else{
+else{       // control comes in else block if voiceMode is set false in config.js
 
     $(document).ready(function (){
         ScoreWeights.meta = 0;
