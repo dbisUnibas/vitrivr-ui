@@ -30,6 +30,7 @@ if (voiceMode) {
 
   function displayErrorMessage(message) {
 
+        responsiveVoice.speak(message,PERSON);        
         Materialize.toast(message, 4000);
   }
 

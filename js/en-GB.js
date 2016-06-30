@@ -13,6 +13,7 @@
 
   var followUpCommands = ['even more','more','even further','further','one more','again one more','One More'];
 
+  const PERSON = "UK English Female";
 // voice queries/commands
   var commands = {
       
