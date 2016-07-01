@@ -58,6 +58,9 @@ if (voiceMode) {
         if(feedbackCommand == undefined){
              displayErrorMessage("Sorry I haven't understood you");
         }
+        else if(feedbackCommand == 1){
+              displayErrorMessage("Query executed");
+        }
         else{
 
             displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
@@ -814,6 +817,7 @@ if (voiceMode) {
         sentence = sentence.trim();
         var notRecognizedWords = sentence.split(" ");
         var frequencyCommand = [];
+        var countTrigram=0;
         for(var phrase in commandID){
 
             var id =commandID[phrase];
@@ -848,7 +852,7 @@ if (voiceMode) {
                     }  
                 }
             }
-
+            countTrigram += key.length+2;
         }
       
         var maximumFrequency = 0;
@@ -864,7 +868,17 @@ if (voiceMode) {
                 feedbackCommand = phrase;
             }
         }
-       
+        
+        if(maximumFrequency / countTrigram >= 0.8){
+            
+            commands[feedbackCommand].apply();
+            feedbackCommand = 1;
+        }
+
+        if(maximumFrequency / countTrigram <= 0.2){
+            feedbackCommand = undefined;
+        }
+
         return feedbackCommand;
   }
   
