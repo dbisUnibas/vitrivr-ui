@@ -167,6 +167,37 @@ if (voiceMode) {
         $('#sidebar').toggleClass('open');
         $('body').toggleClass('push-toright');
   }
+/**
+* Displays the color sketch option for canvas
+*
+*/  
+
+  function showColorSketch(){
+        $('.motionsketch').hide();
+        $('.objectsketch').hide();
+        $('#color-tool-pane').show();
+        $('#sidebarextension').removeClass('open');
+        $('#btnShowSidebar').removeClass('open');
+        $('#colorsketchbutton').parent().siblings().removeClass('active');
+        $('#colorsketchbutton').parent().addClass('active');
+
+  }
+
+/**
+* Displays the motion sketch option for canvas
+*
+*/
+
+  function showMotionSketch(){
+        $('.motionsketch').show();
+        $('.objectsketch').show();
+        $('#color-tool-pane').hide();
+        $('#sidebarextension').removeClass('open');
+        $('#btnShowSidebar').removeClass('open');
+        $('#motionsketchbutton').parent().siblings().removeClass('active');
+        $('#motionsketchbutton').parent().addClass('active');
+
+  }
 
 /**
  * Searches the canvas

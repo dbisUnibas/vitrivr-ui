@@ -29,6 +29,8 @@
         '(show) (me) (move to) next (video) (container)': browseNext,
         '(show) (me) (move to) previous (video) (container)': browsePrevious,
         'search Canvas *tag': searchParticularCanvas,
+        '(show) (me) colour sketch (tool) (option)': showColorSketch,
+        '(show) (mw) motion sketch (tool) (option)': showMotionSketch,
         
         'play (this) (my) (video) (clip)': playVideo,
         'search (this) (my) (video) (clip) id': searchById,
