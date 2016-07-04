@@ -131,6 +131,21 @@ if (voiceMode) {
         return after.trim();
   }
 
+  function preProcessRiTa(str){
+
+        var before = str.split(" ");
+        var after = "";
+        var tagged = RiTa.getPosTags(,true);
+
+        for(var i=0;i < before.length;i++){
+
+            if(tagged[i] == 'n'||tagged[i] == 'v'||tagged[i] == 'a'||tagged[i] == 's'||tagged[i] == 'r'){
+                after += before[i]+" ";
+            }
+        }
+        return after.trim();
+  }
+
 /**
  * This function currently just ignore the speech before saying "voice search"
  * The query printed in text box is the speech after saying "voice search"
@@ -141,7 +156,8 @@ if (voiceMode) {
 
   function voiceSearch_2(tag1,tag2) {
         
-        voiceText = new Array(tag2);
+        var processed = preProcessRiTa(tag2);
+        voiceText = new Array(processed);
         $(VOICE_TEXTBOX).val(tag2);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
@@ -155,7 +171,8 @@ if (voiceMode) {
 
   function voiceSearch_1(tag) {
        
-        voiceText = new Array(tag);
+        var processed = preProcessRiTa(tag);
+        voiceText = new Array(processed);
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
