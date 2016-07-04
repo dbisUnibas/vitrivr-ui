@@ -4,6 +4,7 @@ if (voiceMode) {
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
+  var response;
   var voiceText= new Array();
 
   var dictionary={};
@@ -31,9 +32,26 @@ if (voiceMode) {
   function displayErrorMessage(message) {
 
         responsiveVoice.speak(message,PERSON);        
-        Materialize.toast(message, 4000);
+        Materialize.toast(message, 3000);
   }
 
+  function feedbackResponse(feedbackCommand){
+
+        if(response == 1){
+            commands[feedbackCommand].apply();
+            displayErrorMessage("Query executed");
+        }
+        console.log(response);
+        response = undefined;
+  }
+
+  function setResponse(){
+        if(response == 0)
+            response = 1;
+        else{
+            displayErrorMessage("No feedback");
+        }
+  }
 /**
  * This function prints the sentence with black font in the text box
  * The sentence printed here is the one which is not a voice query 
@@ -63,7 +81,9 @@ if (voiceMode) {
         }
         else{
 
+            response = 0;
             displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
+            setTimeout(feedbackResponse,5000,feedbackCommand);
         }
 
   }

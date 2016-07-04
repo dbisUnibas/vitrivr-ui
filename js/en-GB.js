@@ -30,7 +30,7 @@
         '(show) (me) (move to) previous (video) (container)': browsePrevious,
         'search Canvas *tag': searchParticularCanvas,
         '(show) (me) colour sketch (tool) (option)': showColorSketch,
-        '(show) (mw) motion sketch (tool) (option)': showMotionSketch,
+        '(show) (me) motion sketch (tool) (option)': showMotionSketch,
         
         'play (this) (my) (video) (clip)': playVideo,
         'search (this) (my) (video) (clip) id': searchById,
@@ -43,6 +43,7 @@
         '(even) further': followUpBrowsing,
         '(again) one more': followUpCanvas,
         'One More': followUpCanvas,
+        'yes': setResponse,
 
   };
 
@@ -60,7 +61,10 @@
       'decrease size (of pen) (of brush)'                 : 'decrease size of pen',
       '(move to) next (video) (container)'                : 'next video container',
       '(move to) previous (video) (container)'            : 'previous video container',
-      
+      'search Canvas *tag'                                : 'search particular canvas',
+      '(show) (me) colour sketch (tool) (option)'         : 'show me colour sketch',
+      '(show) (me) motion sketch (tool) (option)'         : 'show me motion sketch',
+
       'play (this) (my) (video) (clip)'                   : 'play this video',
       'search (this) (my) (video) (clip) id'              : 'search this video id',
       'include (this) (video) (clip)'                     : 'include this video',
