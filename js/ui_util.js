@@ -286,10 +286,8 @@ function updateScores(segmentedVideos) {
 		$('#results>.videocontainer').each(function(index) {
 		  ids.push($(this).attr('id').substring(1));
 		});
-		if(ids.length>0){
-			for(var key in ids){
-				updateVideoScore(ids[key]);
-			}
+		for(var key in ids){
+			updateVideoScore(ids[key]);
 		}
 	}else{
 		for (var key in Videos) {

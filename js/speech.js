@@ -48,7 +48,7 @@ if (voiceMode) {
             commands[feedbackCommand].apply();
             displayErrorMessage("Query executed");
         }
-        console.log(response);
+        
         response = undefined;
   }
 
@@ -144,27 +144,6 @@ if (voiceMode) {
         return after.trim();
   }
 
-/**
- * Filters out the words from voice query other than nouns, verbs,
- * adjectives, adjective satellite and adverbs
- *
- * @param {string} str voice search query
- */ 
-
-  function preProcessRiTa(str){
-
-        var before = str.split(" ");
-        var after = "";
-        var tagged = RiTa.getPosTags(str,true);
-
-        for(var i=0;i < before.length;i++){
-
-            if(tagged[i] == 'n'||tagged[i] == 'v'||tagged[i] == 'a'||tagged[i] == 's'||tagged[i] == 'r'){
-                after += before[i]+" ";
-            }
-        }
-        return after.trim();
-  }
 
 /**
  * This function currently just ignore the speech before saying "voice search"
@@ -176,8 +155,7 @@ if (voiceMode) {
 
   function voiceSearch_2(tag1,tag2) {
         
-        var processed = preProcessRiTa(tag2);
-        voiceText = new Array(processed);
+        voiceText = new Array(tag2);
         $(VOICE_TEXTBOX).val(tag2);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
@@ -191,8 +169,7 @@ if (voiceMode) {
 
   function voiceSearch_1(tag) {
        
-        var processed = preProcessRiTa(tag);
-        voiceText = new Array(processed);
+        voiceText = new Array(tag);
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
