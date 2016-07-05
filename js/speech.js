@@ -4,10 +4,10 @@ if (voiceMode) {
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
-  var response;
-  var voiceText= new Array();
+  var response;                 // used to set whenever user responded to feedback
+  var voiceText= new Array();   // used for voice search query
 
-  var dictionary={};
+  var dictionary={};            // dictionary used in feedback system
   var commandID=[];
 
 // declaring constants
@@ -35,6 +35,13 @@ if (voiceMode) {
         Materialize.toast(message, 3000);
   }
 
+/**
+ * Checks if response is set after 4 sec of feedback 
+ * If response is set then query is executed w.r.t. feedback command
+ *
+ * @param {String} feedback command suggested by feedback system
+ */ 
+
   function feedbackResponse(feedbackCommand){
 
         if(response == 1){
@@ -45,6 +52,11 @@ if (voiceMode) {
         response = undefined;
   }
 
+/**
+ * This function sets the response variable when user say "yes"
+ * as a response to feedback
+ */
+
   function setResponse(){
         if(response == 0)
             response = 1;
@@ -52,6 +64,7 @@ if (voiceMode) {
             displayErrorMessage("No feedback");
         }
   }
+
 /**
  * This function prints the sentence with black font in the text box
  * The sentence printed here is the one which is not a voice query 
@@ -131,11 +144,18 @@ if (voiceMode) {
         return after.trim();
   }
 
+/**
+ * Filters out the words from voice query other than nouns, verbs,
+ * adjectives, adjective satellite and adverbs
+ *
+ * @param {string} str voice search query
+ */ 
+
   function preProcessRiTa(str){
 
         var before = str.split(" ");
         var after = "";
-        var tagged = RiTa.getPosTags(,true);
+        var tagged = RiTa.getPosTags(str,true);
 
         for(var i=0;i < before.length;i++){
 
