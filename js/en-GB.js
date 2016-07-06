@@ -46,6 +46,7 @@
         'yes'                                                     : setResponse,
 
         '(show) (display) (overview of) all commands'             : displayCommands,
+        'close this (window) (box)'                               : closeWindow,
 
   };
 
@@ -81,6 +82,7 @@
       'yes'                                               : 'Yes',
 
       '(show) (display) (overview of) all commands'       : 'Show all commands',
+      'close this (window) (box)'                         : 'close this window',
   };
 
 // stop words which get filtered out from unrecognized sentence

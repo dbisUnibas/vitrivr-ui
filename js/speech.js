@@ -2,6 +2,7 @@ if (voiceMode) {
 
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
+  var windowDisplay = false;
   var row = 0;                  // used for browsing video conatiners 
   var factor = 0;
   var response;                 // used to set whenever user responded to feedback
@@ -37,7 +38,22 @@ if (voiceMode) {
 
   function displayCommands(){
 
-        $('#showCommands').openModal();
+        if(!windowDisplay){
+            windowDisplay = true;
+            $('#showCommands').openModal();
+        }
+        else
+            displayErrorMessage("Window is open already");
+  }
+
+  function closeWindow(){
+        
+        if(windowDisplay){
+            windowDisplay = false;
+            $('#showCommands').closeModal();
+        }
+        else
+            displayErrorMessage("No window is open");
   }
 
 /**
