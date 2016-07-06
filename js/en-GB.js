@@ -37,13 +37,15 @@
         'include (this) (video) (clip)': positiveFeedback,
         'remove (this) (video) (clip)': negativeFeedback,
         'search (my) (this) feedback': searchFeedback,
-        '(put) (drop) (it) (image) (this) on Canvas': dropOnCanvas,
+        '(put) (drop) (it) (this) (image) on Canvas': dropOnCanvas,
 
         '(even) more': followUpPenSize,
         '(even) further': followUpBrowsing,
         '(again) one more': followUpCanvas,
         'One More': followUpCanvas,
         'yes': setResponse,
+
+        '(show) (display) (overview of) all commands': displayCommands,
 
   };
 
@@ -66,7 +68,7 @@
       '(show) (me) motion sketch (tool) (option)'         : 'show me motion sketch',
 
       'play (this) (my) (video) (clip)'                   : 'play this video',
-      'search (this) (my) (video) (clip) id'              : 'search this video id',
+      'search (this) (my) (video) (clip) id'              : 'search this video ID',
       'include (this) (video) (clip)'                     : 'include this video',
       'remove (this) (video) (clip)'                      : 'remove this video',
       'search (my) (this) feedback'                       : 'search my feedback',

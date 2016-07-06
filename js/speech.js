@@ -35,6 +35,11 @@ if (voiceMode) {
         Materialize.toast(message, 3000);
   }
 
+  function displayCommands(){
+
+        $('#showCommands').openModal();
+  }
+
 /**
  * Checks if response is set after 4 sec of feedback 
  * If response is set then query is executed w.r.t. feedback command
@@ -973,6 +978,14 @@ if (voiceMode) {
 
         // Render KITT's interface
         SpeechKITT.vroom();
+
+        var allCommands = "";
+        for(var phrase in baseCommands){
+
+            allCommands += baseCommands[phrase]+"<br>";
+        }
+
+        $('#showCommands > div > p').html(allCommands);
 
         buildDictionary();  
 
