@@ -83,8 +83,6 @@ if (voiceMode) {
            sentences = sentences[0];
         }
         
-        factor = 0;
-        
         $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
         $(VOICE_TEXTBOX).css('color','#000000');
         scrollTextBox();
@@ -498,6 +496,7 @@ if (voiceMode) {
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
+        factor = 0;
   }
 
 /**
@@ -543,6 +542,7 @@ if (voiceMode) {
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
+        factor = 0;
   }
 
 /**
@@ -560,7 +560,6 @@ if (voiceMode) {
         }
 
         var lastRecognized = SpeechKITT.getLastRecognizedSentence();
-        factor++;
 
         var lastRecognizedArray = lastRecognized.split(" ");
         var e=0;
@@ -576,7 +575,7 @@ if (voiceMode) {
             addCanvas();
         else
             displayErrorMessage("This command doesn't work after query: "+lastRecognized);
-        
+        factor = 0;
   }
 
 // Below are the functions used for speech + mouse in combination
@@ -854,25 +853,6 @@ if (voiceMode) {
   }
 
 
-/**
- * Creates an array of IDs of commands conating key 
- * @param {String} key used in dictionary
- * @return {Integer[]} Array of IDs of matched commands
- */
-
-  function giveIDArray(key){
-
-        var IDArray=[];
-        for(var phrase in commandID){
-
-            var words = phrase.split(" ");
-            if(words.indexOf(key) != -1){
-                
-                IDArray.push(commandID[phrase]);
-            }
-        }
-        return IDArray;     
-  }
 
 /**
  * Computes frequency of each command using dictionary 
