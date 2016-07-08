@@ -278,8 +278,8 @@ if (voiceMode) {
         var query = "{\"queryType\":\"multiSketch\", \"query\":[";
   
         for(var index in arr){
+
           var voiceKey = "shotInput_"+(arr[index]-1);
-          console.log(voiceKey);
           var shotInput = shotInputs[voiceKey];
 
           query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";

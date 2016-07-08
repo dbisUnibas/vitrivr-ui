@@ -263,6 +263,11 @@ function oboerequest(query, noContext) {
 			hideProgress();
 			searchRunning = false;
 		});
+
+		if(voiceMode){
+			row = 0;     // this global var is declared in speech.js
+		}
+
 	} catch(e) {
 		console.warn(e.message + " | " + e.lineNumber);
 	}
