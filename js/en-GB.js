@@ -53,40 +53,40 @@
 // Commands mapped to their corrosponding base commands
   var baseCommands = {
     
-      'voice search *tag'                                 : 'Voice search:______',
+      'voice search *tag'                                 : 'voice search:______',
       '*tag1 voice search *tag2'                          : '______ voice search:______',
-      '(toggle) (open) (close) top bar'                   : 'Toggle top bar',
-      'search (the) (my) (Canvas) (sketch) (painting)'    : 'Search my Canvas',
-      'add (a) (new) Canvas (sheet)'                      : 'Add new Canvas',
-      'split (video) (into sequences)'                    : 'Split video into sequences',
-      '(toggle) (open) (close) sidebar'                   : 'Toggle sidebar',
-      'increase size (of pen) (of brush)'                 : 'Increase size of pen',
-      'decrease size (of pen) (of brush)'                 : 'Decrease size of pen',
-      '(move to) next (video) (container)'                : 'Next video container',
-      '(move to) previous (video) (container)'            : 'Previous video container',
-      'search Canvas *tag'                                : 'Search canvas _____ and _____ ',
-      '(show) (me) colour sketch (tool) (option)'         : 'Show me colour sketch',
-      '(show) (me) motion sketch (tool) (option)'         : 'Show me motion sketch',
+      '(toggle) (open) (close) top bar'                   : 'toggle top bar',
+      'search (the) (my) (Canvas) (sketch) (painting)'    : 'search my Canvas',
+      'add (a) (new) Canvas (sheet)'                      : 'add new Canvas',
+      'split (video) (into sequences)'                    : 'split video into sequences',
+      '(toggle) (open) (close) sidebar'                   : 'toggle sidebar',
+      'increase size (of pen) (of brush)'                 : 'increase size of pen',
+      'decrease size (of pen) (of brush)'                 : 'decrease size of pen',
+      '(move to) next (video) (container)'                : 'next video container',
+      '(move to) previous (video) (container)'            : 'previous video container',
+      'search Canvas *tag'                                : 'search canvas _____ and _____ ',
+      '(show) (me) colour sketch (tool) (option)'         : 'show me colour sketch',
+      '(show) (me) motion sketch (tool) (option)'         : 'show me motion sketch',
 
-      'play (this) (my) (video) (clip)'                   : 'Play this video',
-      'search (this) (my) (video) (clip) id'              : 'Search this video ID',
-      'include (this) (video) (clip)'                     : 'Include this video',
-      'remove (this) (video) (clip)'                      : 'Remove this video',
-      'search (my) (this) feedback'                       : 'Search my feedback',
-      '(put) (drop) (it) (image) (this) on Canvas'        : 'Drop this image on Canvas',
+      'play (this) (my) (video) (clip)'                   : 'play this video',
+      'search (this) (my) (video) (clip) id'              : 'search this video ID',
+      'include (this) (video) (clip)'                     : 'include this video',
+      'remove (this) (video) (clip)'                      : 'remove this video',
+      'search (my) (this) feedback'                       : 'search my feedback',
+      '(put) (drop) (it) (image) (this) on Canvas'        : 'drop this image on Canvas',
 
-      '(even) more'                                       : 'Even more',
-      '(even) further'                                    : 'Even further',
-      'One More'                                          : 'One more',
-      '(again) one more'                                  : 'Again one more',
-      'yes'                                               : 'Yes',
+      '(even) more'                                       : 'even more',
+      '(even) further'                                    : 'even further',
+      'One More'                                          : 'one more',
+      '(again) one more'                                  : 'again one more',
+      'yes'                                               : 'yes',
 
-      '(show) (display) (overview of) all commands'       : 'Show all commands',
+      '(show) (display) (overview of) all commands'       : 'show all commands',
       'close this (window) (box)'                         : 'close this window',
   };
 
 // stop words which get filtered out from unrecognized sentence
-var stopwords = ["a", "about", "above", "above", "across", "after", "afterwards", "against", "all", "almost", "alone", "along", "already", "also","although","always","am","among", "amongst", "amoungst", "amount",  "an", "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", "are", "around", "as",  "at", "back","be","became", "because","become","becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", "empty", "enough", "etc", "eveno", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", "perhaps", "please", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"];
+var stopwords = ["a", "about", "above", "above", "across", "after", "afterwards", "against", "all", "almost", "alone", "along", "already", "also","although","always","am","among", "amongst", "amoungst", "amount",  "an", "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", "are", "around", "as",  "at", "back","be","became", "because","become","becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", "empty", "enough", "etc", "eveno", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", "perhaps", "please", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"];
 
 /** 
 

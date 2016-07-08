@@ -845,6 +845,19 @@ if (voiceMode) {
         }
   }
 
+  function formCommandsModal(){
+
+        var allCommands = "";
+        var no=1;
+        for(var phrase in baseCommands){
+
+            allCommands += no+". "+baseCommands[phrase]+"<br>";
+            no++;
+        }
+
+        $('#showCommands > div > p').html(allCommands);
+  }
+
 /**
  * Builds a dictionary using the 3-grams words of commands
  * Each 3-gram is mapped to an array of IDs of commands containing that 3-gram
@@ -964,9 +977,6 @@ if (voiceMode) {
         
         if(maximumFrequency / countTrigram >= 0.8){
             
-            commands[feedbackCommand].apply();
-            feedbackCommand = 1;
-
             var baseCommand = baseCommands[feedbackCommand];
             if(followUpCommands.indexOf(baseCommand) == -1){
                 
@@ -974,6 +984,8 @@ if (voiceMode) {
                 factor = 1;
             }
 
+            commands[feedbackCommand].apply();
+            feedbackCommand = 1;
         }
 
         if(maximumFrequency / countTrigram <= 0.2){
@@ -1010,14 +1022,7 @@ if (voiceMode) {
         // Render KITT's interface
         SpeechKITT.vroom();
 
-        var allCommands = "";
-        for(var phrase in baseCommands){
-
-            allCommands += baseCommands[phrase]+"<br>";
-        }
-
-        $('#showCommands > div > p').html(allCommands);
-
+        formCommandsModal();
         buildDictionary();  
 
   });
