@@ -36,6 +36,17 @@ if (voiceMode) {
         Materialize.toast(message, 3000);
   }
 
+  function addSerialNumber(){
+
+        var containerArray = $(".videocontainer");
+        var serial = 1;  
+        $(containerArray[row]).children('div').each(function(){
+            
+            $(this).find('.bottomhoverbox').append("<div class='serialnumber'>"+ (serial) +".</div>");
+            serial++;
+        });
+  }
+
   function displayCommands(){
 
         if(!windowDisplay){
@@ -66,9 +77,19 @@ if (voiceMode) {
   function feedbackResponse(feedbackCommand){
 
         if(response == 1){
+
+            var baseCommand = baseCommands[feedbackCommand];
+            if(followUpCommands.indexOf(baseCommand) == -1){
+                
+                SpeechKITT.setRecognizedSentence(baseCommand);
+                factor = 1;
+            }
+
             commands[feedbackCommand].apply();
             displayErrorMessage("Query executed");
         }
+        else 
+          factor = 0;
         
         response = undefined;
   }
@@ -95,8 +116,8 @@ if (voiceMode) {
  */  
 
   function notRecognizedSentence(sentences) {
-       if (Array.isArray(sentences)) {
-           sentences = sentences[0];
+        if (Array.isArray(sentences)) {
+            sentences = sentences[0];
         }
         
         $(VOICE_TEXTBOX).val($(VOICE_TEXTBOX).val() +" "+sentences);
@@ -106,10 +127,11 @@ if (voiceMode) {
         var feedbackCommand = userInterfaceFeedback(sentences);
        // console.log(sentences);
         if(feedbackCommand == undefined){
-             displayErrorMessage("Sorry I haven't understood you");
+            factor = 0;
+            displayErrorMessage("Sorry I haven't understood you");
         }
         else if(feedbackCommand == 1){
-              displayErrorMessage("Query executed");
+            displayErrorMessage("Query executed");
         }
         else{
 
@@ -424,6 +446,8 @@ if (voiceMode) {
         else if( containerArray.length > 0 ){
 
             document.getElementById(containerArray[row].id).style = "";
+            $('.serialnumber').remove();
+
             if(row < containerArray.length-unit){
                 row += unit;
             }
@@ -434,6 +458,8 @@ if (voiceMode) {
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+
+            addSerialNumber();
         }
   }
 
@@ -459,6 +485,8 @@ if (voiceMode) {
         else if( containerArray.length > 0 ){
 
             document.getElementById(containerArray[row].id).style = "";
+            $('.serialnumber').remove();
+
             if(row >= unit){
                 row = row - unit;
             }
@@ -469,6 +497,8 @@ if (voiceMode) {
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
             document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+        
+            addSerialNumber();
         }
   }
 
@@ -512,7 +542,6 @@ if (voiceMode) {
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
-        factor = 0;
   }
 
 /**
@@ -558,7 +587,6 @@ if (voiceMode) {
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
-        factor = 0;
   }
 
 /**
@@ -591,7 +619,6 @@ if (voiceMode) {
             addCanvas();
         else
             displayErrorMessage("This command doesn't work after query: "+lastRecognized);
-        factor = 0;
   }
 
 // Below are the functions used for speech + mouse in combination
@@ -939,6 +966,14 @@ if (voiceMode) {
             
             commands[feedbackCommand].apply();
             feedbackCommand = 1;
+
+            var baseCommand = baseCommands[feedbackCommand];
+            if(followUpCommands.indexOf(baseCommand) == -1){
+                
+                SpeechKITT.setRecognizedSentence(baseCommand);
+                factor = 1;
+            }
+
         }
 
         if(maximumFrequency / countTrigram <= 0.2){

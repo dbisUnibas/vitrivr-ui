@@ -7,11 +7,11 @@
   // These queries are used in follow up commands
   const QUERY_A = 'increase size (of pen) (of brush)';
   const QUERY_B = 'decrease size (of pen) (of brush)';
-  const QUERY_C = '(move to) next (video) (container)';
-  const QUERY_D = '(move to) previous (video) (container)'; 
+  const QUERY_C = '(show) (me) (move to) next (video) (container)';
+  const QUERY_D = '(show) (me) (move to) previous (video) (container)'; 
   const QUERY_E = 'add (a) (new) Canvas (sheet)';  	
 
-  var followUpCommands = ['even more','more','even further','further','one more','again one more','One More'];
+  var followUpCommands = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
 
   const PERSON = "UK English Female";
 // voice queries/commands
