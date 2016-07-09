@@ -845,6 +845,36 @@ if (voiceMode) {
         }
   }
 
+  // Functions with suffix as "ByNumber" are called when action query is said by serial number
+
+  function playVideoByNumber(num){
+
+        var resultDisplayed = $(".videocontainer");
+        if(resultDisplayed.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+
+            var labeledShots = $(".serialnumber");
+            if(num == undefined){
+                displayErrorMessage("Please also say video number");
+            }
+            else if(num > labeledShots.length){
+                displayErrorMessage("Video number "+num+" is not available");
+            }
+            else{
+                var object = $(labeledShots[num-1]);
+                prepare_playback(object.parent());
+            }
+       }
+  }
+
+
   function formCommandsModal(){
 
         var allCommands = "";

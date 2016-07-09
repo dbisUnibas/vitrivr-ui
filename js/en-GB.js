@@ -39,6 +39,8 @@
         'search (my) (this) feedback'                             : searchFeedback,
         '(put) (drop) (it) (this) (image) on Canvas'              : dropOnCanvas,
 
+        'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
+
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
         '(again) one more'                                        : followUpCanvas,
@@ -74,6 +76,8 @@
       'remove (this) (video) (clip)'                      : 'remove this video',
       'search (my) (this) feedback'                       : 'search my feedback',
       '(put) (drop) (it) (image) (this) on Canvas'        : 'drop this image on Canvas',
+
+      'play (me) video (clip) (with) (serial) number :num': 'play me video number:______',
 
       '(even) more'                                       : 'even more',
       '(even) further'                                    : 'even further',
