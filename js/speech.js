@@ -741,6 +741,13 @@ if (voiceMode) {
                 actionOccured = true;
                 addImageCanvas($(this));
                 break;
+
+            case "search_play":
+                actionVariable = null;
+                actionOccured = true;
+                prepare_playback($(this));
+                similaritySearch($(this));
+                break;
         }
   }
 
@@ -832,6 +839,11 @@ if (voiceMode) {
   function dropOnCanvas(){
 
         checkUseCases("dropImage");
+  }
+
+  function searchPlayVideo(){
+
+        checkUseCases("search_play");
   }
 
 /**

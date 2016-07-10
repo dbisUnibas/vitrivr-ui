@@ -42,6 +42,7 @@
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
+        'search and play (this) (my) video'                       : searchPlayVideo,
 
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
@@ -82,6 +83,7 @@
       'play (me) video (clip) (with) (serial) number :num': 'play me video number:______',
 
       '(toggle) (open) (close) top and sidebar'           : 'toggle top and sidebar',
+      'search and play (this) (my) video'                 : 'search and play this video',
 
       '(even) more'                                       : 'even more',
       '(even) further'                                    : 'even further',
