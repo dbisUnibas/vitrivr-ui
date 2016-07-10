@@ -242,6 +242,13 @@ if (voiceMode) {
         $('#sidebar').toggleClass('open');
         $('body').toggleClass('push-toright');
   }
+
+  function toggleTopSideBar(){
+  
+          toggleTopbar();
+          toggleSidebar();
+  }
+
 /**
 * Displays the color sketch option for canvas
 *

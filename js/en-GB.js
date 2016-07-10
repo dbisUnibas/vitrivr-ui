@@ -41,6 +41,8 @@
 
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
 
+        '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
+
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
         '(again) one more'                                        : followUpCanvas,
@@ -78,6 +80,8 @@
       '(put) (drop) (it) (image) (this) on Canvas'        : 'drop this image on Canvas',
 
       'play (me) video (clip) (with) (serial) number :num': 'play me video number:______',
+
+      '(toggle) (open) (close) top and sidebar'           : 'toggle top and sidebar',
 
       '(even) more'                                       : 'even more',
       '(even) further'                                    : 'even further',
