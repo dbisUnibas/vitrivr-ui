@@ -657,7 +657,7 @@ if (voiceMode) {
         var shotBox = object.parent().parent();
         var shotId = parseInt(shotBox.attr('id').substring(1));
         
-        if(actionVariable == "addVideo"){
+        if(actionVariable == "addVideo" || actionVariable == "play_addVideo"){
 
           if($.inArray(shotId, rf_positive) >= 0){ //remove
             document.getElementById(shotBox.attr('id')).style.border = "";
@@ -672,7 +672,7 @@ if (voiceMode) {
             document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
           }
         }
-        else if(actionVariable == "removeVideo"){//negative
+        else if(actionVariable == "removeVideo" || actionVariable == "play_removeVideo"){//negative
 
             if($.inArray(shotId, rf_negative) >= 0){ //remove
 
@@ -748,6 +748,19 @@ if (voiceMode) {
                 prepare_playback($(this));
                 similaritySearch($(this));
                 break;
+
+            case "play_addVideo":
+                actionOccured = true;
+                relevanceFeedbackVoice($(this));
+                prepare_playback($(this));
+                break;
+
+            case "play_removeVideo":
+                actionOccured = true;
+                relevanceFeedbackVoice($(this));
+                prepare_playback($(this));
+                break;
+
         }
   }
 
@@ -844,6 +857,16 @@ if (voiceMode) {
   function searchPlayVideo(){
 
         checkUseCases("search_play");
+  }
+
+  function playAddedVideo(){
+
+        checkUseCases("play_addVideo");
+  }
+
+  function playRemovedVideo(){
+
+        checkUseCases("play_removeVideo");
   }
 
 /**

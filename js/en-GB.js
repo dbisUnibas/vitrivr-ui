@@ -43,6 +43,8 @@
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
+        'play and include (this) (my) video'                      : playAddedVideo,
+        'play and remove (this) (my) video'                       : playRemovedVideo,
 
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
@@ -84,6 +86,8 @@
 
       '(toggle) (open) (close) top and sidebar'           : 'toggle top and sidebar',
       'search and play (this) (my) video'                 : 'search and play this video',
+      'play and include (this) (my) video'                : 'play and include this video',
+      'play and remove (this) (my) video'                 : 'play and remove this video',
 
       '(even) more'                                       : 'even more',
       '(even) further'                                    : 'even further',
