@@ -25,7 +25,7 @@ if (voiceMode) {
   }
 
 /**
- * pop up the error message as a toast
+ * pop up the error message as a toast and voice response
  *
  * @param {string} message The error to be displayed
  */
@@ -35,6 +35,10 @@ if (voiceMode) {
         responsiveVoice.speak(message,PERSON);        
         Materialize.toast(message, 3000);
   }
+
+/**
+ * Adds serial numbers to video shots of pointed container
+ */
 
   function addSerialNumber(){
 
@@ -47,6 +51,10 @@ if (voiceMode) {
         });
   }
 
+/**
+ * Displays all commands in a pop up window
+ */
+
   function displayCommands(){
 
         if(!windowDisplay){
@@ -56,6 +64,11 @@ if (voiceMode) {
         else
             displayErrorMessage("Window is open already");
   }
+
+/**
+ * Closes any pop up window
+ */
+ 
 
   function closeWindow(){
         
@@ -242,6 +255,10 @@ if (voiceMode) {
         $('#sidebar').toggleClass('open');
         $('body').toggleClass('push-toright');
   }
+
+/**
+ * Toggles both top and sidebar
+ */
 
   function toggleTopSideBar(){
   
@@ -602,7 +619,6 @@ if (voiceMode) {
  * voice query - "one more"/"again one more"
  */ 
 
-
   function followUpCanvas() {
         
         if(factor == 0){
@@ -753,12 +769,14 @@ if (voiceMode) {
                 actionOccured = true;
                 relevanceFeedbackVoice($(this));
                 prepare_playback($(this));
+                actionVariable = null;
                 break;
 
             case "play_removeVideo":
                 actionOccured = true;
                 relevanceFeedbackVoice($(this));
                 prepare_playback($(this));
+                actionVariable = null;
                 break;
 
         }
@@ -854,15 +872,27 @@ if (voiceMode) {
         checkUseCases("dropImage");
   }
 
+/**
+ * Called when action query to play and search that video is made
+ */
+
   function searchPlayVideo(){
 
         checkUseCases("search_play");
   }
 
+/**
+ * Called when action query to play and add that video to positive feedback is made
+ */
+
   function playAddedVideo(){
 
         checkUseCases("play_addVideo");
   }
+
+/**
+ * Called when action query to play and add that video to negative feedback is made
+ */
 
   function playRemovedVideo(){
 
@@ -916,6 +946,9 @@ if (voiceMode) {
        }
   }
 
+/**
+ * Creates a pop up modal (window) which conatains all base commands
+ */
 
   function formCommandsModal(){
 
