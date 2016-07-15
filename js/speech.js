@@ -673,7 +673,7 @@ if (voiceMode) {
         var shotBox = object.parent().parent();
         var shotId = parseInt(shotBox.attr('id').substring(1));
         
-        if(actionVariable == "addVideo" || actionVariable == "play_addVideo"){
+        if(actionVariable == "addVideo"){
 
           if($.inArray(shotId, rf_positive) >= 0){ //remove
             document.getElementById(shotBox.attr('id')).style.border = "";
@@ -688,7 +688,7 @@ if (voiceMode) {
             document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
           }
         }
-        else if(actionVariable == "removeVideo" || actionVariable == "play_removeVideo"){//negative
+        else if(actionVariable == "removeVideo"){//negative
 
             if($.inArray(shotId, rf_negative) >= 0){ //remove
 
@@ -764,21 +764,6 @@ if (voiceMode) {
                 prepare_playback($(this));
                 similaritySearch($(this));
                 break;
-
-            case "play_addVideo":
-                actionOccured = true;
-                relevanceFeedbackVoice($(this));
-                prepare_playback($(this));
-                actionVariable = null;
-                break;
-
-            case "play_removeVideo":
-                actionOccured = true;
-                relevanceFeedbackVoice($(this));
-                prepare_playback($(this));
-                actionVariable = null;
-                break;
-
         }
   }
 
@@ -879,24 +864,6 @@ if (voiceMode) {
   function searchPlayVideo(){
 
         checkUseCases("search_play");
-  }
-
-/**
- * Called when action query to play and add that video to positive feedback is made
- */
-
-  function playAddedVideo(){
-
-        checkUseCases("play_addVideo");
-  }
-
-/**
- * Called when action query to play and add that video to negative feedback is made
- */
-
-  function playRemovedVideo(){
-
-        checkUseCases("play_removeVideo");
   }
 
 /**
