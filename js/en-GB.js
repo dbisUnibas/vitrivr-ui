@@ -1,5 +1,5 @@
   // set langauge English(UK)
-  const LANGUAGE = 'en-GB';
+  const LANGUAGE = 'en-IN';
 
   // Gets displayed on ON/Off GUI button
   const INSTRUCTION = "Say 'voice search' followed by your Query";
@@ -40,6 +40,7 @@
         '(put) (drop) (it) (this) (image) on Canvas'              : dropOnCanvas,
 
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
+        'search (me) video (clip) (with) (serial) number :num'    : searchVideoByNumber,
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
@@ -58,29 +59,30 @@
 // Commands mapped to their corrosponding base commands
   var baseCommands = {
     
-      'voice search *tag'                                 : 'voice search:______',
-      '*tag1 voice search *tag2'                          : '______ voice search:______',
-      '(toggle) (open) (close) top bar'                   : 'toggle top bar',
-      'search (the) (my) (Canvas) (sketch) (painting)'    : 'search my Canvas',
-      'add (a) (new) Canvas (sheet)'                      : 'add new Canvas',
-      'split (video) (into sequences)'                    : 'split video into sequences',
-      '(toggle) (open) (close) sidebar'                   : 'toggle sidebar',
-      'increase size (of pen) (of brush)'                 : 'increase size of pen',
-      'decrease size (of pen) (of brush)'                 : 'decrease size of pen',
-      '(move to) next (video) (container)'                : 'next video container',
-      '(move to) previous (video) (container)'            : 'previous video container',
-      'search Canvas *tag'                                : 'search canvas _____ and _____ ',
-      '(show) (me) colour sketch (tool) (option)'         : 'show me colour sketch',
-      '(show) (me) motion sketch (tool) (option)'         : 'show me motion sketch',
+      'voice search *tag'                                     : 'voice search:______',
+      '*tag1 voice search *tag2'                              : '______ voice search:______',
+      '(toggle) (open) (close) top bar'                       : 'toggle top bar',
+      'search (the) (my) (Canvas) (sketch) (painting)'        : 'search my Canvas',
+      'add (a) (new) Canvas (sheet)'                          : 'add new Canvas',
+      'split (video) (into sequences)'                        : 'split video into sequences',
+      '(toggle) (open) (close) sidebar'                       : 'toggle sidebar',
+      'increase size (of pen) (of brush)'                     : 'increase size of pen',
+      'decrease size (of pen) (of brush)'                     : 'decrease size of pen',
+      '(move to) next (video) (container)'                    : 'next video container',
+      '(move to) previous (video) (container)'                : 'previous video container',
+      'search Canvas *tag'                                    : 'search canvas _____ and _____ ',
+      '(show) (me) colour sketch (tool) (option)'             : 'show me colour sketch',
+      '(show) (me) motion sketch (tool) (option)'             : 'show me motion sketch',
 
-      'play (this) (my) (video) (clip)'                   : 'play this video',
-      'search (this) (my) (video) (clip) id'              : 'search this video ID',
-      'include (this) (video) (clip)'                     : 'include this video',
-      'remove (this) (video) (clip)'                      : 'remove this video',
-      'search (my) (this) feedback'                       : 'search my feedback',
-      '(put) (drop) (it) (image) (this) on Canvas'        : 'drop this image on Canvas',
+      'play (this) (my) (video) (clip)'                       : 'play this video',
+      'search (this) (my) (video) (clip) id'                  : 'search this video ID',
+      'include (this) (video) (clip)'                         : 'include this video',
+      'remove (this) (video) (clip)'                          : 'remove this video',
+      'search (my) (this) feedback'                           : 'search my feedback',
+      '(put) (drop) (it) (image) (this) on Canvas'            : 'drop this image on Canvas',
 
-      'play (me) video (clip) (with) (serial) number :num': 'play me video number:______',
+      'play (me) video (clip) (with) (serial) number :num'    : 'play video number:______',
+      'search (me) video (clip) (with) (serial) number :num'  : 'search video number:______',
 
       '(toggle) (open) (close) top and sidebar'           : 'toggle top and sidebar',
       'search and play (this) (my) video'                 : 'search and play this video',

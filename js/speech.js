@@ -886,7 +886,7 @@ if (voiceMode) {
 
   // Functions with suffix as "ByNumber" are called when action query is said by serial number
 
-  function playVideoByNumber(num){
+  function checkUseCasesByNumber(num){
 
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
@@ -907,11 +907,33 @@ if (voiceMode) {
                 displayErrorMessage("Video number "+num+" is not available");
             }
             else{
-                var object = $(labeledShots[num-1]);
-                prepare_playback(object.parent());
+
+                return false;
             }
        }
+       return true;
   }
+
+  function playVideoByNumber(num){
+
+        if(!checkUseCasesByNumber(num)){
+
+            var labeledShots = $(".serialnumber");
+            var object = $(labeledShots[num-1]);
+            prepare_playback(object.parent());
+        }
+  }
+
+  function searchVideoByNumber(num){
+
+        if(!checkUseCasesByNumber(num)){
+
+            var labeledShots = $(".serialnumber");
+            var object = $(labeledShots[num-1]);
+            similaritySearch(object.parent());
+        }
+  }
+
 
 /**
  * Creates a pop up modal (window) which conatains all base commands
