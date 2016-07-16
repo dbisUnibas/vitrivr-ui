@@ -1,5 +1,5 @@
   // set langauge English(UK)
-  const LANGUAGE = 'en-IN';
+  const LANGUAGE = 'en-GB';
 
   // Gets displayed on ON/Off GUI button
   const INSTRUCTION = "Say 'voice search' followed by your Query";
@@ -41,6 +41,7 @@
 
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
         'search (me) video (clip) (with) (serial) number :num'    : searchVideoByNumber,
+        '(put) (drop) (image) number :num on Canvas'              : dropOnCanvasByNumber,
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,

@@ -774,7 +774,7 @@ if (voiceMode) {
  */
 
    function addImageCanvas(thumbnail){
-
+ 
         var url = thumbnail.attr('src');
   
         var len=0;
@@ -931,6 +931,17 @@ if (voiceMode) {
             var labeledShots = $(".serialnumber");
             var object = $(labeledShots[num-1]);
             similaritySearch(object.parent());
+        }
+  }
+
+  function dropOnCanvasByNumber(num){
+
+        if(!checkUseCasesByNumber(num)){
+
+            var labeledShots = $(".serialnumber");
+            var object = $(labeledShots[num-1]);
+            var thumbnail = $(object.parent().parent().find(".thumbnail"));
+            addImageCanvas(thumbnail);
         }
   }
 
