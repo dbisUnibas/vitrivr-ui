@@ -7,6 +7,7 @@ if (voiceMode) {
   var factor = 0;
   var response;                 // used to set whenever user responded to feedback
   var voiceText= new Array();   // used for voice search query
+  var colorByVoice = "#000000"
 
   var dictionary={};            // dictionary used in feedback system
   var commandID=[];
@@ -381,6 +382,35 @@ if (voiceMode) {
         }
         
   }
+
+  function selectColor(color){
+
+        colorByVoice = color.replace(/\s/g, '');
+        colorByVoice = colorByVoice.toLowerCase();
+    
+        colorByVoice = colourToHex[colorByVoice];
+        if(colorByVoice==undefined)
+            displayErrorMessage(color +" color is not available");
+        $('span').removeClass("sp-thumb-active");
+        $('.sp-preview-inner').css("background-color",colorByVoice);
+        for (el in shotInputs) {
+            
+            shotInputs[el].color.setColor(colorByVoice);
+        }    
+  }
+
+  $(document).ready(function(){
+      
+      $('.sp-replacer').click(function(){
+
+          colorByVoice = $("#colorInput").spectrum('get');
+          if(colorByVoice._format != "rgb")
+              colorByVoice._format = "rgb";
+          for (el in shotInputs) {
+              shotInputs[el].color.setColor(colorByVoice);
+          }
+      });
+  });
 
 /**
  * Increse pen size upto 100 units

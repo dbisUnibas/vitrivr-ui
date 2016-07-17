@@ -62,7 +62,11 @@ function newShotInput() {
 
 	var colorcanvas = new sketchCanvas(color);
 	colorcanvas.setLineWidth($('#draw-radius').get(0).noUiSlider.get());
-	colorcanvas.setColor($("#colorInput").spectrum('get'));
+
+	if(voiceMode)
+		colorcanvas.setColor(colorByVoice);
+	else
+		colorcanvas.setColor($("#colorInput").spectrum('get'));
 
 
 	shotInputs[id] = {
