@@ -31,7 +31,8 @@
         'search Canvas *tag'                                      : searchParticularCanvas,
         '(show) (me) colour sketch (tool) (option)'               : showColorSketch,
         '(show) (me) motion sketch (tool) (option)'               : showMotionSketch,
-        '(select) (set) *color colour (pen) (brush)'              : selectColor,
+        'select *color colour (pen) (brush)'                      : selectColor,
+        'fill Canvas :num with *color (colour)'                   : fillCanvas,
       
         'play (this) (my) (video) (clip)'                         : playVideo,
         'search (this) (my) (video) (clip) id'                    : searchById,
@@ -75,7 +76,8 @@
       'search Canvas *tag'                                    : 'search canvas _____ and _____ ',
       '(show) (me) colour sketch (tool) (option)'             : 'show me colour sketch',
       '(show) (me) motion sketch (tool) (option)'             : 'show me motion sketch',
-      '(select) (set) *color colour (pen) (brush)'            : 'select _____ colour',
+      'select *color colour (pen) (brush)'                    : 'select _____ colour',
+      'fill Canvas :num with *color (colour)'                 : 'fill Canvas _____ with _____ colour',
 
       'play (this) (my) (video) (clip)'                       : 'play this video',
       'search (this) (my) (video) (clip) id'                  : 'search this video ID',

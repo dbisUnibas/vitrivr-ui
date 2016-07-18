@@ -422,6 +422,27 @@ if (voiceMode) {
 
   });
 
+  function fillCanvas(num , color){
+
+        fillColor = color.replace(/\s/g, '');
+        fillColor = fillColor.toLowerCase();
+    
+        fillColor = colourToHex[fillColor];
+        if(fillColor==undefined){
+            displayErrorMessage(color +" color is not available");
+            return;
+        }
+        var canvas = $(".query-input-container");
+        if(num > canvas.length){
+            displayErrorMessage("Canvas "+num+" is not present");
+            return;
+        }
+        var id = canvas[num-1].id;
+        shotInputs[id].color.setColor(fillColor);
+        shotInputs[id].color.fill();
+        shotInputs[id].color.setColor(colorByVoice);
+  }
+
 /**
  * Increse pen size upto 100 units
  * unit of increase is decided by follow up command
