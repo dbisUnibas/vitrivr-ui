@@ -389,8 +389,10 @@ if (voiceMode) {
         colorByVoice = colorByVoice.toLowerCase();
     
         colorByVoice = colourToHex[colorByVoice];
-        if(colorByVoice==undefined)
+        if(colorByVoice==undefined){
             displayErrorMessage(color +" color is not available");
+            return;
+        }
         $('span').removeClass("sp-thumb-active");
         $('.sp-preview-inner').css("background-color",colorByVoice);
         for (el in shotInputs) {
@@ -409,7 +411,15 @@ if (voiceMode) {
           for (el in shotInputs) {
               shotInputs[el].color.setColor(colorByVoice);
           }
+
+          $('.sp-thumb-el').click(function(){
+              
+              setTimeout(function(){
+                  colorByVoice = $("#colorInput").spectrum('get');
+              },100);
+          });
       });
+
   });
 
 /**
