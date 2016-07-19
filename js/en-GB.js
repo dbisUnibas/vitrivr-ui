@@ -44,6 +44,7 @@
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
         'search (me) video (clip) (with) (serial) number :num'    : searchVideoByNumber,
         '(put) (drop) (image) number :num on Canvas'              : dropOnCanvasByNumber,
+        'include video number *num'                               : positiveFeedbackByNumber,
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
@@ -73,7 +74,7 @@
       'decrease size (of pen) (of brush)'                     : 'decrease size of pen',
       '(move to) next (video) (container)'                    : 'next video container',
       '(move to) previous (video) (container)'                : 'previous video container',
-      'search Canvas *tag'                                    : 'search canvas _____ and _____ ',
+      'search Canvas *tag'                                    : 'search canvas _____ and _____',
       '(show) (me) colour sketch (tool) (option)'             : 'show me colour sketch',
       '(show) (me) motion sketch (tool) (option)'             : 'show me motion sketch',
       'select *color colour (pen) (brush)'                    : 'select _____ colour',
@@ -88,6 +89,8 @@
 
       'play (me) video (clip) (with) (serial) number :num'    : 'play video number:______',
       'search (me) video (clip) (with) (serial) number :num'  : 'search video number:______',
+      '(put) (drop) (image) number :num on Canvas'            : 'drop image number:______ on Canvas',
+      'include video number *num'                             : 'include video number _____ and _____',
 
       '(toggle) (open) (close) top and sidebar'               : 'toggle top and sidebar',
       'search and play (this) (my) video'                     : 'search and play this video',

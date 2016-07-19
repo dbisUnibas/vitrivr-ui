@@ -1006,6 +1006,52 @@ if (voiceMode) {
         }
   }
 
+  function positiveFeedbackByNumber(num){
+
+        var resultDisplayed = $(".videocontainer");
+        if(resultDisplayed.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+
+            var labeledShots = $(".serialnumber");
+            if(num == undefined){
+                displayErrorMessage("Please also say video number");
+            }
+            else{
+
+                var num = num.split(" ");
+                removeItem = "and";
+                num = $.grep(num, function(value) {
+                    return value != removeItem;
+                });
+                actionVariable = "addVideo";
+                var labeledShots = $(".serialnumber");
+                var outIndex = "";
+              
+                for(var i=0;i<num.length;i++){        
+                    if(num[i] > labeledShots.length){
+                    
+                        outIndex += num[i]+" ";
+                    }
+                    else{
+                        var object = $(labeledShots[num[i]-1]);
+                        relevanceFeedbackVoice(object.parent());
+                    } 
+                }
+
+                if(outIndex)
+                    displayErrorMessage("Video number "+outIndex+" not available");
+                
+                actionVariable = null;
+            }
+       }   
+  }
 
 /**
  * Creates a pop up modal (window) which conatains all base commands
