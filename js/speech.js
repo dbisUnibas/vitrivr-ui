@@ -1006,7 +1006,7 @@ if (voiceMode) {
         }
   }
 
-  function positiveFeedbackByNumber(num){
+  function feedbackByNumber(num){
 
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
@@ -1030,7 +1030,7 @@ if (voiceMode) {
                 num = $.grep(num, function(value) {
                     return value != removeItem;
                 });
-                actionVariable = "addVideo";
+                
                 var labeledShots = $(".serialnumber");
                 var outIndex = "";
               
@@ -1047,11 +1047,23 @@ if (voiceMode) {
 
                 if(outIndex)
                     displayErrorMessage("Video number "+outIndex+" not available");
-                
-                actionVariable = null;
             }
-       }   
+       }
+
+       actionVariable = null;   
   }
+
+  function positiveFeedbackByNumber(num){
+
+        actionVariable = "addVideo";
+        feedbackByNumber(num);
+  }
+
+  function negativeFeedbackByNumber(num){
+
+        actionVariable = "removeVideo";
+        feedbackByNumber(num);
+  }  
 
 /**
  * Creates a pop up modal (window) which conatains all base commands

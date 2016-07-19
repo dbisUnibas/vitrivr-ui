@@ -45,6 +45,7 @@
         'search (me) video (clip) (with) (serial) number :num'    : searchVideoByNumber,
         '(put) (drop) (image) number :num on Canvas'              : dropOnCanvasByNumber,
         'include video number *num'                               : positiveFeedbackByNumber,
+        'remove video number *num'                                : negativeFeedbackByNumber,
 
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
@@ -91,6 +92,7 @@
       'search (me) video (clip) (with) (serial) number :num'  : 'search video number:______',
       '(put) (drop) (image) number :num on Canvas'            : 'drop image number:______ on Canvas',
       'include video number *num'                             : 'include video number _____ and _____',
+      'remove video number *num'                              : 'remove video number _____ and _____',
 
       '(toggle) (open) (close) top and sidebar'               : 'toggle top and sidebar',
       'search and play (this) (my) video'                     : 'search and play this video',
