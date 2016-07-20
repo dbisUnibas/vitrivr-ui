@@ -443,6 +443,25 @@ if (voiceMode) {
         shotInputs[id].color.setColor(colorByVoice);
   }
 
+  function downloadCanvas(num){
+        
+        var canvas = $(".query-input-container");
+        if(num > canvas.length){
+            displayErrorMessage("Canvas "+num+" is not present");
+            return;
+        }
+        try{
+            var id = canvas[num-1].id;
+            var shotInput = shotInputs[id];
+            var image = shotInput.color.getDataURL("image/png").replace("image/png", "image/octet-stream");
+            window.location.href=image;
+        }
+        catch(e){
+            displayErrorMessage("Please say a number after download Canvas");
+            console.warn(e);
+        }
+  }
+
 /**
  * Increse pen size upto 100 units
  * unit of increase is decided by follow up command
