@@ -457,7 +457,7 @@ if (voiceMode) {
             window.location.href=image;
         }
         catch(e){
-            displayErrorMessage("Please say a number after download Canvas");
+            displayErrorMessage("Please say Canvas number after the query");
             console.warn(e);
         }
   }
