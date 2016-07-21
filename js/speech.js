@@ -734,15 +734,20 @@ if (voiceMode) {
             setTimeout(function(){  // delay of 100ms is given so that recognized query got set findrst
 
                   var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+                  var player = videojs('videoPlayer');
+                  player.pause();
+                  $('#video-modal').closeModal();
                   if(lastRecognized == QUERY_F){
 
                       actionVariable = "addVideo";
                       relevanceFeedbackVoice(playingShotBox);
+                      actionVariable = null;
                   }
                   else if(lastRecognized == QUERY_G){
 
                       actionVariable = "removeVideo";
                       relevanceFeedbackVoice(playingShotBox);
+                      actionVariable = null;
                   }
                   else
                       displayErrorMessage("Sorry I haven't understood you");
