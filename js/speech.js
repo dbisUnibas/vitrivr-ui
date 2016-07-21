@@ -8,6 +8,7 @@ if (voiceMode) {
   var response;                 // used to set whenever user responded to feedback
   var voiceText= new Array();   // used for voice search query
   var colorByVoice = "#000000"
+  var playingShotBox = null;
 
   var dictionary={};            // dictionary used in feedback system
   var commandID=[];
@@ -82,7 +83,7 @@ if (voiceMode) {
   }
 
 /**
- * Checks if response is set after 4 sec of feedback 
+ * Checks if response is set after 5 sec of feedback 
  * If response is set then query is executed w.r.t. feedback command
  *
  * @param {String} feedback command suggested by feedback system
@@ -724,6 +725,31 @@ if (voiceMode) {
             displayErrorMessage("This command doesn't work after query: "+lastRecognized);
   }
 
+  function followUpFeedback(){
+
+        if($('#video-modal').css('display') == 'none'){
+            displayErrorMessage("This command works while playing a video");
+        }
+        else{
+            setTimeout(function(){  // delay of 100ms is given so that recognized query got set findrst
+
+                  var lastRecognized = SpeechKITT.getLastRecognizedSentence();
+                  if(lastRecognized == QUERY_F){
+
+                      actionVariable = "addVideo";
+                      relevanceFeedbackVoice(playingShotBox);
+                  }
+                  else if(lastRecognized == QUERY_G){
+
+                      actionVariable = "removeVideo";
+                      relevanceFeedbackVoice(playingShotBox);
+                  }
+                  else
+                      displayErrorMessage("Sorry I haven't understood you");
+            },100);
+        }
+  }
+
 // Below are the functions used for speech + mouse in combination
 
 /**
@@ -813,6 +839,7 @@ if (voiceMode) {
             case "play" :
                 actionVariable = null;
                 actionOccured = true;
+                playingShotBox = $(this);
                 prepare_playback($(this));
                 break;
 
@@ -841,6 +868,7 @@ if (voiceMode) {
             case "search_play":
                 actionVariable = null;
                 actionOccured = true;
+                playingShotBox = $(this);
                 prepare_playback($(this));
                 similaritySearch($(this));
                 break;
@@ -1000,6 +1028,7 @@ if (voiceMode) {
 
             var labeledShots = $(".serialnumber");
             var object = $(labeledShots[num-1]);
+            playingShotBox = object.parent();
             prepare_playback(object.parent());
         }
   }

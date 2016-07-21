@@ -9,7 +9,10 @@
   const QUERY_B = 'decrease size (of pen) (of brush)';
   const QUERY_C = '(show) (me) (move to) next (video) (container)';
   const QUERY_D = '(show) (me) (move to) previous (video) (container)'; 
-  const QUERY_E = 'add (a) (new) Canvas (sheet)';  	
+  const QUERY_E = 'add (a) (new) Canvas (sheet)';
+
+  const QUERY_F = 'add it';
+  const QUERY_G = 'remove it'; 	
 
   var followUpCommands = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
 
@@ -56,6 +59,8 @@
         '(again) one more'                                        : followUpCanvas,
         'One More'                                                : followUpCanvas,
         'yes'                                                     : setResponse,
+        'add it'                                                  : followUpFeedback,
+        'remove it'                                               : followUpFeedback,
 
         '(show) (display) (overview of) all commands'             : displayCommands,
         'close this (window) (box)'                               : closeWindow,
@@ -104,6 +109,8 @@
       'One More'                                              : 'one more',
       '(again) one more'                                      : 'again one more',
       'yes'                                                   : 'yes',
+      'add this'                                              : 'add this',
+      'remove this'                                           : 'remove this',
 
       '(show) (display) (overview of) all commands'           : 'show all commands',
       'close this (window) (box)'                             : 'close this window',
