@@ -60,7 +60,7 @@ body {
 	left: 0px;
 }
 
-#voiceQuery {
+#voiceTextbox , #voiceSearchQuery {
 	border:1px; border-style:solid; 
 	border-color:#F44336; 
 	padding: 0.5em;
@@ -68,6 +68,10 @@ body {
 	max-width: 100%;
 	word-wrap: break-word;
 	height: 50px;
+}
+
+#voiceSearchQuery {
+	color:#F44336;
 }
 
 #sidebarextension {

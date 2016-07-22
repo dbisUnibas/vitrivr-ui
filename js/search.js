@@ -148,8 +148,10 @@ function buildQuery(){ //TODO categories from sketch complete
 		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
 		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
 	
-		if(voiceMode)
+		if(voiceMode){
+			voiceText = new Array($('#voiceSearchQuery').val());
 			query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
+		}
 	
 		query += "\"id\": " + 0 + "\n";
 		query += "},";

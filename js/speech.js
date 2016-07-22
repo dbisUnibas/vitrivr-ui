@@ -211,10 +211,11 @@ if (voiceMode) {
 
   function voiceSearch_2(tag1,tag2) {
         
-        voiceText = new Array(tag2);
         $(VOICE_TEXTBOX).val(tag2);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
+
+        $('#voiceSearchQuery').val(tag2);
   }
 
 /**
@@ -225,10 +226,11 @@ if (voiceMode) {
 
   function voiceSearch_1(tag) {
        
-        voiceText = new Array(tag);
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
+
+        $('#voiceSearchQuery').val(tag);
   }
 
 /**
