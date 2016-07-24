@@ -7,8 +7,8 @@ if (voiceMode) {
   var factor = 0;
   var response;                 // used to set whenever user responded to feedback
   var voiceText= new Array();   // used for voice search query
-  var colorByVoice = "#000000"
-  var playingShotBox = null;
+  var colorByVoice = "#000000"; // always contains current selected color
+  var playingShotBox = null;    // used to store the object of playing video
 
   var dictionary={};            // dictionary used in feedback system
   var commandID=[];
@@ -386,9 +386,15 @@ if (voiceMode) {
         
   }
 
+/**
+ * This function select/set the color said by user in voice query
+ * 
+ * @param {string} color Color name in voice query
+ */ 
+
   function selectColor(color){
 
-        colorByVoice = color.replace(/\s/g, '');
+        colorByVoice = color.replace(/\s/g, '');      // remove spaces
         colorByVoice = colorByVoice.toLowerCase();
     
         colorByVoice = colourToHex[colorByVoice];
@@ -406,6 +412,11 @@ if (voiceMode) {
 
   $(document).ready(function(){
       
+      /**
+      *  Selects the color when user clicks on the color selection button
+      *  Color selection button is present in the sidebar of UI
+      */
+
       $('.sp-replacer').click(function(){
 
           colorByVoice = $("#colorInput").spectrum('get');
@@ -414,6 +425,11 @@ if (voiceMode) {
           for (el in shotInputs) {
               shotInputs[el].color.setColor(colorByVoice);
           }
+
+         /**
+          *  Sets the colorByVoice variable when user clicks on the color platelet 
+          *  Color platelets are present on the color selection window
+          */
 
           $('.sp-thumb-el').click(function(){
               
@@ -424,6 +440,14 @@ if (voiceMode) {
       });
 
   });
+
+/**
+ * Fills a particular Canvas with the color in voice query
+ * Example: 'fill Canvas 2 with blue colour'
+ *
+ * @param {Integer} num Canvas number that is to filled with color
+ * @param {String} color Name of the color in voice query
+ */   
 
   function fillCanvas(num , color){
 
@@ -445,6 +469,12 @@ if (voiceMode) {
         shotInputs[id].color.fill();
         shotInputs[id].color.setColor(colorByVoice);
   }
+
+/**
+ * Downloads a particular Canvas in the system as png image
+ * 
+ * @param {Integer} num Canvas number that has to be downloaded 
+ */   
 
   function downloadCanvas(num){
         
@@ -727,6 +757,11 @@ if (voiceMode) {
             displayErrorMessage("This command doesn't work after query: "+lastRecognized);
   }
 
+/**
+ * Works only when video is playing
+ * Adds the playing video to positive / negative feedback
+ */ 
+
   function followUpFeedback(){
 
         if($('#video-modal').css('display') == 'none'){
@@ -1001,6 +1036,10 @@ if (voiceMode) {
 
   // Functions with suffix as "ByNumber" are called when action query is said by serial number
 
+/**
+ * Checks the use cases for the action queries that involed serial number of video
+ */
+
   function checkUseCasesByNumber(num){
 
         var resultDisplayed = $(".videocontainer");
@@ -1029,6 +1068,13 @@ if (voiceMode) {
        return true;
   }
 
+/**
+ * Plays the video by its number
+ * Example- 'play video number 3'
+ *
+ * @param {Integer} num Number of the video that is going to be played
+ */
+
   function playVideoByNumber(num){
 
         if(!checkUseCasesByNumber(num)){
@@ -1040,6 +1086,13 @@ if (voiceMode) {
         }
   }
 
+/**
+ * Searches the video by its number
+ * Example- 'search video number 4'
+ *
+ * @param {Integer} num Number of the video that is going to be searched by itd ID
+ */
+
   function searchVideoByNumber(num){
 
         if(!checkUseCasesByNumber(num)){
@@ -1049,6 +1102,13 @@ if (voiceMode) {
             similaritySearch(object.parent());
         }
   }
+
+/**
+ * Drops the video thumbnail by its nember on the last Canavas present 
+ * Example- 'drop image number 3 on Canvas'
+ *
+ * @param {Integer} num Number of the video that is going to be droped on Canvas
+ */
 
   function dropOnCanvasByNumber(num){
 
@@ -1060,6 +1120,12 @@ if (voiceMode) {
             addImageCanvas(thumbnail);
         }
   }
+
+/**
+ * Adds the video to positive / negative feedback by video number
+ *
+ * @param {String} num String containing numbers of videos, seprated by spaces, that has to be considered for relevance feedback
+ */
 
   function feedbackByNumber(num){
 
@@ -1108,11 +1174,25 @@ if (voiceMode) {
        actionVariable = null;   
   }
 
+/**
+ * Sets actionVariable to add the video to positive feedback
+ * Example- 'include video number 1 5 and 6'
+ *
+ * @param {String} num String containing numbers of videos, seprated by spaces, that has to be added to positive feedback
+ */
+
   function positiveFeedbackByNumber(num){
 
         actionVariable = "addVideo";
         feedbackByNumber(num);
   }
+
+/**
+ * Sets actionVariable to add the video to negative feedback
+ * Example- 'remove video number 1 5 and 6'
+ *
+ * @param {String} num String containing numbers of videos, seprated by spaces, that has to be added to negative feedback
+ */
 
   function negativeFeedbackByNumber(num){
 
