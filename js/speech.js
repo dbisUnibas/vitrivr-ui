@@ -225,7 +225,7 @@ if (voiceMode) {
  */
 
   function voiceSearch_1(tag) {
-       
+
         $(VOICE_TEXTBOX).val(tag);
         $(VOICE_TEXTBOX).css('color','#F44336');
         scrollTextBox();
