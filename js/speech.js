@@ -1068,6 +1068,11 @@ if (voiceMode) {
        return true;
   }
 
+  function playFirstShot(){
+
+        playVideoByNumber(1);
+  }
+
 /**
  * Plays the video by its number
  * Example- 'play video number 3'

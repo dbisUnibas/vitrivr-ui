@@ -44,13 +44,14 @@
         'remove (this) (video) (clip)'                            : negativeFeedback,
         'search (my) (this) feedback'                             : searchFeedback,
         '(put) (drop) (it) (this) (image) on Canvas'              : dropOnCanvas,
+        'play first (shot) (video)'                               : playFirstShot,
 
         'play (me) video (clip) (with) (serial) number :num'      : playVideoByNumber,
         'search (me) video (clip) (with) (serial) number :num'    : searchVideoByNumber,
         '(put) (drop) (image) number :num on Canvas'              : dropOnCanvasByNumber,
         'include video number *num'                               : positiveFeedbackByNumber,
         'remove video number *num'                                : negativeFeedbackByNumber,
-
+        
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
 
@@ -63,6 +64,7 @@
         'remove it'                                               : followUpFeedback,
 
         '(show) (display) (overview of) all commands'             : displayCommands,
+        'what can I say'                                          : displayCommands,
         'close this (window) (box)'                               : closeWindow,
 
   };
@@ -94,13 +96,14 @@
       'remove (this) (video) (clip)'                          : 'remove this video',
       'search (my) (this) feedback'                           : 'search my feedback',
       '(put) (drop) (it) (image) (this) on Canvas'            : 'drop this image on Canvas',
+      'play first (shot) (video)'                             : 'play first shot',
 
       'play (me) video (clip) (with) (serial) number :num'    : 'play video number:______',
       'search (me) video (clip) (with) (serial) number :num'  : 'search video number:______',
       '(put) (drop) (image) number :num on Canvas'            : 'drop image number:______ on Canvas',
       'include video number *num'                             : 'include video number _____ and _____',
       'remove video number *num'                              : 'remove video number _____ and _____',
-
+      
       '(toggle) (open) (close) top and sidebar'               : 'toggle top and sidebar',
       'search and play (this) (my) video'                     : 'search and play this video',
 
@@ -113,6 +116,7 @@
       'remove it'                                             : 'remove it',
 
       '(show) (display) (overview of) all commands'           : 'show all commands',
+      'what can I say'                                        : 'what can I say',
       'close this (window) (box)'                             : 'close this window',
   };
 
