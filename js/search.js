@@ -5,18 +5,41 @@ var Scores = {};
 var rf_positive = new Array();
 var rf_negative = new Array();
 
-var ScoreWeights = { //TODO update with sliders
+function getCategories(){
+	var categories = [];
+	if(ScoreWeights.globalcolor > 0){
+		categories.push('globalcolor');
+	}
+	if(ScoreWeights.localcolor > 0){
+		categories.push('localcolor');
+	}
+	if(ScoreWeights.edge > 0){
+		categories.push('edge');
+	}
+	if(ScoreWeights.motion > 0){
+		categories.push('motion');
+	}
+	return categories;
+}
+
+var ScoreWeights = {
 	globalcolor: 0.1,
 	localcolor: 0.6,
 	edge: 0.3,
-	motion: 0
+	motion: 0,
 };
 
-function normalizeScoreWeights(){
+function sumWeights(){
 	var sum = parseInt(ScoreWeights.globalcolor) + 
 		parseInt(ScoreWeights.localcolor) + 
 		parseInt(ScoreWeights.edge) + 
-    parseInt(ScoreWeights.motion);
+		parseInt(ScoreWeights.motion);
+		return sum > 0 ? sum : 1;
+}
+
+function normalizeScoreWeights(){
+
+	var sum = sumWeights();
 
 	if(sum > 0){
 		ScoreWeights.globalcolor /= sum;
@@ -59,7 +82,7 @@ function buildIdQuery(id) {
 
 	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
 
-	query += "{\"categories\":" + JSON.stringify(categories) + ",\n";	//see config.js
+	query += "{\"categories\":" + JSON.stringify(getCategories()) + ",\n";	//see config.js
 	query += "\"id\": " + id + "}\n";
 
 	query += "]}";
@@ -73,7 +96,7 @@ function buildRFQuery() {
 	var query = "{\"queryType\":\"relevanceFeedback\", \"query\":";
 		query += "{\"positive\": " + JSON.stringify(rf_positive) + ",\n";
 		query += "\"negative\": " + JSON.stringify(rf_negative) + ",\n";
-		query += "\"categories\":" + JSON.stringify(categories) + "\n";	//see config.js
+		query += "\"categories\":" + JSON.stringify(getCategories()) + "\n";	//see config.js
 		query += "}}";
 
 	return query;
@@ -105,7 +128,7 @@ function buildVideoQuery(shotid){
 	
 }
 
-function buildQuery(){
+function buildQuery(){ //TODO categories from sketch complete
 	
 	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
 	
@@ -114,7 +137,8 @@ function buildQuery(){
 		
 		query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
-		query += "\"categories\":" + JSON.stringify(categories) + ",\n"; //see config.js
+		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
+		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
 		query += "\"id\": " + 0 + "\n";
 		query += "},";
 	}
@@ -122,20 +146,21 @@ function buildQuery(){
 	query = query.slice(0, -1);
 	query += "],";
 	query += "\"resultname\":\"" + getResultName() + "\"}";
-	
+		
 	return query;
 	
 }
 
 function getResultName(){
 	var resultName = $('#resultset-filter-selection>p>input:checked').attr('id');
-	if(resultName == 'no-filter'){
+	if(resultName == 'no-filter' || resultName === undefined){
 		resultName = null;
 	}
 	return resultName;
 }
 
 function oboerequest(query, noContext) {
+	searchRunning = true;
 	showProgress(0);
 	if(noContext === undefined){
 		noContext = false;
@@ -158,17 +183,20 @@ function oboerequest(query, noContext) {
 			}
 			
 			sortVideos();
-			if(noContext){
 				$('#sequence-segmentation-button').show();
 				hideProgress();
-			}else{
-				oboerequest(buildContextQuery(), true);
-				showProgress(categories.length / (categories.length + 1));
-			}
+
+			searchRunning = false;
 			
 		}).node('{type}', function(data) {
 			var type = data.type;
 			switch(type) {
+			
+			case "error":
+			
+				console.warn(data);
+				break;
+				
 			case "result":
 				
 				addResults([data]);
@@ -190,14 +218,7 @@ function oboerequest(query, noContext) {
 				
 				break;
 				
-			case "error" :
-			
-				console.error('Error from API: ' + data.msg);
-				
-				break;
-				
 			case "batch":
-				
 				switch(data.inner){
 					case "result":
 						
@@ -225,6 +246,7 @@ function oboerequest(query, noContext) {
 			console.log("FAIL");
 			console.log(data);
 			hideProgress();
+			searchRunning = false;
 		});
 	} catch(e) {
 		console.warn(e.message + " | " + e.lineNumber);
@@ -289,6 +311,7 @@ function addResults(resultArray){
 	}
 	
 	var shotIdsToUpdateScore = Object.keys(shotsToUpdateScore);
+	var weightSum = sumWeights();
 	for(var i = 0; i < shotIdsToUpdateScore.length; ++i){
 		var scoreContainer = Scores[shotIdsToUpdateScore[i]];
 		
@@ -296,10 +319,11 @@ function addResults(resultArray){
 		for (var key in ScoreWeights) {
 			score += scoreContainer[key] * ScoreWeights[key];
 		}
-		updateScoreInShotContainer(shotIdsToUpdateScore[i], score);
+		updateScoreInShotContainer(shotIdsToUpdateScore[i], score / weightSum);
 		
 	}
 
+	var categories = getCategories();
 	var currentProgress = ((categories.indexOf(resultArray[0].category) + 1) / (categories.length + 1));
 	if (currentProgress > progressCounter) {
 		progressCounter = currentProgress;
@@ -315,12 +339,21 @@ function requestEntireVideo(shotid){
 
 function updateVideoScore(videoid){
 	var score = 0;
+	var arr = Array();
 	$('#v' + videoid + ' > .shotbox').each(function(){
 		var data_score = $(this).data('score');
-		if(data_score !== undefined){
-			score = Math.max(score, parseFloat(data_score));
+		if(data_score !== undefined && parseFloat(data_score) > 0){
+			arr.push(parseFloat(data_score));
 		}
-		
 	});
+
+	for(var i = 0; i < arr.length; ++i){
+		score = Math.max(score, arr[i]);
+	}
+	
+	if(score != score){
+		score = 0;
+	}
+	
 	$('#v' + videoid).data('score', score).attr('data-score', score); //second part is necessary to write score to html
 }

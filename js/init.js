@@ -1,16 +1,38 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
 
-function remove_emenent(arr, val) {
+function remove_element(arr, val) {
     var i = arr.indexOf(val);
-         return i>-1 ? this.splice(i, 1) : [];
+         return i>-1 ? arr.splice(i, 1) : [];
   };
+
+
+function updateSliders() {
+
+	ScoreWeights.globalcolor = $('#global-color-weight').get(0).noUiSlider.get();
+	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
+	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
+	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
+	normalizeScoreWeights();
+
+	updateScores(true);
+
+}
+
+function readSliders() {
+
+	ScoreWeights.globalcolor = $('#global-color-weight').get(0).noUiSlider.get();
+	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
+	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
+	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
+		
+}
 
 
 $(function() {
 	/*  sliders  */
 	noUiSlider.create($('#draw-radius').get(0), {
-		start : 10,
+		start : 50,
 		step : 1,
 		range : {
 			'min' : 1,
@@ -77,22 +99,62 @@ $(function() {
 		})
 	});
 	
-
-	function updateSliders(){
-		ScoreWeights.globalcolor = $('#global-color-weight').get(0).noUiSlider.get();
-		ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
-		ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
-		ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
-		normalizeScoreWeights();
+	$('#global-color-weight').get(0).noUiSlider.on('change', function(_, __, val){
 		
+		if(val > ScoreWeights.globalcolor){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.globalcolor);
+				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
+				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+			}
+		}
 		updateScores(true);
+	});
+	$('#local-color-weight').get(0).noUiSlider.on('change', function(_, __, val){
 		
-	}
-	
-	$('#global-color-weight').get(0).noUiSlider.on('change', updateSliders);
-	$('#local-color-weight').get(0).noUiSlider.on('change', updateSliders);
-	$('#edge-weight').get(0).noUiSlider.on('change', updateSliders);
-	$('#motion-weight').get(0).noUiSlider.on('change', updateSliders);
+		if(val > ScoreWeights.localcolor){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.localcolor);
+				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
+				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+			}
+		}
+		updateScores(true);
+	});
+	$('#edge-weight').get(0).noUiSlider.on('change', function(_, __, val){
+		
+		if(val > ScoreWeights.edge){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.edge);
+				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
+				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
+				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+			}
+		}
+		updateScores(true);
+	});
+	$('#motion-weight').get(0).noUiSlider.on('change', function(_, __, val){
+		
+		if(val > ScoreWeights.motion){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.motion);
+				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
+				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
+				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+			}
+		}
+		updateScores(true);
+	});
 
 	/*  color picker  */
 	$("#colorInput").spectrum({
@@ -142,10 +204,7 @@ $(function() {
 			$('#sidebarextension').removeClass('open');
 			$('#btnShowSidebar').removeClass('open');
 
-		} else if ($('#filterbutton').parent().hasClass('active')) {
-			$('#sidebarextension').addClass('open');
-			$('#btnShowSidebar').addClass('open');
-		}
+		} 
 		$('#sidebar').toggleClass('open');
 		$('body').toggleClass('push-toright');
 	});
@@ -160,27 +219,35 @@ $(function() {
 
 	$('#colorsketchbutton').on('click', function(event) {
 		$('.motionsketch').hide();
+		$('.objectsketch').hide();
 		$('#color-tool-pane').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
-		$(this).parent().siblings().removeClass('active');
-		$(this).parent().addClass('active');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
 	});
 
 	$('#motionsketchbutton').on('click', function(event) {
 		$('.motionsketch').show();
+		$('.objectsketch').show();
 		$('#color-tool-pane').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
-		$(this).parent().siblings().removeClass('active');
-		$(this).parent().addClass('active');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
 
 	});
+	
+	
+	
 	$('#filterbutton').on('click', function(event) {
 		$('.motionsketch').show();
+		$('.objectsketch').show();
+		$('.audiosketch').hide();
 		$('#color-tool-pane').hide();
 		$('#sidebarextension').addClass('open');
 		$('#btnShowSidebar').addClass('open');
+		$('#concept-selection').hide();
 		$('#filter-selection').show();
 		$(this).parent().siblings().removeClass('active');
 		$(this).parent().addClass('active');
@@ -188,7 +255,7 @@ $(function() {
 
 	$('#search-button').click(function(){
 		search();
-		$('#btnShowSidebar').click();
+//		$('#btnShowSidebar').click();
 	});
 	
 	$('#sequence-segmentation-button').click(sequenceSegmentation);
@@ -220,6 +287,7 @@ $(function() {
 		videojs('videoPlayer').play();
 	});
 	
-
+	$('#btnShowSidebar').click();
+	setTimeout(function(){$('#btnShowTopbar').click();}, 500);
 
 });

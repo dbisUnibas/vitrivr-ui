@@ -1,5 +1,6 @@
 var shotInputs = {};
 var shotInputIdCounter = 0;
+var submissionURL;
 
 function newShotInput() {
 
@@ -21,14 +22,54 @@ function newShotInput() {
 	motion.attr('width', '360').attr('height', '288');
 	container.append(motion);
 
+	/*var objects = $('<div>');
+	objects.addClass('queryinput').addClass('objectsketch').addClass('dropzone');
+	container.append(objects);*/
+	
+	var concepts = $('<canvas>');
+	concepts.addClass('queryinput').addClass('objectsketch');
+	concepts.attr('width', '360').attr('height', '288');
+	container.append(concepts);
+	
+/*
+	var audio = $('<div>');
+	audio.addClass('queryinput').addClass('audiosketch');
+	audio.append('<audio id="audio_' + id + '" src="" controls=""></audio>');
+	var recordButton = $('<button id="record_' + id + '" class="waves-effect waves-light btn btn-large red" style="width: 300px">' + 
+	'<i class="material-icons left">mic_none</i>Record' + 
+	'</button>');
+	
+	recordButton.click(function(){
+		var button = $(this);
+		if(button.data('recording')){
+			button.data('recording', false);
+			button.html('<i class="material-icons left">mic_none</i>Record');
+			Fr.voice.export(function(url){
+				button.prev().attr("src", url);
+			}, function(base64){
+				button.parent().parent().data('audio', base64);
+			});
+			Fr.voice.stop();
+		}else{
+			button.data('recording', true);
+			button.html('<i class="material-icons left">mic</i>Recording...');
+			Fr.voice.record(false);
+		}
+	});
+	
+	audio.append(recordButton);
+	container.append(audio);*/
+
 	var colorcanvas = new sketchCanvas(color);
 	colorcanvas.setLineWidth($('#draw-radius').get(0).noUiSlider.get());
 	colorcanvas.setColor($("#colorInput").spectrum('get'));
 
+
 	shotInputs[id] = {
 		color : colorcanvas,
 		motion : new motionCanvas(motion),
-		id : '#' + id
+		id : '#' + id,
+		conceptList : new Array()
 	};
 
 	$('#query-container-pane').append(container);
@@ -81,6 +122,46 @@ function newShotInput() {
 		}
 	}
 	]);
+	
+	/*context.attach('#' + id + '>.objectsketch', [{
+		header : 'Layer'
+	}, {
+		text : 'Clear',
+		action : function(e) {
+			e.preventDefault();
+			$('#' + id + '>.objectsketch').empty();
+		}
+	},{
+		header : 'Canvas'
+	}, {
+		text : 'Delete',
+		action : function(e) {
+			e.preventDefault();
+			destroyCanvas(id);
+		}
+	}
+	]);*/
+	
+	/*context.attach('#' + id + '>.audiosketch', [{
+		header : 'Layer'
+	}, {
+		text : 'Clear',
+		action : function(e) {
+			e.preventDefault();
+			$('#' + id).data('audio', undefined);
+		}
+	}, {
+		header : 'Canvas'
+	}, {
+		text : 'Delete',
+		action : function(e) {
+			e.preventDefault();
+			destroyCanvas(id);
+		}
+	}
+	]);*/
+
+	//addDropZone('.class-container', '#' + id + '>.dropzone');
 
 	$('#modechoice').children(".active").find("span").click();
 
@@ -103,8 +184,8 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'<span class="material-icons playbutton">play_arrow</span>' +
 		'<span class="material-icons relevanceFeedback relevanceFeedback-add">add</span>' +
 		'<span class="material-icons relevanceFeedback">remove</span>' +
-		'<span class="material-icons showid">textsms</span>' +
-		'<span class="material-icons load_video">movie</span>' +
+	//	'<span class="material-icons showid">textsms</span>' +
+	//	'<span class="material-icons load_video">movie</span>' +
 		'</div>' +
 		'<div class="bottomhoverbox">' +
 		'<span class="score"> 0% </span>' +
@@ -114,11 +195,12 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'</div>'
 		
 	);
-	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
+	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
+	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
 	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
 	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
-	$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
-	$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
+	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
+	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
 }
 
 function updateScoreInShotContainer(id, score){
@@ -149,21 +231,32 @@ function scoreToColor(pct) {
 
 
 function sortVideoContainer(videoid){
-	tinysort('#v' + videoid + '>.shotbox', {
-		data : 'startframe',
-		order : 'asc'
-	});
+	try{
+		tinysort('#v' + videoid + '>.shotbox', {
+			data : 'startframe',
+			order : 'asc'
+		});
+	}catch (e){
+		console.warn(e);
+	}
 }
 
 function sortVideos(){
-	tinysort('#results>.videocontainer', {
-		data : 'score',
-		order : 'desc'
-	});
+	try{
+		tinysort('#results>.videocontainer', {
+			data : 'score',
+			order : 'desc'
+		});
+	}catch (e){
+		console.warn(e);
+	}
 }
 
 
 function updateScores(segmentedVideos) {
+	readSliders();
+	var weightSum = sumWeights();
+	
 	for (var key in Shots) {
 		var shotId = Shots[key].shotid;
 
@@ -172,7 +265,7 @@ function updateScores(segmentedVideos) {
 		for (var key in ScoreWeights) {
 			score += scoreContainer[key] * ScoreWeights[key];
 		}
-		updateScoreInShotContainer(shotId, score);
+		updateScoreInShotContainer(shotId, score / weightSum);
 		
 	}
 
@@ -183,7 +276,6 @@ function updateScores(segmentedVideos) {
 		  ids.push($(this).attr('id').substring(1));
 		});
 		for(var key in ids){
-			updateVideoScore(ids[key]);
 			updateVideoScore(ids[key]);
 		}
 	}else{
@@ -294,15 +386,33 @@ function relevanceFeedback(event){
 	}else{
 		$('#rf-button').hide();
 	}
+	
+	
+	console.log(rf_positive);
+	console.log(rf_negative);
 }
 
-function showVideoId(event){
-	var _this = $(this);
-	var shotBox = _this.parent().parent().parent();
+function prepare_playback(event){
+	var shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
-	
-	Materialize.toast('Video id: ' + shotInfo.videoid, 3000);
+	var frame = Math.floor((shotInfo.start + shotInfo.end) / 2);
+	var videoInfo = Videos[shotInfo.videoid];
+	var path = videoHost + videoInfo.path;
+	var videoInfo = Videos[shotInfo.videoid];
+	shotStartTime = shotInfo.start / (videoInfo.frames / videoInfo.seconds);
+	var player = videojs('videoPlayer');
+		
+   $('#video-modal').openModal({
+  	in_duration: 0,
+  	out_duration: 0,
+  	ready: function(){
+		player.src(path);
+  	},
+  	complete:function(){
+  		player.pause();
+  	}
+  });
 }
 
 function load_video(event){
@@ -341,6 +451,8 @@ function getNumberOfShotInputs(){
 function destroyCanvas(id) {
 	context.destroy('#' + id + '>.colorsketch' );
 	context.destroy('#' + id + '>.motionsketch' );
+	context.destroy('#' + id + '>.objectsketch' );
+	context.destroy('#' + id + '>.audiosketch' );
 	
 	delete shotInputs[id];
 	$('#' + id).slideUp(200, function() {
@@ -349,5 +461,81 @@ function destroyCanvas(id) {
 			newShotInput();
 		}
 	});
+}
 
+function showSketchSuggestions(shotInputId){
+	var suggestionPanel = $('#sketchSuggestionPanel');
+	if(suggestionPanel.is(":visible")){
+		suggestionPanel.hide();
+	}
+	
+	var top = $('#shotInput_' + shotInputId).offset().top + 340;
+	suggestionPanel.css('top', top);
+	suggestionPanel.fadeIn(200);
+	hideSketchSuggestionsTimer();
+}
+
+function hideSketchSuggestions(callback){
+	clearTimeout(hideSketchSuggestionsTimeOut);
+	$('#sketchSuggestionPanel').fadeOut(200, function(){
+		$(this).empty();
+		if(callback !== undefined){
+			callback();
+		}
+	});
+	
+}
+
+function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
+	var suggestionPanel = $('#sketchSuggestionPanel');
+	var suggestion = $('<div>');
+	var imageUrl = 'img/sketch/' + id + '.png';
+	var previewUrl = 'img/sketch_original/' + id + '.png';
+	suggestion.addClass('sketchSuggestion');
+	var img = $('<img width="250" height="250" src="' + previewUrl + '" />');
+	suggestion.append(img);
+	suggestion.append('<div>' + name + '</div>');
+	
+	img.click(function(e){
+		var sketchImage = $('<img width="' + width + '" height="' + height + '" src="' + imageUrl + '" />');
+		sketchImage.addClass('autoCompletedImage');
+		sketchImage.css('top', dy).css('left', dx);
+		sketchImage.hide();
+		var target = $('#shotInput_' + shtoInputId);
+		target.append(sketchImage);
+		sketchImage.fadeIn(200);
+		hideSketchSuggestions();
+		shotInputs['shotInput_' + shtoInputId].concept.clear();
+		shotInputs['shotInput_' + shtoInputId].conceptList.push(Math.floor(id / 80));
+		startSearchTimeOut();
+		if(ScoreWeights.concept == 0){
+			readSliders();
+			var val = 50;
+			$('#concept-weight').get(0).noUiSlider.set(val);
+			
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.concept);
+				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
+				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
+				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+			}
+		
+		updateScores(true);
+		
+		}
+		
+	});
+	
+	
+	suggestionPanel.append(suggestion);
+	
+}
+var hideSketchSuggestionsTimeOut;
+
+function hideSketchSuggestionsTimer(){
+	clearTimeout(hideSketchSuggestionsTimeOut);
+	hideSketchSuggestionsTimeOut = setTimeout(hideSketchSuggestions, 10000);
 }

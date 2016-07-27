@@ -102,6 +102,11 @@ body {
 	top: 40px;
 }
 
+#modechoice li{
+	padding-left: 80px;
+	padding-right: 80px;
+}
+
 #results{
 	padding-top: 40px;
 }
@@ -138,7 +143,7 @@ body {
 }
 
 .motionsketch {
-	z-index: 2;
+	z-index: 4;
 	display: none;
 }
 
@@ -147,6 +152,15 @@ body {
 	display: none;
 }
 
+.autoCompletedImage{
+	z-index: 2;
+	position: absolute;
+	border-style: dashed;
+	border-width: 2px;
+	border-color: #888888;
+}
+
+/*
 .audiosketch {
 	background-color: rgba(200,250,200,0.5);
 	z-index: 4;
@@ -154,7 +168,7 @@ body {
 	padding-left: 30px;
 	padding-top: 100px;
 }
-
+*/
 .tool-pane {
 	width: 360;
 	margin-top: 10px;
@@ -201,6 +215,7 @@ body {
 	border-color: #bdbdbd;
 	margin-top: 2px;
 	margin-bottom: 2px;
+	width: calc(100% - 400px);
 }
 
 .shotbox {
@@ -214,9 +229,13 @@ body {
 }
 
 .thumbnail {
-	max-width: 100%;
-	max-height:100%;
+	max-width: 180px;
+	max-height: 100%;
 	margin-left: 10px;
+	background-image: url('../img/loading.png');
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 .preview {
 	position: absolute;
@@ -362,3 +381,4 @@ input[type="text"]:invalid{
 	border-bottom: 1px solid #f44336 !important;
     box-shadow: 0 1px 0 0 #f44336 !important;
 }
+
