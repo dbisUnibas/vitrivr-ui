@@ -48,7 +48,7 @@ if (voiceMode) {
         var serial = 1;  
         $(containerArray[row]).children('div').each(function(){
             
-            $(this).find('.bottomhoverbox').append("<div class='serialnumber'>"+ (serial) +".</div>");
+            $(this).find('.bottomhoverbox').append("<div class='serialnumber'> - "+ (serial) +" - </div>");
             serial++;
         });
   }
@@ -1207,11 +1207,10 @@ if (voiceMode) {
   function formCommandsModal(){
 
         var allCommands = "";
-        var no=1;
+        
         for(var phrase in baseCommands){
 
-            allCommands += no+". "+baseCommands[phrase]+"<br>";
-            no++;
+            allCommands += "&bull;  "+baseCommands[phrase]+"<br>";
         }
 
         $('#showCommands > div > p').html(allCommands);
