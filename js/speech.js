@@ -306,7 +306,7 @@ if (voiceMode) {
  * Searches the canvas
  */
 
-  function searchCanvas(){
+  function searchCanvasQuery(){
         search();
   }
 
