@@ -137,6 +137,7 @@ function buildQuery(){ //TODO categories from sketch complete
 		
 		query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
+		query += "\"motionbackground\":" + shotInput.motion.getBgPaths() + ",\n";
 		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
 		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
 		query += "\"id\": " + 0 + "\n";
