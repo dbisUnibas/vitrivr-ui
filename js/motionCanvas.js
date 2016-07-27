@@ -2,15 +2,12 @@ function motionCanvas(canvas){
 	
 	var el = canvas.get(0);
 	
-    var fgbgSwitch = 1;//1: foreground; 0: background; 
-    
 	var paths = new Array();
-    var bgPaths = new Array();
 	var currentPath;
 	
 	var ctx = el.getContext('2d');
 	ctx.lineJoin = ctx.lineCap = 'round';
-	ctx.strokeStyle = ctx.fillStyle = 'red';
+	ctx.strokeStyle = ctx.fillStyle = 'black';
 	ctx.lineWidth = 1;
 
 	var isDrawing, lastPoint, lastAngle;
@@ -47,12 +44,7 @@ function motionCanvas(canvas){
 	el.onmouseup = el.onmouseout = function() {
 	  isDrawing = false;
 	  if(currentPath != null && currentPath.length > 1){
-		if(fgbgSwitch == 1){
-	        paths.push(currentPath);
-	    }
-	    else{
-	        bgPaths.push(currentPath);
-	    }
+	  	paths.push(currentPath);
 	  	
 	  	ctx.save();
 	  	ctx.translate(lastPoint.x, lastPoint.y);
@@ -72,28 +64,9 @@ function motionCanvas(canvas){
 	this.getPaths = function(){
 		return JSON.stringify(paths);
 	};
-    
-    this.getBgPaths = function(){
-		return JSON.stringify(bgPaths);
-	};
 	
 	this.clearPaths = function(){
 		paths = new Array();
 		ctx.clearRect(0, 0, el.width, el.height);
-	};
-    
-    this.clearBgPaths = function(){
-        bgPaths = new Array();
-		ctx.clearRect(0, 0, el.width, el.height);
-	};
-    
-    this.switchFgBg = function(){
-		fgbgSwitch = 1 - fgbgSwitch;
-        if(fgbgSwitch == 1){
-            ctx.strokeStyle = ctx.fillStyle = 'red';
-        }
-        else{
-            ctx.strokeStyle = ctx.fillStyle = 'green';
-        }
 	};
 }

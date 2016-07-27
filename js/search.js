@@ -114,7 +114,6 @@ function buildQuery(){
 		
 		query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
-        query += "\"motionbackground\":" + shotInput.motion.getBgPaths() + ",\n";
 		query += "\"categories\":" + JSON.stringify(categories) + ",\n"; //see config.js
 		query += "\"id\": " + 0 + "\n";
 		query += "},";
