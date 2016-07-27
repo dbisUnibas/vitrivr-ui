@@ -594,7 +594,7 @@ if (voiceMode) {
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
-            document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+            document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
 
             addSerialNumber();
         }
@@ -633,7 +633,7 @@ if (voiceMode) {
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
-            document.getElementById(containerArray[row].id).style = "border: 2px solid #F44336;";
+            document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
         
             addSerialNumber();
         }
@@ -833,7 +833,7 @@ if (voiceMode) {
               remove_element(rf_negative,shotId);
             }
             rf_positive.push(shotId);
-            document.getElementById(shotBox.attr('id')).style.border = "medium solid blue";
+            document.getElementById(shotBox.attr('id')).style.border = "medium solid #006400";
           }
         }
         else if(actionVariable == "removeVideo"){//negative
@@ -850,7 +850,7 @@ if (voiceMode) {
               }
 
               rf_negative.push(shotId);
-              document.getElementById(shotBox.attr('id')).style.border = "medium solid red";
+              document.getElementById(shotBox.attr('id')).style.border = "medium solid #F44336";
             }
         }
         

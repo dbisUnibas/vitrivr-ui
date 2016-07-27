@@ -2,7 +2,7 @@
   const LANGUAGE = 'en-GB';
 
   // Gets displayed on ON/Off GUI button
-  const INSTRUCTION = "Say 'voice search' followed by your Query";
+  const INSTRUCTION = "Say 'show all commands' for overview of voice queries";
 
   // These queries are used in follow up commands
   const QUERY_A = 'increase size (of pen) (of brush)';
