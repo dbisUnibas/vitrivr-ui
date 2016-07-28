@@ -108,12 +108,22 @@ function motionCanvas(canvas){
 	};
 	
 	this.switchFgBg = function(){
-	fgbgSwitch = 1 - fgbgSwitch;
-	if(fgbgSwitch == 1){
-		ctx.strokeStyle = ctx.fillStyle = 'red';
-	}
-	else{
-		ctx.strokeStyle = ctx.fillStyle = 'green';
-	}
-};
+		fgbgSwitch = 1 - fgbgSwitch;
+		if(fgbgSwitch == 1){
+			ctx.strokeStyle = ctx.fillStyle = 'red';
+		}
+		else{
+			ctx.strokeStyle = ctx.fillStyle = 'green';
+		}
+	};
+	
+	this.setFgbgSwitch = function(fgbg){
+		fgbgSwitch = fgbg;
+		if(fgbgSwitch == 1){
+			ctx.strokeStyle = ctx.fillStyle = 'red';
+		}
+		else{
+			ctx.strokeStyle = ctx.fillStyle = 'green';
+		}
+	};
 }
