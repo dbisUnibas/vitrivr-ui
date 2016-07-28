@@ -57,6 +57,8 @@
         'search and play (this) (my) video'                       : searchPlayVideo,
 
         'show (me) (video) (shot) greater than (score) :num'      : showScoredVideo,
+        'total (number of) (shots) (videos) retrieved'            : totalShots,
+        'total (number of) (shots) (videos) greater than (score) :num' : totalSpecificShots,
 
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
@@ -112,6 +114,8 @@
       'search and play (this) (my) video'                     : 'search and play this video',
 
       'show (me) (video) (shot) greater than (score) :num'    : 'show me video greater than score _____%',
+      'total (number of) (shots) (videos) retrieved'          : 'total number of shots retrieved',
+      'total (number of) (shots) (videos) greater than (score) :num' : 'total number of shots greater than score _____%',
 
       '(even) more'                                           : 'even more',
       '(even) further'                                        : 'even further',
