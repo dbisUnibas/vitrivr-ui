@@ -1205,6 +1205,35 @@ if (voiceMode) {
         feedbackByNumber(num);
   }  
 
+  function showScoredVideo(num){
+        
+        var resultDisplayed = $(".videocontainer");
+        if(resultDisplayed.length == 0){
+
+            displayErrorMessage("Query not executed as there is no video results retrieved");
+        }
+        else if(searchRunning){
+
+            displayErrorMessage("Please wait till search is in progress");
+        }
+        else if(resultDisplayed.length > 0){
+
+            $('div').removeClass('filteredShot');
+            num = parseInt(num.substring(0,num.length-1));
+            var shotBoxes = $(".shotbox");
+            for(var i=0;i < shotBoxes.length;i++){
+                
+                var shot = shotBoxes[i];
+                var score = $(shot).find('.score').html();
+                score  = parseInt(score.substring(0,score.length-1));
+                if(score > num){
+                    $(shot).addClass("filteredShot");
+                }
+            }
+        }
+  }
+
+
 /**
  * Creates a pop up modal (window) which conatains all base commands
  */

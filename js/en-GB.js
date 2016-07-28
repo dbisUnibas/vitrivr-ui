@@ -56,6 +56,8 @@
         '(toggle) (open) (close) top and sidebar'                 : toggleTopSideBar,
         'search and play (this) (my) video'                       : searchPlayVideo,
 
+        'show (me) (video) (shot) greater than (score) :num'      : showScoredVideo,
+
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
         '(again) one more'                                        : followUpCanvas,
@@ -108,6 +110,8 @@
       
       '(toggle) (open) (close) top and sidebar'               : 'toggle top and sidebar',
       'search and play (this) (my) video'                     : 'search and play this video',
+
+      'show (me) (video) (shot) greater than (score) :num'    : 'show me video greater than score _____%',
 
       '(even) more'                                           : 'even more',
       '(even) further'                                        : 'even further',

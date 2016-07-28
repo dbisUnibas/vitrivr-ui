@@ -74,6 +74,10 @@ body {
 	color:#F44336;
 }
 
+.filteredShot {
+	border: 2px solid yellow;
+}
+
 #sidebarextension {
 	position: fixed;
 	width: 600px;
