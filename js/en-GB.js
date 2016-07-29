@@ -39,6 +39,8 @@
         'fill Canvas :num with *color (colour)'                   : fillCanvas,
         'download Canvas (number) :num'                           : downloadCanvas,
         'delete Canvas (number) :num'                             : deleteCanvas,
+        'clearcanvas (number) :num'                               : clearCanvas,
+        'clear Canvas (number) :num'                              : clearCanvas,
       
         'play (this) (my) (video) (clip)'                         : playVideo,
         'search (this) (my) (video) (clip) id'                    : searchById,
@@ -63,8 +65,8 @@
 
         '(even) more'                                             : followUpPenSize,
         '(even) further'                                          : followUpBrowsing,
-        '(again) one more'                                        : followUpCanvas,
         'One More'                                                : followUpCanvas,
+        '(again) one more'                                        : followUpCanvas,
         'yes'                                                     : setResponse,
         'add it'                                                  : followUpFeedback,
         'remove it'                                               : followUpFeedback,
@@ -99,6 +101,8 @@
       'fill Canvas :num with *color (colour)'                 : 'fill Canvas _____ with _____ colour',
       'download Canvas (number) :num'                         : 'download Canvas number _____',
       'delete Canvas (number) :num'                           : 'delete Canvas number _____',
+      'clearcanvas (number) :num'                             : 'clearcanvas number _____',
+      'clear Canvas (number) :num'                            : 'clear Canvas number _____',
 
       'play (this) (my) (video) (clip)'                       : 'play this video',
       'search (this) (my) (video) (clip) id'                  : 'search this video ID',

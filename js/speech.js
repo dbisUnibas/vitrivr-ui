@@ -536,6 +536,22 @@ if (voiceMode) {
         destroyCanvas(id);
   }
 
+  function clearCanvas(num){
+
+        var canvas = $(".query-input-container");
+        if(num > canvas.length){
+            displayErrorMessage("Canvas "+num+" is not present");
+            return;
+        }
+        
+        var id = canvas[num-1].id;
+
+        if($('#colorsketchbutton').parent().hasClass('active'))
+            shotInputs[id].color.clear();
+        else if($('#motionsketchbutton').parent().hasClass('active'))
+            shotInputs[id].motion.clearPaths();
+  }
+
 /**
  * Increse pen size upto 100 units
  * unit of increase is decided by follow up command
