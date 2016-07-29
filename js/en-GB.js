@@ -38,6 +38,7 @@
         'select *color colour (pen) (brush)'                      : selectColor,
         'fill Canvas :num with *color (colour)'                   : fillCanvas,
         'download Canvas (number) :num'                           : downloadCanvas,
+        'delete Canvas (number) :num'                             : deleteCanvas,
       
         'play (this) (my) (video) (clip)'                         : playVideo,
         'search (this) (my) (video) (clip) id'                    : searchById,
@@ -97,6 +98,7 @@
       'select *color colour (pen) (brush)'                    : 'select _____ colour',
       'fill Canvas :num with *color (colour)'                 : 'fill Canvas _____ with _____ colour',
       'download Canvas (number) :num'                         : 'download Canvas number _____',
+      'delete Canvas (number) :num'                           : 'delete Canvas number _____',
 
       'play (this) (my) (video) (clip)'                       : 'play this video',
       'search (this) (my) (video) (clip) id'                  : 'search this video ID',
