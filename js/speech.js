@@ -74,12 +74,42 @@ if (voiceMode) {
 
   function closeWindow(){
         
-        if(windowDisplay){
-            windowDisplay = false;
-            $('#showCommands').closeModal();
+        windowDisplay = false;
+        $('#showCommands').closeModal();
+        var player = videojs('videoPlayer');
+        player.pause();
+        $('#video-modal').closeModal();
+  }
+
+  function replayVideo(){
+
+        if($('#video-modal').is(':visible')){
+            var player = videojs('videoPlayer');
+            player.currentTime(shotStartTime);
+            player.play();
         }
         else
-            displayErrorMessage("No window is open");
+            displayErrorMessage("There is no video playing");
+  }
+
+  function pauseVideo(){
+
+        if($('#video-modal').is(':visible')){
+            var player = videojs('videoPlayer');
+            player.pause();
+        }
+        else
+            displayErrorMessage("There is no video playing");
+  }
+
+  function startVideo(){
+        
+        if($('#video-modal').is(':visible')){
+            var player = videojs('videoPlayer');
+            player.play();
+        }
+        else
+            displayErrorMessage("There is no video playing");
   }
 
 /**

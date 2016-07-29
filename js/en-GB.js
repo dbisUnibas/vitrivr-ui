@@ -71,7 +71,9 @@
         '(show) (display) (overview of) all commands'             : displayCommands,
         'what can I say'                                          : displayCommands,
         'close this (window) (box)'                               : closeWindow,
-
+        'replay (the) (video)'                                    : replayVideo,
+        'pause (the) (video)'                                     : pauseVideo,
+        'start (the) (video)'                                     : startVideo,
   };
 
 // Commands mapped to their corrosponding base commands
@@ -128,6 +130,9 @@
       '(show) (display) (overview of) all commands'           : 'show all commands',
       'what can I say'                                        : 'what can I say',
       'close this (window) (box)'                             : 'close this window',
+      'replay (the) (video)'                                  : 'replay the video',
+      'pause (the) (video)'                                   : 'pause the video',
+      'start (the) (video)'                                   : 'start the video',
   };
 
 // stop words which get filtered out from unrecognized sentence
