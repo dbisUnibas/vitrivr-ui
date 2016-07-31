@@ -303,7 +303,7 @@ if (voiceMode) {
 /**
 * Displays the color sketch option for canvas
 *
-*/  
+*/
 
   function showColorSketch(){
         $('.motionsketch').hide();
@@ -311,9 +311,8 @@ if (voiceMode) {
         $('#color-tool-pane').show();
         $('#sidebarextension').removeClass('open');
         $('#btnShowSidebar').removeClass('open');
-        $('#colorsketchbutton').parent().siblings().removeClass('active');
-        $('#colorsketchbutton').parent().addClass('active');
-
+        $('#colorsketchbutton').siblings().removeClass('active');
+        $('#colorsketchbutton').addClass('active');
   }
 
 /**
@@ -327,8 +326,8 @@ if (voiceMode) {
         $('#color-tool-pane').hide();
         $('#sidebarextension').removeClass('open');
         $('#btnShowSidebar').removeClass('open');
-        $('#motionsketchbutton').parent().siblings().removeClass('active');
-        $('#motionsketchbutton').parent().addClass('active');
+        $('#motionsketchbutton').siblings().removeClass('active');
+        $('#motionsketchbutton').addClass('active');
 
   }
 
