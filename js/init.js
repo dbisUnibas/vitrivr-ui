@@ -256,8 +256,8 @@ $(function() {
 		$('#color-tool-pane').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
-		$(this).parent().siblings().removeClass('active');
-		$(this).parent().addClass('active');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
 	});
 
 	$('#motionsketchbutton').on('click', function(event) {
@@ -266,8 +266,8 @@ $(function() {
 		$('#color-tool-pane').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
-		$(this).parent().siblings().removeClass('active');
-		$(this).parent().addClass('active');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
 
 	});
 	

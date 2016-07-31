@@ -217,6 +217,8 @@ function oboerequest(query, noContext) {
 			case "error":
 			
 				console.warn(data);
+				Materialize.toast(data.msg, 5000, 'orange');
+				
 				break;
 				
 			case "result":
