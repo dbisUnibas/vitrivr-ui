@@ -545,9 +545,9 @@ if (voiceMode) {
         
         var id = canvas[num-1].id;
 
-        if($('#colorsketchbutton').parent().hasClass('active'))
+        if($('#colorsketchbutton').hasClass('active'))
             shotInputs[id].color.clear();
-        else if($('#motionsketchbutton').parent().hasClass('active'))
+        else if($('#motionsketchbutton').hasClass('active'))
             shotInputs[id].motion.clearPaths();
   }
 
