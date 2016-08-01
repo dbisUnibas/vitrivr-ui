@@ -9,6 +9,7 @@ if (voiceMode) {
   var voiceText= new Array();   // used for voice search query
   var colorByVoice = "#000000"; // always contains current selected color
   var playingShotBox = null;    // used to store the object of playing video
+  var feedbackCount = 0;
 
   var dictionary={};            // dictionary used in feedback system
   var commandID=[];
@@ -34,7 +35,8 @@ if (voiceMode) {
 
   function displayErrorMessage(message) {
 
-        responsiveVoice.speak(message,PERSON);        
+        if(feedbackCount<=3)
+            responsiveVoice.speak(message,PERSON);        
         Materialize.toast(message, 3000);
   }
 
@@ -173,14 +175,17 @@ if (voiceMode) {
        // console.log(sentences);
         if(feedbackCommand == undefined){
             factor = 0;
+            feedbackCount++;
             displayErrorMessage("Sorry I haven't understood you");
         }
         else if(feedbackCommand == 1){
+            feedbackCount = 0;
             displayErrorMessage("Query executed");
         }
         else{
 
             response = 0;
+            feedbackCount++;
             displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
             setTimeout(feedbackResponse,5000,feedbackCommand);
         }
@@ -197,6 +202,7 @@ if (voiceMode) {
 
   function recognizedSentence(phrase,command) {
         
+        feedbackCount = 0;
         if(followUpCommands.indexOf(phrase) == -1){
             SpeechKITT.setRecognizedSentence(phrase);
             factor = 1;
