@@ -9,7 +9,7 @@ if (voiceMode) {
   var voiceText= new Array();   // used for voice search query
   var colorByVoice = "#000000"; // always contains current selected color
   var playingShotBox = null;    // used to store the object of playing video
-  var feedbackCount = 0;
+  var feedbackCount = 0;        // keep counts of number of consecutive feedback response
 
   var dictionary={};            // dictionary used in feedback system
   var commandID=[];
@@ -83,6 +83,10 @@ if (voiceMode) {
         $('#video-modal').closeModal();
   }
 
+/**
+ * Replay the playing video 
+ */
+
   function replayVideo(){
 
         if($('#video-modal').is(':visible')){
@@ -94,6 +98,10 @@ if (voiceMode) {
             displayErrorMessage("There is no video playing");
   }
 
+/**
+ * Pause the playing video 
+ */
+
   function pauseVideo(){
 
         if($('#video-modal').is(':visible')){
@@ -103,6 +111,10 @@ if (voiceMode) {
         else
             displayErrorMessage("There is no video playing");
   }
+
+/**
+ * Starts the paused video 
+ */
 
   function startVideo(){
         
@@ -530,6 +542,12 @@ if (voiceMode) {
         }
   }
 
+/**
+ * Deletes a particular Canvas if available
+ * 
+ * @param {Integer} num Canvas number that has to be deleted 
+ */  
+
   function deleteCanvas(num){
 
         var canvas = $(".query-input-container");
@@ -540,6 +558,12 @@ if (voiceMode) {
         var id = canvas[num-1].id;
         destroyCanvas(id);
   }
+
+/**
+ * Clears a particular Canvas if available
+ * 
+ * @param {Integer} num Canvas number that has to be cleared 
+ */ 
 
   function clearCanvas(num){
 
@@ -1130,6 +1154,10 @@ if (voiceMode) {
        return true;
   }
 
+/**
+ * Plays the first shot/video of the current browsing container
+ */ 
+
   function playFirstShot(){
 
         playVideoByNumber(1);
@@ -1267,6 +1295,13 @@ if (voiceMode) {
         feedbackByNumber(num);
   }  
 
+/**
+ * Marks all the shots with score greater than particular score
+ * Example- 'show me shot greater than 30%'
+ *
+ * @param {String} num String containing a number and appended with '%'
+ */
+
   function showScoredVideo(num){
         
         var shotBoxes = $(".shotbox");
@@ -1287,6 +1322,10 @@ if (voiceMode) {
         }
   }
 
+/**
+ * Tells the total number of shots retrieved after searching 
+ */
+
   function totalShots(){
 
         var shotBoxes = $(".shotbox");
@@ -1295,6 +1334,13 @@ if (voiceMode) {
         else
             displayErrorMessage("There are total "+shotBoxes.length+" shots retrieved");
   }
+
+/**
+ * Tells the number of shots with score greater than particular score
+ * Example- 'total shots greater than 30%'
+ *
+ * @param {String} num String containing a number and appended with '%'
+ */  
 
   function totalSpecificShots(num){
         
