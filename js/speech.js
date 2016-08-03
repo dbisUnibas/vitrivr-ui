@@ -198,7 +198,7 @@ if (voiceMode) {
 
             response = 0;
             feedbackCount++;
-            displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand]);
+            displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand].toLowerCase());
             setTimeout(feedbackResponse,5000,feedbackCommand);
         }
 
@@ -1378,7 +1378,7 @@ if (voiceMode) {
         
         for(var phrase in baseCommands){
 
-            allCommands += "&bull;  "+baseCommands[phrase]+"<br>";
+            allCommands += "&bull;  "+baseCommands[phrase].toLowerCase()+"<br>";
         }
 
         $('#showCommands > div > p').html(allCommands);
