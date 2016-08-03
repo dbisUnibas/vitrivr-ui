@@ -63,6 +63,7 @@
         'total (number of) (shots) (videos) retrieved'                   : totalShots,
         'total (number of) (shots) (videos) greater than (score) :num'   : totalSpecificShots,
         'hide (all) (video) (shots) below (score) :num'                  : hideSpecificShots,
+        'show (all) (video) (shots) again'                               : showHiddenShots,
 
         '(even) more'                                                    : followUpPenSize,
         '(even) further'                                                 : followUpBrowsing,
@@ -126,6 +127,7 @@
         'total (number of) (shots) (videos) retrieved'                   : 'total number of shots retrieved',
         'total (number of) (shots) (videos) greater than (score) :num'   : 'total number of shots greater than score _____%',
         'hide (all) (video) (shots) below (score) :num'                  : 'hide all shots below score _____%',
+        'show (all) (video) (shots) again'                               : 'show all shots again',
 
         '(even) more'                                                    : 'even more',
         '(even) further'                                                 : 'even further',

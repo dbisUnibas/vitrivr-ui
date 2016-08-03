@@ -1342,6 +1342,12 @@ if (voiceMode) {
         }
   }
 
+  function showHiddenShots(){
+
+        $('.hideshot').show();
+        $('div').removeClass('hideshot');
+  }
+
 /**
  * Tells the total number of shots retrieved after searching 
  */
