@@ -1322,6 +1322,26 @@ if (voiceMode) {
         }
   }
 
+  function hideSpecificShots(num){
+
+        var shotBoxes = $(".shotbox");
+        if(shotBoxes.length==0)
+            displayErrorMessage("There is no shot retrieved");
+        else {
+            num = parseInt(num.substring(0,num.length-1));
+            for(var i=0;i < shotBoxes.length;i++){
+                
+                var shot = shotBoxes[i];
+                var score = $(shot).find('.score').html();
+                score  = parseInt(score.substring(0,score.length-1));
+                if(score < num){
+                    $(shot).addClass("hideshot");
+                }
+            }
+            $('.hideshot').hide();
+        }
+  }
+
 /**
  * Tells the total number of shots retrieved after searching 
  */
