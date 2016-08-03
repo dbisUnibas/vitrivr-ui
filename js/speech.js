@@ -3,7 +3,7 @@ if (voiceMode) {
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
   var windowDisplay = false;
-  var row = 0;                  // used for browsing video conatiners 
+  var row = 0;                  // used for browsing video containers 
   var factor = 0;
   var response;                 // used to set whenever user responded to feedback
   var voiceText= new Array();   // used for voice search query
@@ -1000,6 +1000,12 @@ if (voiceMode) {
                 prepare_playback($(this));
                 similaritySearch($(this));
                 break;
+
+            case "addNumbers":
+                actionVariable = null;
+                actionOccured = true;
+                setVideoContainer($(this));
+                break;
         }
   }
 
@@ -1018,6 +1024,25 @@ if (voiceMode) {
             len++;
         } 
         shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
+  }
+
+  function setVideoContainer(object){
+
+        var container = $(object).closest('.videocontainer');
+        var id = container[0].id;
+        var containerArray = $('.videocontainer');
+
+        for(var i=0;i<containerArray.length;i++){
+         
+            if(containerArray[i].id == id){
+                document.getElementById(containerArray[row].id).style = "";
+                row = i;
+                $('.serialnumber').remove();
+                addSerialNumber();
+                document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
+                break;
+            }
+        }
   }
 
 /**
@@ -1100,6 +1125,11 @@ if (voiceMode) {
   function searchPlayVideo(){
 
         checkUseCases("search_play");
+  }
+
+  function addNumbersHere(){
+
+        checkUseCases("addNumbers");
   }
 
 /**
@@ -1395,7 +1425,7 @@ if (voiceMode) {
   }
 
 /**
- * Creates a pop up modal (window) which conatains all base commands
+ * Creates a pop up modal (window) which contains all base commands
  */
 
   function formCommandsModal(){

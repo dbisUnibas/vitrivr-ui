@@ -48,6 +48,7 @@
         'remove (this) (video) (clip) (shot)'                            : negativeFeedback,
         'search (my) (this) feedback'                                    : searchFeedback,
         '(put) (drop) (this) (image) (shot) on Canvas'                   : dropOnCanvas,
+        'add (serial) numbers here'                                      : addNumbersHere,
         'play first (video) (shot)'                                      : playFirstShot,
 
         'play (me) video (clip) (shot) (with) (serial) number :num'      : playVideoByNumber,
@@ -112,6 +113,7 @@
         'remove (this) (video) (clip) (shot)'                            : 'remove this video',
         'search (my) (this) feedback'                                    : 'search my feedback',
         '(put) (drop) (this) (image) (shot) on Canvas'                   : 'drop this shot on Canvas',
+        'add (serial) numbers here'                                      : 'add numbers here',
         'play first (video) (shot)'                                      : 'play first shot',
 
         'play (me) video (clip) (shot) (with) (serial) number :num'      : 'play video shot number:______',
