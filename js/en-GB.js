@@ -17,6 +17,30 @@
   var followUpCommands = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
 
   const PERSON = "UK English Female";
+
+
+  const ERR1  = 'Window is open already';
+  const ERR2  = 'There is no video playing';
+  const ERR3  = 'Query executed';
+  const ERR4  = 'No feedback';
+  const ERR5  = "Sorry I haven't understood you";
+  const ERR6  = 'Query not executed as there is no video results retrieved';
+  const ERR7  = 'Please wait till search is in progress';
+  const ERR8  = 'Query already executed';
+  const ERR9  = 'Please say canvas number after the query';
+  const ERR10 = 'Size of pen can not be increase';
+  const ERR11 = 'Size of pen can not be decrease';
+  const ERR12 = 'You are at the bottom';
+  const ERR13 = 'You are at the top';
+  const ERR14 = 'First say some query';
+  const ERR15 = 'This command works while playing a video';
+  const ERR16 = 'User has not clicked any shot';
+  const ERR17 = 'Please say an action query';
+  const ERR18 = 'There must be atleast one video added as positive feedback';
+  const ERR19 = 'Please also say shot number';
+  const ERR20 = 'There is no shot retrieved';
+
+
 // voice queries/commands
   var commands = {
       

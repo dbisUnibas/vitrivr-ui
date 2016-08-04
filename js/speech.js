@@ -66,7 +66,7 @@ if (voiceMode) {
             $('#showCommands').openModal();
         }
         else
-            displayErrorMessage("Window is open already");
+            displayErrorMessage(ERR1);
   }
 
 /**
@@ -95,7 +95,7 @@ if (voiceMode) {
             player.play();
         }
         else
-            displayErrorMessage("There is no video playing");
+            displayErrorMessage(ERR2);
   }
 
 /**
@@ -109,7 +109,7 @@ if (voiceMode) {
             player.pause();
         }
         else
-            displayErrorMessage("There is no video playing");
+            displayErrorMessage(ERR2);
   }
 
 /**
@@ -123,7 +123,7 @@ if (voiceMode) {
             player.play();
         }
         else
-            displayErrorMessage("There is no video playing");
+            displayErrorMessage(ERR2);
   }
 
 /**
@@ -145,7 +145,7 @@ if (voiceMode) {
             }
 
             commands[feedbackCommand].apply();
-            displayErrorMessage("Query executed");
+            displayErrorMessage(ERR3);
         }
         else 
           factor = 0;
@@ -162,7 +162,7 @@ if (voiceMode) {
         if(response == 0)
             response = 1;
         else{
-            displayErrorMessage("No feedback");
+            displayErrorMessage(ERR4);
         }
   }
 
@@ -188,11 +188,11 @@ if (voiceMode) {
         if(feedbackCommand == undefined){
             factor = 0;
             feedbackCount++;
-            displayErrorMessage("Sorry I haven't understood you");
+            displayErrorMessage(ERR5);
         }
         else if(feedbackCommand == 1){
             feedbackCount = 0;
-            displayErrorMessage("Query executed");
+            displayErrorMessage(ERR3);
         }
         else{
 
@@ -414,11 +414,11 @@ if (voiceMode) {
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if(resultDisplayed.length > 0){
             if(!splitVideoExecuted){
@@ -427,7 +427,7 @@ if (voiceMode) {
             }
             else{
 
-                displayErrorMessage("Query already executed");
+                displayErrorMessage(ERR8);
             }
         }
         
@@ -537,7 +537,7 @@ if (voiceMode) {
             window.location.href=image;
         }
         catch(e){
-            displayErrorMessage("Please say Canvas number after the query");
+            displayErrorMessage(ERR9);
             console.warn(e);
         }
   }
@@ -596,7 +596,7 @@ if (voiceMode) {
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
         if(size == 100){
-            displayErrorMessage("Size of pen can not be increase");
+            displayErrorMessage(ERR10);
         }
         else if(size <= 100-unit){
             for (el in shotInputs) {
@@ -629,7 +629,7 @@ if (voiceMode) {
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
         if(size == 1){
-            displayErrorMessage("Size of pen can not be decrease");
+            displayErrorMessage(ERR11);
         }
         else if(size >= unit){
             for (el in shotInputs) {
@@ -660,11 +660,11 @@ if (voiceMode) {
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if( containerArray.length > 0 ){
 
@@ -676,7 +676,7 @@ if (voiceMode) {
             }
             else{
                 row = containerArray.length-1;
-                displayErrorMessage("You are at the bottom");
+                displayErrorMessage(ERR12);
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
@@ -699,11 +699,11 @@ if (voiceMode) {
         var containerArray = $(".videocontainer");
         if(containerArray.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if( containerArray.length > 0 ){
 
@@ -715,7 +715,7 @@ if (voiceMode) {
             }
             else{
                 row = 0;
-                displayErrorMessage("You are at the top");
+                displayErrorMessage(ERR13);
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
@@ -734,7 +734,7 @@ if (voiceMode) {
   function followUpPenSize() {
         
         if(factor == 0){
-            displayErrorMessage("First say some query");
+            displayErrorMessage(ERR14);
             return;
         }
 
@@ -776,7 +776,7 @@ if (voiceMode) {
   function followUpBrowsing() {
         
         if(factor == 0){
-            displayErrorMessage("First say some query");
+            displayErrorMessage(ERR14);
             return;
         }
 
@@ -821,7 +821,7 @@ if (voiceMode) {
   function followUpCanvas() {
         
         if(factor == 0){
-            displayErrorMessage("First say some query");
+            displayErrorMessage(ERR14);
             return;
         }
 
@@ -851,7 +851,7 @@ if (voiceMode) {
   function followUpFeedback(){
 
         if($('#video-modal').css('display') == 'none'){
-            displayErrorMessage("This command works while playing a video");
+            displayErrorMessage(ERR15);
         }
         else{
             setTimeout(function(){  // delay of 100ms is given so that recognized query got set findrst
@@ -873,7 +873,7 @@ if (voiceMode) {
                       actionVariable = null;
                   }
                   else
-                      displayErrorMessage("Sorry I haven't understood you");
+                      displayErrorMessage(ERR5);
             },100);
         }
   }
@@ -891,7 +891,7 @@ if (voiceMode) {
         if(!actionOccured){
 
             actionVariable = null;
-            displayErrorMessage("User has not clicked any video");      
+            displayErrorMessage(ERR16);      
         }        
   }
 
@@ -961,7 +961,7 @@ if (voiceMode) {
         switch( actionVariable ) {
 
             case null:
-                displayErrorMessage("Please say an action query");
+                displayErrorMessage(ERR17);
                 break;
 
             case "play" :
@@ -1059,11 +1059,11 @@ if (voiceMode) {
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if(resultDisplayed.length > 0){
 
@@ -1146,7 +1146,7 @@ if (voiceMode) {
         }
         else{
 
-            displayErrorMessage("There must be atleast one video added as positive feedback");
+            displayErrorMessage(ERR18);
         }
   }
 
@@ -1161,17 +1161,17 @@ if (voiceMode) {
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if(resultDisplayed.length > 0){
 
             var labeledShots = $(".serialnumber");
             if(num == undefined){
-                displayErrorMessage("Please also say video number");
+                displayErrorMessage(ERR19);
             }
             else if(num > labeledShots.length){
                 displayErrorMessage("Video number "+num+" is not available");
@@ -1257,17 +1257,17 @@ if (voiceMode) {
         var resultDisplayed = $(".videocontainer");
         if(resultDisplayed.length == 0){
 
-            displayErrorMessage("Query not executed as there is no video results retrieved");
+            displayErrorMessage(ERR6);
         }
         else if(searchRunning){
 
-            displayErrorMessage("Please wait till search is in progress");
+            displayErrorMessage(ERR7);
         }
         else if(resultDisplayed.length > 0){
 
             var labeledShots = $(".serialnumber");
             if(num == undefined){
-                displayErrorMessage("Please also say video number");
+                displayErrorMessage(ERR19);
             }
             else{
 
@@ -1336,7 +1336,7 @@ if (voiceMode) {
         
         var shotBoxes = $(".shotbox");
         if(shotBoxes.length==0)
-            displayErrorMessage("There is no shot retrieved");
+            displayErrorMessage(ERR20);
         else {
             $('div').removeClass('filteredShot');
             num = parseInt(num.substring(0,num.length-1));
@@ -1356,7 +1356,7 @@ if (voiceMode) {
 
         var shotBoxes = $(".shotbox");
         if(shotBoxes.length==0)
-            displayErrorMessage("There is no shot retrieved");
+            displayErrorMessage(ERR20);
         else {
             num = parseInt(num.substring(0,num.length-1));
             for(var i=0;i < shotBoxes.length;i++){
@@ -1386,7 +1386,7 @@ if (voiceMode) {
 
         var shotBoxes = $(".shotbox");
         if(shotBoxes.length==0)
-            displayErrorMessage("There is no shot retrieved");
+            displayErrorMessage(ERR20);
         else
             displayErrorMessage("There are total "+shotBoxes.length+" shots retrieved");
   }
@@ -1402,7 +1402,7 @@ if (voiceMode) {
         
         var shotBoxes = $(".shotbox");
         if(shotBoxes.length==0)
-            displayErrorMessage("There is no shot retrieved");
+            displayErrorMessage(ERR20);
         else {
             var count=0;
             num = parseInt(num.substring(0,num.length-1));
