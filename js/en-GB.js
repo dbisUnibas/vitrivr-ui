@@ -40,6 +40,7 @@
   const ERR19 = 'Please also say shot number';
   const ERR20 = 'There is no shot retrieved';
   const ERR21 = 'Please also say score';
+  const ERR22 = 'Please check the query';
 
 
 // voice queries/commands

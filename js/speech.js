@@ -365,34 +365,47 @@ if (voiceMode) {
  */ 
 
   function searchParticularCanvas(tag){
-        var arr = tag.split(" ");
-        console.log("starting sketch-based search");
-        removeItem = "and";
-        arr = $.grep(arr, function(value) {
-           return value != removeItem;
-        });
-        clearResults();
-        var query = "{\"queryType\":\"multiSketch\", \"query\":[";
-  
-        for(var index in arr){
 
-          var voiceKey = "shotInput_"+(arr[index]-1);
-          var shotInput = shotInputs[voiceKey];
+        try{
+            var arr = tag.split(" ");
+            console.log("starting sketch-based search");
+            removeItem = "and";
+            arr = $.grep(arr, function(value) {
+               return value != removeItem;
+            });
+            clearResults();
+            var query = "{\"queryType\":\"multiSketch\", \"query\":[";
 
-          query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
-          query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
-          query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
-          query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
-          query += "\"id\": " + 0 + "\n";
-          query += "},";
+            var canvas = $(".query-input-container");
+      
+            for(var index in arr){
+            
+              var num = replaceEnglishNumber(arr[index]);
+              if(num > canvas.length){
+                  displayErrorMessage("Canvas "+num+" is not present");
+                  return;
+              }
+              var id = canvas[num-1].id;
+              var shotInput = shotInputs[id];
+
+              query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
+              query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
+              query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
+              query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
+              query += "\"id\": " + 0 + "\n";
+              query += "},";
+            }
+            
+            query = query.slice(0, -1);
+            query += "],";
+            query += "\"resultname\":\"" + getResultName() + "\"}";
+              
+            oboerequest(query);
         }
-        
-        query = query.slice(0, -1);
-        query += "],";
-        query += "\"resultname\":\"" + getResultName() + "\"}";
-          
-        oboerequest(query);
-
+        catch(e){
+            displayErrorMessage(ERR22);
+            console.warn(e);
+        }
   }
 
 /**
