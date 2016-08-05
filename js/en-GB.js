@@ -39,6 +39,7 @@
   const ERR18 = 'There must be atleast one video added as positive feedback';
   const ERR19 = 'Please also say shot number';
   const ERR20 = 'There is no shot retrieved';
+  const ERR21 = 'Please also say score';
 
 
 // voice queries/commands

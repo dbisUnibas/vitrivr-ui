@@ -555,8 +555,14 @@ if (voiceMode) {
             displayErrorMessage("Canvas "+num+" is not present");
             return;
         }
-        var id = canvas[num-1].id;
-        destroyCanvas(id);
+        try{
+            var id = canvas[num-1].id;
+            destroyCanvas(id);
+        }
+        catch(e){
+            displayErrorMessage(ERR9);
+            console.warn(e);
+        }
   }
 
 /**
@@ -572,13 +578,18 @@ if (voiceMode) {
             displayErrorMessage("Canvas "+num+" is not present");
             return;
         }
-        
-        var id = canvas[num-1].id;
+        try{
+            var id = canvas[num-1].id;
 
-        if($('#colorsketchbutton').hasClass('active'))
-            shotInputs[id].color.clear();
-        else if($('#motionsketchbutton').hasClass('active'))
-            shotInputs[id].motion.clearPaths();
+            if($('#colorsketchbutton').hasClass('active'))
+                shotInputs[id].color.clear();
+            else if($('#motionsketchbutton').hasClass('active'))
+                shotInputs[id].motion.clearPaths();
+        }
+        catch(e){
+            displayErrorMessage(ERR9);
+            console.warn(e);
+        }
   }
 
 /**
@@ -1354,16 +1365,23 @@ if (voiceMode) {
         if(shotBoxes.length==0)
             displayErrorMessage(ERR20);
         else {
-            $('div').removeClass('filteredShot');
-            num = parseInt(num.substring(0,num.length-1));
-            for(var i=0;i < shotBoxes.length;i++){
-                
-                var shot = shotBoxes[i];
-                var score = $(shot).find('.score').html();
-                score  = parseInt(score.substring(0,score.length-1));
-                if(score > num){
-                    $(shot).addClass("filteredShot");
+
+            try{
+                $('div').removeClass('filteredShot');
+                num = parseInt(num.substring(0,num.length-1));
+                for(var i=0;i < shotBoxes.length;i++){
+                    
+                    var shot = shotBoxes[i];
+                    var score = $(shot).find('.score').html();
+                    score  = parseInt(score.substring(0,score.length-1));
+                    if(score > num){
+                        $(shot).addClass("filteredShot");
+                    }
                 }
+            }
+            catch(e){
+                displayErrorMessage(ERR21);
+                console.warn(e);
             }
         }
   }
@@ -1374,17 +1392,24 @@ if (voiceMode) {
         if(shotBoxes.length==0)
             displayErrorMessage(ERR20);
         else {
-            num = parseInt(num.substring(0,num.length-1));
-            for(var i=0;i < shotBoxes.length;i++){
-                
-                var shot = shotBoxes[i];
-                var score = $(shot).find('.score').html();
-                score  = parseInt(score.substring(0,score.length-1));
-                if(score < num){
-                    $(shot).addClass("hideshot");
+
+            try{
+                num = parseInt(num.substring(0,num.length-1));
+                for(var i=0;i < shotBoxes.length;i++){
+                    
+                    var shot = shotBoxes[i];
+                    var score = $(shot).find('.score').html();
+                    score  = parseInt(score.substring(0,score.length-1));
+                    if(score < num){
+                        $(shot).addClass("hideshot");
+                    }
                 }
+                $('.hideshot').hide();
             }
-            $('.hideshot').hide();
+            catch(e){
+                displayErrorMessage(ERR21);
+                console.warn(e);
+            }
         }
   }
 
@@ -1420,23 +1445,29 @@ if (voiceMode) {
         if(shotBoxes.length==0)
             displayErrorMessage(ERR20);
         else {
-            var count=0;
-            num = parseInt(num.substring(0,num.length-1));
-            for(var i=0;i < shotBoxes.length;i++){
-                
-                var shot = shotBoxes[i];
-                var score = $(shot).find('.score').html();
-                score  = parseInt(score.substring(0,score.length-1));
-                if(score > num){
-                   count++;
+            try{
+                var count=0;
+                num = parseInt(num.substring(0,num.length-1));
+                for(var i=0;i < shotBoxes.length;i++){
+                    
+                    var shot = shotBoxes[i];
+                    var score = $(shot).find('.score').html();
+                    score  = parseInt(score.substring(0,score.length-1));
+                    if(score > num){
+                       count++;
+                    }
                 }
+                if(count==0)
+                  displayErrorMessage("There is no shot greater than "+num+"%");
+                else if(count==1)
+                  displayErrorMessage("There is 1 shot greater than "+num+"%");
+                else
+                  displayErrorMessage("There are "+count+" shots greater than "+num+"%");
             }
-            if(count==0)
-              displayErrorMessage("There is no shot greater than "+num+"%");
-            else if(count==1)
-              displayErrorMessage("There is 1 shot greater than "+num+"%");
-            else
-              displayErrorMessage("There are "+count+" shots greater than "+num+"%");
+            catch(e){
+                displayErrorMessage(ERR21);
+                console.warn(e);
+            }
         }
   }
 
