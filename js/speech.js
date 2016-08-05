@@ -1193,6 +1193,17 @@ if (voiceMode) {
         playVideoByNumber(1);
   }
 
+  function replaceEnglishNumber(num){
+
+        for(var i in englishNumbers){
+            if(i == num){
+                num = englishNumbers[i];
+                break;
+            }
+        }
+        return num;  
+  }
+
 /**
  * Plays the video by its number
  * Example- 'play video number 3'
@@ -1202,6 +1213,7 @@ if (voiceMode) {
 
   function playVideoByNumber(num){
 
+        num = replaceEnglishNumber(num);
         if(!checkUseCasesByNumber(num)){
 
             var labeledShots = $(".serialnumber");
@@ -1220,6 +1232,7 @@ if (voiceMode) {
 
   function searchVideoByNumber(num){
 
+        num = replaceEnglishNumber(num);
         if(!checkUseCasesByNumber(num)){
 
             var labeledShots = $(".serialnumber");
@@ -1237,6 +1250,7 @@ if (voiceMode) {
 
   function dropOnCanvasByNumber(num){
 
+        num = replaceEnglishNumber(num);
         if(!checkUseCasesByNumber(num)){
 
             var labeledShots = $(".serialnumber");
@@ -1280,7 +1294,9 @@ if (voiceMode) {
                 var labeledShots = $(".serialnumber");
                 var outIndex = "";
               
-                for(var i=0;i<num.length;i++){        
+                for(var i=0;i<num.length;i++){
+
+                    num[i] = replaceEnglishNumber(num[i]);        
                     if(num[i] > labeledShots.length){
                     
                         outIndex += num[i]+" ";
