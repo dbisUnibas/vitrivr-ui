@@ -2,7 +2,6 @@ if (voiceMode) {
 
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
-  var windowDisplay = false;
   var row = 0;                  // used for browsing video containers 
   var factor = 0;
   var response;                 // used to set whenever user responded to feedback
@@ -61,9 +60,9 @@ if (voiceMode) {
 
   function displayCommands(){
 
-        if(!windowDisplay){
-            windowDisplay = true;
-            $('#commands-model').openModal();
+        if($('#commands-modal').css('display') == 'none' ){
+           
+            $('#commands-modal').openModal();
         }
         else
             displayErrorMessage(ERR1);
@@ -75,12 +74,23 @@ if (voiceMode) {
  
 
   function closeWindow(){
+     
+        var flag=0;
+        if(!($('#commands-modal').css('display') == 'none')){
+            flag=1;
+            $('#commands-modal').closeModal();
+        }
+
+        if(!($('#video-modal').css('display') == 'none')){
+            flag=1;
+            var player = videojs('videoPlayer');
+            player.pause();
+            $('#video-modal').closeModal();
+        }
         
-        windowDisplay = false;
-        $('#commands-model').closeModal();
-        var player = videojs('videoPlayer');
-        player.pause();
-        $('#video-modal').closeModal();
+        if(flag==0)
+            displayErrorMessage(ERR23);
+
   }
 
 /**
@@ -89,7 +99,7 @@ if (voiceMode) {
 
   function replayVideo(){
 
-        if($('#video-modal').is(':visible')){
+        if(!$('#video-modal').css('display') == 'none'){
             var player = videojs('videoPlayer');
             player.currentTime(shotStartTime);
             player.play();
@@ -1497,7 +1507,7 @@ if (voiceMode) {
             allCommands += "&bull;  "+baseCommands[phrase].toLowerCase()+"<br>";
         }
 
-        $('#commands-model > div > p').html(allCommands);
+        $('#commands-modal > div > p').html(allCommands);
   }
 
 /**
