@@ -63,7 +63,7 @@ if (voiceMode) {
 
         if(!windowDisplay){
             windowDisplay = true;
-            $('#showCommands').openModal();
+            $('#commands-model').openModal();
         }
         else
             displayErrorMessage(ERR1);
@@ -77,7 +77,7 @@ if (voiceMode) {
   function closeWindow(){
         
         windowDisplay = false;
-        $('#showCommands').closeModal();
+        $('#commands-model').closeModal();
         var player = videojs('videoPlayer');
         player.pause();
         $('#video-modal').closeModal();
@@ -1497,7 +1497,7 @@ if (voiceMode) {
             allCommands += "&bull;  "+baseCommands[phrase].toLowerCase()+"<br>";
         }
 
-        $('#showCommands > div > p').html(allCommands);
+        $('#commands-model > div > p').html(allCommands);
   }
 
 /**

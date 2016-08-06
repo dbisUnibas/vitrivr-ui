@@ -334,7 +334,8 @@ function sequenceSegmentation(){
 		
 	}
 	updateScores(true);
-	
+	if(voiceMode)
+		addSerialNumber();
 }
 
 function playShot(event){
