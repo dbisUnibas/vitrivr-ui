@@ -3,7 +3,7 @@ if (voiceMode) {
   var actionVariable = null;    // used to set action
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video containers 
-  var factor = 0;
+  var factor = 0;               // increase with the extent of followup command
   var response;                 // used to set whenever user responded to feedback
   var voiceText= new Array();   // used for voice search query
   var colorByVoice = "#000000"; // always contains current selected color
@@ -11,10 +11,13 @@ if (voiceMode) {
   var feedbackCount = 0;        // keep counts of number of consecutive feedback response
 
   var dictionary={};            // dictionary used in feedback system
-  var commandID=[];
+  var commandID=[];             // maps commmands to their IDs in dictionary of feedback system
 
 // declaring constants
   const VOICE_TEXTBOX = "#voiceTextbox";
+  const NAVIGATION_COLOR = "blue";        // boundary color of current browsing video container
+  const POSITIVE_COLOR = "#006400";       // boundary color over positive feedback shot
+  const NEGATIVE_COLOR = "#F44336";       // boundary color over nagative feedback shot
 
 /**
  * Scroll the textbox whenever it overflows due to display of recognized words/sentences
@@ -35,12 +38,12 @@ if (voiceMode) {
   function displayErrorMessage(message) {
 
         if(feedbackCount<=3)
-            responsiveVoice.speak(message,PERSON);        
+            responsiveVoice.speak(message,PERSON);    // voice response of UI        
         Materialize.toast(message, 3000);
   }
 
 /**
- * Adds serial numbers to video shots of pointed container
+ * Adds serial numbers to video shots of current browsing container
  */
 
   function addSerialNumber(){
@@ -69,9 +72,8 @@ if (voiceMode) {
   }
 
 /**
- * Closes any pop up window
+ * Closes pop up window of 'all commands' and video player
  */
- 
 
   function closeWindow(){
      
@@ -714,7 +716,7 @@ if (voiceMode) {
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
-            document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
+            document.getElementById(containerArray[row].id).style = "border: 2px solid " + NAVIGATION_COLOR;
 
             addSerialNumber();
         }
@@ -753,7 +755,7 @@ if (voiceMode) {
             }
 
             $('html, body').animate({scrollTop: $("#"+containerArray[row].id).offset().top  }, 800);
-            document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
+            document.getElementById(containerArray[row].id).style = "border: 2px solid "+NAVIGATION_COLOR;
         
             addSerialNumber();
         }
@@ -838,9 +840,6 @@ if (voiceMode) {
               case d:
                   browsePrevious(2*(factor-1));
                   break;
-             /* case e:
-                  addCanvas();
-                  break;*/
               default:
                   displayErrorMessage("This command doesn't work after query: "+lastRecognized);
         }
@@ -953,7 +952,7 @@ if (voiceMode) {
               remove_element(rf_negative,shotId);
             }
             rf_positive.push(shotId);
-            document.getElementById(shotBox.attr('id')).style.border = "medium solid #006400";
+            document.getElementById(shotBox.attr('id')).style.border = "medium solid " + POSITIVE_COLOR;
           }
         }
         else if(actionVariable == "removeVideo"){//negative
@@ -970,7 +969,7 @@ if (voiceMode) {
               }
 
               rf_negative.push(shotId);
-              document.getElementById(shotBox.attr('id')).style.border = "medium solid #F44336";
+              document.getElementById(shotBox.attr('id')).style.border = "medium solid " + NEGATIVE_COLOR;
             }
         }
         
@@ -1073,7 +1072,7 @@ if (voiceMode) {
                 row = i;
                 $('.serialnumber').remove();
                 addSerialNumber();
-                document.getElementById(containerArray[row].id).style = "border: 2px solid blue;";
+                document.getElementById(containerArray[row].id).style = "border: 2px solid " + NAVIGATION_COLOR;
                 break;
             }
         }
