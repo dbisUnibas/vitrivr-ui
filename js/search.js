@@ -5,6 +5,9 @@ var Scores = {};
 var rf_positive = new Array();
 var rf_negative = new Array();
 
+/*
+*	splitVideoExecuted variable allows to execute sequenceSegmentation() function only once per search
+*/
 var splitVideoExecuted;
 
 function getCategories(){

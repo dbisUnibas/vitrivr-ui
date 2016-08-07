@@ -14,6 +14,9 @@
   const QUERY_F = 'add it';
   const QUERY_G = 'remove it'; 	
 
+  const COMMAND_A = "voice search *tag";
+  const COMMAND_B = "*tag1 voice search *tag2";
+
   var followUpCommands = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
 
   const PERSON = "UK English Female";

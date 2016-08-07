@@ -1,6 +1,6 @@
 if (voiceMode) {
 
-  var actionVariable = null;    // used to set action
+  var actionVariable = null;    // used to set click based action
   var actionOccured = false;    // used to check if action has occurred or not
   var row = 0;                  // used for browsing video containers 
   var factor = 0;               // increase with the extent of followup command
@@ -18,6 +18,7 @@ if (voiceMode) {
   const NAVIGATION_COLOR = "blue";        // boundary color of current browsing video container
   const POSITIVE_COLOR = "#006400";       // boundary color over positive feedback shot
   const NEGATIVE_COLOR = "#F44336";       // boundary color over nagative feedback shot
+  const FONT_COLOR = "#F44336";
 
 /**
  * Scroll the textbox whenever it overflows due to display of recognized words/sentences
@@ -139,7 +140,7 @@ if (voiceMode) {
   }
 
 /**
- * Checks if response is set after 5 sec of feedback 
+ * Checks if response is set after 5 sec of feedback given by feedback system
  * If response is set then query is executed w.r.t. feedback command
  *
  * @param {String} feedback command suggested by feedback system
@@ -156,7 +157,7 @@ if (voiceMode) {
                 factor = 1;
             }
 
-            commands[feedbackCommand].apply();
+            commands[feedbackCommand].apply();  
             displayErrorMessage(ERR3);
         }
         else 
@@ -167,7 +168,7 @@ if (voiceMode) {
 
 /**
  * This function sets the response variable when user say "yes"
- * as a response to feedback
+ * as a response to feedback given by UI
  */
 
   function setResponse(){
@@ -179,9 +180,11 @@ if (voiceMode) {
   }
 
 /**
- * This function prints the sentence with black font in the text box
- * The sentence printed here is the one which is not a voice query 
+ * This function prints the sentence with black font in the voice query text box
+ * Black font shows that it is not a recognized voice command
  * Unrecognized sentence after pre processing is given to feedback system
+ * Feedback command returned is checked further and response is given acordingly
+ * feedbackCommand is equal to 1 when feedback response has normalized frequency greater its threshold 
  *
  * @param {(string|string[])} sentences Array of probable recognized sentences
  */  
@@ -196,7 +199,7 @@ if (voiceMode) {
         scrollTextBox();
         sentences = preProcess(sentences);
         var feedbackCommand = userInterfaceFeedback(sentences);
-       // console.log(sentences);
+       
         if(feedbackCommand == undefined){
             factor = 0;
             feedbackCount++;
@@ -217,7 +220,7 @@ if (voiceMode) {
   }
   
 /**
- * This function prints voice query given by user except the "voice search" query
+ * This function prints voice command given by user except the "voice search" query
  * The query printed in text box has #F44336 font color
  *
  * @param {string} phrase Recognized voice query
@@ -232,10 +235,10 @@ if (voiceMode) {
             factor = 1;
         }
 
-        if(!(command == "voice search *tag" || command == "*tag1 voice search *tag2")){
+        if(!(command == COMMAND_A || command == COMMAND_B)){
     
             $(VOICE_TEXTBOX).val(phrase);
-            $(VOICE_TEXTBOX).css('color','#F44336');
+            $(VOICE_TEXTBOX).css('color',FONT_COLOR);
             
             scrollTextBox();
         }
@@ -262,39 +265,39 @@ if (voiceMode) {
 
 
 /**
- * This function currently just ignore the speech before saying "voice search"
- * The query printed in text box is the speech after saying "voice search"
+ * This function ignores the speech before saying "voice search"
+ * The query printed in voice search query text box is the speech after saying "voice search"
  *
  * @param {string} tag1 String before "voice search"; Ignored
- * @param {string} tag2 String after "voice search"; Will be used for voice search
+ * @param {string} tag2 String after "voice search"; Will be used as voice search text query
  */
 
   function voiceSearch_2(tag1,tag2) {
         
         $(VOICE_TEXTBOX).val(tag2);
-        $(VOICE_TEXTBOX).css('color','#F44336');
+        $(VOICE_TEXTBOX).css('color',FONT_COLOR);
         scrollTextBox();
 
         $('#voiceSearchQuery').val(tag2);
   }
 
 /**
- * The fuction currently just print the speech query after saying "voice query" 
+ * The function print the speech query after saying "voice query" in voice search query text box
  *
- * @param {string} tag String after "voice search"; Will be used for voice search
+ * @param {string} tag String after "voice search"; Will be used as voice search text query
  */
 
   function voiceSearch_1(tag) {
 
         $(VOICE_TEXTBOX).val(tag);
-        $(VOICE_TEXTBOX).css('color','#F44336');
+        $(VOICE_TEXTBOX).css('color',FONT_COLOR);
         scrollTextBox();
 
         $('#voiceSearchQuery').val(tag);
   }
 
 /**
- * Toggle the top bar
+ * Toggles the top bar
  */
 
   function toggleTopbar(){
@@ -306,7 +309,7 @@ if (voiceMode) {
   }
 
 /**
- * Toggle the sidebar
+ * Toggles the sidebar
  */
 
   function toggleSidebar(){
@@ -332,7 +335,6 @@ if (voiceMode) {
 
 /**
 * Displays the color sketch option for canvas
-*
 */
 
   function showColorSketch(){
@@ -347,7 +349,6 @@ if (voiceMode) {
 
 /**
 * Displays the motion sketch option for canvas
-*
 */
 
   function showMotionSketch(){
@@ -362,7 +363,7 @@ if (voiceMode) {
   }
 
 /**
- * Searches the canvas
+ * Searches the canvas and voice search query (text query) if available
  */
 
   function searchCanvasQuery(){
@@ -371,7 +372,10 @@ if (voiceMode) {
 
 /**
  * Searches any particular canvas or combination of Canvas
- * Example- tag ="1 2 and 3" will search for first,second and third canvas 
+ * The function builds query considering only particular canvases
+ * The function display's error and returns when canvas with certain number is not present
+ * Goes to catch block if parameter 'tag' contains words instead of numbers 
+ * Example- "search canvas 1 3 and 4" will search for first,third and forth canvas 
  *
  * @param {string} tag Integers string seprated by spaces and containing "and" in between
  */ 
@@ -430,7 +434,7 @@ if (voiceMode) {
 
 /**
  * Use to split video into sequences
- * Works when video results are completed retrieved
+ * Works after video results are completed retrieved
  * Can be executed once after every search
  */
 
@@ -446,7 +450,7 @@ if (voiceMode) {
             displayErrorMessage(ERR7);
         }
         else if(resultDisplayed.length > 0){
-            if(!splitVideoExecuted){
+            if(!splitVideoExecuted){          // declared in search.js
               
                 sequenceSegmentation();
             }
@@ -459,7 +463,7 @@ if (voiceMode) {
   }
 
 /**
- * This function select/set the color said by user in voice query
+ * This function selects/sets the color said by user in voice query
  * 
  * @param {string} color Color name in voice query
  */ 
@@ -514,7 +518,8 @@ if (voiceMode) {
   });
 
 /**
- * Fills a particular Canvas with the color in voice query
+ * Fills a particular canvas with the color in voice query
+ * The function display's error and returns when canvas with certain number is not present
  * Example: 'fill Canvas 2 with blue colour'
  *
  * @param {Integer} num Canvas number that is to filled with color
@@ -523,7 +528,7 @@ if (voiceMode) {
 
   function fillCanvas(num , color){
 
-        fillColor = color.replace(/\s/g, '');
+        fillColor = color.replace(/\s/g, '');  // removes the spaces
         fillColor = fillColor.toLowerCase();
     
         fillColor = colourToHex[fillColor];
@@ -544,7 +549,9 @@ if (voiceMode) {
 
 /**
  * Downloads a particular Canvas in the system as png image
- * 
+ * The function display's error and returns when canvas with certain number is not present 
+ * Goes to catch block when 'num' parameter is null or string 
+ *
  * @param {Integer} num Canvas number that has to be downloaded 
  */   
 
@@ -568,7 +575,8 @@ if (voiceMode) {
   }
 
 /**
- * Deletes a particular Canvas if available
+ * Deletes a particular Canvas if available else display's error
+ * Goes to catch block when 'num' parameter is null or string 
  * 
  * @param {Integer} num Canvas number that has to be deleted 
  */  
@@ -591,7 +599,8 @@ if (voiceMode) {
   }
 
 /**
- * Clears a particular Canvas if available
+ * Clears a particular Canvas if available else display's error
+ * Goes to catch block when 'num' parameter is null or string 
  * 
  * @param {Integer} num Canvas number that has to be cleared 
  */ 
@@ -619,8 +628,8 @@ if (voiceMode) {
 
 /**
  * Increse pen size upto 100 units
- * unit of increase is decided by follow up command
- * @param {Integer} increase in radius of pen
+ * unit of increase is decided by extent of follow up command else default is 5 units
+ * @param {Integer} unit Increase in radius of pen
  */
 
   function increasePenSize(unit){
@@ -652,8 +661,8 @@ if (voiceMode) {
 
 /**
  * Decrease pen size till 1 unit
- * unit of decrease is decided by follow up command
- * @param {Integer} decrease in radius of pen
+ * unit of decrease is decided by extent of follow up command else default is 5 units
+ * @param {Integer} unit Decrease in radius of pen
  */
 
   function decreasePenSize(unit){
@@ -685,7 +694,8 @@ if (voiceMode) {
 
 /**
  * Scrolls down the window to the next video container
- * The video container that comes up on scroll is highlighted by #F44336 color border
+ * Displays error for cases when no result is retrieved, search is in progress
+ * The video container that comes up on scroll is highlighted by blue color border
  */
 
   function browseNext(unit) {
@@ -724,7 +734,8 @@ if (voiceMode) {
 
  /**
  * Scrolls up the window to the previous video container
- * The video container that comes up on scroll is highlighted by #F44336 color border
+ * Displays error for cases when no result is retrieved, search is in progress
+ * The video container that comes up on scroll is highlighted by blue color border
  */ 
 
   function browsePrevious(unit) {
@@ -762,8 +773,8 @@ if (voiceMode) {
   }
 
  /**
- * Performs the last action with more degree of extent 
- * Works for changing pen size
+ * Performs the last action of changing pen size with more degree of extent 
+ * Works after changing pen size else error is prompted
  * voice query - "even more"/"more"
  */ 
 
@@ -804,8 +815,8 @@ if (voiceMode) {
   }
 
 /**
- * Performs the last action with more degree of extent 
- * Works for browsing container
+ * Performs the last action of navigation with more degree of extent 
+ * Works after browsing video container
  * voice query - "even further"/"further"
  */ 
 
@@ -846,8 +857,8 @@ if (voiceMode) {
   }
 
 /**
- * Performs the last action with more degree of extent 
- * Works for adding a new Canvas
+ * Performs the last action of adding canvas with more degree of extent 
+ * Works after adding a new Canvas
  * voice query - "one more"/"again one more"
  */ 
 
@@ -879,6 +890,7 @@ if (voiceMode) {
 /**
  * Works only when video is playing
  * Adds the playing video to positive / negative feedback
+ * Query to add to postive feedback - 'add it' and negative feedback - 'remove it'
  */ 
 
   function followUpFeedback(){
@@ -887,7 +899,7 @@ if (voiceMode) {
             displayErrorMessage(ERR15);
         }
         else{
-            setTimeout(function(){  // delay of 100ms is given so that recognized query got set findrst
+            setTimeout(function(){  // delay of 100ms is given so that recognized query got set first
 
                   var lastRecognized = SpeechKITT.getLastRecognizedSentence();
                   var player = videojs('videoPlayer');
@@ -911,12 +923,12 @@ if (voiceMode) {
         }
   }
 
-// Below are the functions used for speech + mouse in combination
+// Below are some functions used for speech + mouse in combination
 
 /**
  * Checks  if user has clicked on video thumbnail
  * Function is called after 5 seconds of action voice query 
- * If action/click is not occured than it sets actionVariable to null
+ * If action/click is not occured than it sets actionVariable to null and display's error
  */
 
   function checkActionOccured(){
@@ -931,7 +943,9 @@ if (voiceMode) {
 /**
  * Works according to actionVariable value 
  * actionValue="addVideo" -> adds video to positive feedback on click over video thumbnail
- * actionValue="addVideo" -> adds video to positive feedback on click over video thumbnail
+ * actionValue="removeVideo" -> adds video to negative feedback on click over video thumbnail
+ * adds color boubdary over video shots added positive/negative feedback
+ *
  * @param {Object} object thumbnail image element
  */  
 
@@ -986,6 +1000,7 @@ if (voiceMode) {
 /**
  * Gives control to the necessary function, depending on the value of actionVariable
  * decideAction function is called when user click on video thumbnail
+ *
  * @param {Object} thumbnail image element
  */
 
@@ -1159,6 +1174,10 @@ if (voiceMode) {
 
         checkUseCases("search_play");
   }
+
+/**
+ * Called when action query to add serial numbers to shots of video container is made
+ */
 
   function addNumbersHere(){
 
@@ -1408,6 +1427,13 @@ if (voiceMode) {
         }
   }
 
+/**
+ * Hide all the shots below particular score
+ * Example- 'hide all shots below score _____%'
+ *
+ * @param {String} num String containing a number and appended with '%'
+ */
+
   function hideSpecificShots(num){
 
         var shotBoxes = $(".shotbox");
@@ -1434,6 +1460,10 @@ if (voiceMode) {
             }
         }
   }
+
+ /**
+ * Shows the hidden shots if any
+ */
 
   function showHiddenShots(){
 
