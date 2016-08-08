@@ -1,3 +1,12 @@
+/**
+* Speech functions. 
+* <P>
+* 
+* This file contains all functions related to voice interface
+*
+* @author Prateek Goel
+*/
+
 if (voiceMode) {
 
   var actionVariable = null;    // used to set click based action
@@ -23,19 +32,16 @@ if (voiceMode) {
 /**
  * Scroll the textbox whenever it overflows due to display of recognized words/sentences
  */
-
   function scrollTextBox() {
         var textarea = $(VOICE_TEXTBOX);
         if(textarea.length)
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
   }
-
 /**
  * pop up the error message as a toast and voice response
  *
  * @param {string} message The error to be displayed
  */
-
   function displayErrorMessage(message) {
 
         if(feedbackCount<=3)
@@ -46,7 +52,6 @@ if (voiceMode) {
 /**
  * Adds serial numbers to video shots of current browsing container
  */
-
   function addSerialNumber(){
 
         var containerArray = $(".videocontainer");
@@ -61,7 +66,6 @@ if (voiceMode) {
 /**
  * Displays all commands in a pop up window
  */
-
   function displayCommands(){
 
         if($('#commands-modal').css('display') == 'none' ){
@@ -75,7 +79,6 @@ if (voiceMode) {
 /**
  * Closes pop up window of 'all commands' and video player
  */
-
   function closeWindow(){
      
         var flag=0;
@@ -99,7 +102,6 @@ if (voiceMode) {
 /**
  * Replay the playing video 
  */
-
   function replayVideo(){
 
         if(!$('#video-modal').css('display') == 'none'){
@@ -114,7 +116,6 @@ if (voiceMode) {
 /**
  * Pause the playing video 
  */
-
   function pauseVideo(){
 
         if($('#video-modal').is(':visible')){
@@ -128,7 +129,6 @@ if (voiceMode) {
 /**
  * Starts the paused video 
  */
-
   function startVideo(){
         
         if($('#video-modal').is(':visible')){
@@ -145,7 +145,6 @@ if (voiceMode) {
  *
  * @param {String} feedback command suggested by feedback system
  */ 
-
   function feedbackResponse(feedbackCommand){
 
         if(response == 1){
@@ -170,7 +169,6 @@ if (voiceMode) {
  * This function sets the response variable when user say "yes"
  * as a response to feedback given by UI
  */
-
   function setResponse(){
         if(response == 0)
             response = 1;
@@ -188,7 +186,6 @@ if (voiceMode) {
  *
  * @param {(string|string[])} sentences Array of probable recognized sentences
  */  
-
   function notRecognizedSentence(sentences) {
         if (Array.isArray(sentences)) {
             sentences = sentences[0];
@@ -226,7 +223,6 @@ if (voiceMode) {
  * @param {string} phrase Recognized voice query
  * @param {string} command The command executed for recognized voice query
  */ 
-
   function recognizedSentence(phrase,command) {
         
         feedbackCount = 0;
@@ -249,7 +245,6 @@ if (voiceMode) {
  *
  * @param {string} str Unrecognized voice query
  */ 
-
   function preProcess(str){
 
         var before = str.split(" ");
@@ -263,7 +258,6 @@ if (voiceMode) {
         return after.trim();
   }
 
-
 /**
  * This function ignores the speech before saying "voice search"
  * The query printed in voice search query text box is the speech after saying "voice search"
@@ -271,7 +265,6 @@ if (voiceMode) {
  * @param {string} tag1 String before "voice search"; Ignored
  * @param {string} tag2 String after "voice search"; Will be used as voice search text query
  */
-
   function voiceSearch_2(tag1,tag2) {
         
         $(VOICE_TEXTBOX).val(tag2);
@@ -286,7 +279,6 @@ if (voiceMode) {
  *
  * @param {string} tag String after "voice search"; Will be used as voice search text query
  */
-
   function voiceSearch_1(tag) {
 
         $(VOICE_TEXTBOX).val(tag);
@@ -299,7 +291,6 @@ if (voiceMode) {
 /**
  * Toggles the top bar
  */
-
   function toggleTopbar(){
         $('body').toggleClass('push-tobottom');
         $('#btnShowTopbar').toggleClass('topOpen');
@@ -311,7 +302,6 @@ if (voiceMode) {
 /**
  * Toggles the sidebar
  */
-
   function toggleSidebar(){
         if($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
             
@@ -326,7 +316,6 @@ if (voiceMode) {
 /**
  * Toggles both top and sidebar
  */
-
   function toggleTopSideBar(){
   
           toggleTopbar();
@@ -336,7 +325,6 @@ if (voiceMode) {
 /**
 * Displays the color sketch option for canvas
 */
-
   function showColorSketch(){
         $('.motionsketch').hide();
         $('.objectsketch').hide();
@@ -350,7 +338,6 @@ if (voiceMode) {
 /**
 * Displays the motion sketch option for canvas
 */
-
   function showMotionSketch(){
         $('.motionsketch').show();
         $('.objectsketch').show();
@@ -365,7 +352,6 @@ if (voiceMode) {
 /**
  * Searches the canvas and voice search query (text query) if available
  */
-
   function searchCanvasQuery(){
         search();
   }
@@ -379,7 +365,6 @@ if (voiceMode) {
  *
  * @param {string} tag Integers string seprated by spaces and containing "and" in between
  */ 
-
   function searchParticularCanvas(tag){
 
         try{
@@ -427,7 +412,6 @@ if (voiceMode) {
 /**
  * Adds a new canvas
  */
-
   function addCanvas(){
         newShotInput();
   }
@@ -437,7 +421,6 @@ if (voiceMode) {
  * Works after video results are completed retrieved
  * Can be executed once after every search
  */
-
   function splitVideo(){
     
         var resultDisplayed = $(".videocontainer");
@@ -467,7 +450,6 @@ if (voiceMode) {
  * 
  * @param {string} color Color name in voice query
  */ 
-
   function selectColor(color){
 
         colorByVoice = color.replace(/\s/g, '');      // remove spaces
@@ -492,7 +474,6 @@ if (voiceMode) {
       *  Selects the color when user clicks on the color selection button
       *  Color selection button is present in the sidebar of UI
       */
-
       $('.sp-replacer').click(function(){
 
           colorByVoice = $("#colorInput").spectrum('get');
@@ -506,7 +487,6 @@ if (voiceMode) {
           *  Sets the colorByVoice variable when user clicks on the color platelet 
           *  Color platelets are present on the color selection window
           */
-
           $('.sp-thumb-el').click(function(){
               
               setTimeout(function(){
@@ -525,7 +505,6 @@ if (voiceMode) {
  * @param {Integer} num Canvas number that is to filled with color
  * @param {String} color Name of the color in voice query
  */   
-
   function fillCanvas(num , color){
 
         fillColor = color.replace(/\s/g, '');  // removes the spaces
@@ -554,7 +533,6 @@ if (voiceMode) {
  *
  * @param {Integer} num Canvas number that has to be downloaded 
  */   
-
   function downloadCanvas(num){
         
         var canvas = $(".query-input-container");
@@ -580,7 +558,6 @@ if (voiceMode) {
  * 
  * @param {Integer} num Canvas number that has to be deleted 
  */  
-
   function deleteCanvas(num){
 
         var canvas = $(".query-input-container");
@@ -604,7 +581,6 @@ if (voiceMode) {
  * 
  * @param {Integer} num Canvas number that has to be cleared 
  */ 
-
   function clearCanvas(num){
 
         var canvas = $(".query-input-container");
@@ -631,7 +607,6 @@ if (voiceMode) {
  * unit of increase is decided by extent of follow up command else default is 5 units
  * @param {Integer} unit Increase in radius of pen
  */
-
   function increasePenSize(unit){
         
         if(unit == undefined){
@@ -664,7 +639,6 @@ if (voiceMode) {
  * unit of decrease is decided by extent of follow up command else default is 5 units
  * @param {Integer} unit Decrease in radius of pen
  */
-
   function decreasePenSize(unit){
         
         if(unit == undefined){
@@ -697,7 +671,6 @@ if (voiceMode) {
  * Displays error for cases when no result is retrieved, search is in progress
  * The video container that comes up on scroll is highlighted by blue color border
  */
-
   function browseNext(unit) {
 
         if(unit == undefined)
@@ -737,7 +710,6 @@ if (voiceMode) {
  * Displays error for cases when no result is retrieved, search is in progress
  * The video container that comes up on scroll is highlighted by blue color border
  */ 
-
   function browsePrevious(unit) {
         
         if(unit == undefined)
@@ -777,7 +749,6 @@ if (voiceMode) {
  * Works after changing pen size else error is prompted
  * voice query - "even more"/"more"
  */ 
-
   function followUpPenSize() {
         
         if(factor == 0){
@@ -819,7 +790,6 @@ if (voiceMode) {
  * Works after browsing video container
  * voice query - "even further"/"further"
  */ 
-
   function followUpBrowsing() {
         
         if(factor == 0){
@@ -861,7 +831,6 @@ if (voiceMode) {
  * Works after adding a new Canvas
  * voice query - "one more"/"again one more"
  */ 
-
   function followUpCanvas() {
         
         if(factor == 0){
@@ -890,9 +859,9 @@ if (voiceMode) {
 /**
  * Works only when video is playing
  * Adds the playing video to positive / negative feedback
+ * Assigns action to actionVariable and then calls relevanceFeedbackVoice function
  * Query to add to postive feedback - 'add it' and negative feedback - 'remove it'
  */ 
-
   function followUpFeedback(){
 
         if($('#video-modal').css('display') == 'none'){
@@ -930,7 +899,6 @@ if (voiceMode) {
  * Function is called after 5 seconds of action voice query 
  * If action/click is not occured than it sets actionVariable to null and display's error
  */
-
   function checkActionOccured(){
 
         if(!actionOccured){
@@ -948,7 +916,6 @@ if (voiceMode) {
  *
  * @param {Object} object thumbnail image element
  */  
-
   function relevanceFeedbackVoice(object){
   
         var shotBox = object.parent().parent();
@@ -998,12 +965,11 @@ if (voiceMode) {
   }
 
 /**
- * Gives control to the necessary function, depending on the value of actionVariable
- * decideAction function is called when user click on video thumbnail
+ * Gives control to a particular function, depending on the value of actionVariable
+ * decideAction function is called when user clicks on video thumbnail
  *
  * @param {Object} thumbnail image element
  */
-
   function decideAction(event){
 
         switch( actionVariable ) {
@@ -1060,20 +1026,23 @@ if (voiceMode) {
 /**
  * Adds the thumbnail image on the canvas
  * The image is added always on last canvas (in case of single canvas last will the only present one)
- * @param {Object} thumbnail image element
+ * 
+ * @param {Object} thumbnail Image element
  */
-
    function addImageCanvas(thumbnail){
  
         var url = thumbnail.attr('src');
   
-        var len=0;
-        for (el in shotInputs) {
-            len++;
-        } 
-        shotInputs["shotInput_"+(len-1)].color.loadImageFromUrl(url);
+        var canvas = $(".query-input-container");
+        var id = canvas[canvas.length - 1].id; 
+        shotInputs[id].color.loadImageFromUrl(url);
   }
 
+ /**
+ * Adds serial numbers to shots of certain video container on which the click event occured
+ * 
+ * @param {Object} object Thumbnail image element
+ */ 
   function setVideoContainer(object){
 
         var container = $(object).closest('.videocontainer');
@@ -1095,13 +1064,13 @@ if (voiceMode) {
 
 /**
  * Checks for cases when the action query is made
+ * Assign actionVariable to particular action
  * Cases includes: 1) No video is retrieved
  *                 2) search is in progress
  *                 3) videos retrieved  
  * 
  * @param {String} action that will be performed after click on thumbnail image
  */  
-
   function checkUseCases(action){
 
         var resultDisplayed = $(".videocontainer");
@@ -1124,7 +1093,6 @@ if (voiceMode) {
 /**
  * Called when action query to play video is made
  */
-
   function playVideo(){
 
         checkUseCases("play");
@@ -1133,7 +1101,6 @@ if (voiceMode) {
 /**
  * Called when action query to search video by ID is made
  */
-
   function searchById(){
 
         checkUseCases("search");
@@ -1142,7 +1109,6 @@ if (voiceMode) {
 /**
  * Called when action query to add video to positive feedback is made
  */
-
   function positiveFeedback(){
 
         checkUseCases("addVideo");
@@ -1151,7 +1117,6 @@ if (voiceMode) {
 /**
  * Called when action query to add video to negative feedback is made
  */
-
   function negativeFeedback(){
 
         checkUseCases("removeVideo");
@@ -1160,7 +1125,6 @@ if (voiceMode) {
 /**
  * Called when action query to add thumbnail image on the canvas is made
  */
-
   function dropOnCanvas(){
 
         checkUseCases("dropImage");
@@ -1169,7 +1133,6 @@ if (voiceMode) {
 /**
  * Called when action query to play and search that video is made
  */
-
   function searchPlayVideo(){
 
         checkUseCases("search_play");
@@ -1178,7 +1141,6 @@ if (voiceMode) {
 /**
  * Called when action query to add serial numbers to shots of video container is made
  */
-
   function addNumbersHere(){
 
         checkUseCases("addNumbers");
@@ -1188,7 +1150,6 @@ if (voiceMode) {
  * Called when action query to search relevance feedback is made
  * There must be atleast one video added as positive feedback
  */
-
   function searchFeedback(){
 
         if(rf_positive.length > 0){
@@ -1202,12 +1163,11 @@ if (voiceMode) {
         }
   }
 
-  // Functions with suffix as "ByNumber" are called when action query is said by serial number
+// Functions with suffix as "ByNumber" are called when action query is said by serial number
 
 /**
  * Checks the use cases for the action queries that involed serial number of video
  */
-
   function checkUseCasesByNumber(num){
 
         var resultDisplayed = $(".videocontainer");
@@ -1239,12 +1199,18 @@ if (voiceMode) {
 /**
  * Plays the first shot/video of the current browsing container
  */ 
-
   function playFirstShot(){
 
         playVideoByNumber(1);
   }
 
+ /**
+ * Used for pre-processing of string containing integer numbers
+ * Repalces english number word with its integer value upto 10
+ * Example - 'one' -> '1' 
+ *
+ * @param {Integer} num Number of the video that is going to be played
+ */ 
   function replaceEnglishNumber(num){
 
         for(var i in englishNumbers){
@@ -1262,7 +1228,6 @@ if (voiceMode) {
  *
  * @param {Integer} num Number of the video that is going to be played
  */
-
   function playVideoByNumber(num){
 
         num = replaceEnglishNumber(num);
@@ -1279,9 +1244,8 @@ if (voiceMode) {
  * Searches the video by its number
  * Example- 'search video number 4'
  *
- * @param {Integer} num Number of the video that is going to be searched by itd ID
+ * @param {Integer} num Number of the video that is going to be searched by its ID
  */
-
   function searchVideoByNumber(num){
 
         num = replaceEnglishNumber(num);
@@ -1294,12 +1258,11 @@ if (voiceMode) {
   }
 
 /**
- * Drops the video thumbnail by its nember on the last Canavas present 
+ * Drops the video/shot thumbnail by its number on the last canavas present 
  * Example- 'drop image number 3 on Canvas'
  *
- * @param {Integer} num Number of the video that is going to be droped on Canvas
+ * @param {Integer} num Serial number of the video that is going to be droped on Canvas
  */
-
   function dropOnCanvasByNumber(num){
 
         num = replaceEnglishNumber(num);
@@ -1317,7 +1280,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing numbers of videos, seprated by spaces, that has to be considered for relevance feedback
  */
-
   function feedbackByNumber(num){
 
         var resultDisplayed = $(".videocontainer");
@@ -1373,7 +1335,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing numbers of videos, seprated by spaces, that has to be added to positive feedback
  */
-
   function positiveFeedbackByNumber(num){
 
         actionVariable = "addVideo";
@@ -1386,7 +1347,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing numbers of videos, seprated by spaces, that has to be added to negative feedback
  */
-
   function negativeFeedbackByNumber(num){
 
         actionVariable = "removeVideo";
@@ -1399,7 +1359,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing a number and appended with '%'
  */
-
   function showScoredVideo(num){
         
         var shotBoxes = $(".shotbox");
@@ -1433,7 +1392,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing a number and appended with '%'
  */
-
   function hideSpecificShots(num){
 
         var shotBoxes = $(".shotbox");
@@ -1464,7 +1422,6 @@ if (voiceMode) {
  /**
  * Shows the hidden shots if any
  */
-
   function showHiddenShots(){
 
         $('.hideshot').show();
@@ -1474,7 +1431,6 @@ if (voiceMode) {
 /**
  * Tells the total number of shots retrieved after searching 
  */
-
   function totalShots(){
 
         var shotBoxes = $(".shotbox");
@@ -1490,7 +1446,6 @@ if (voiceMode) {
  *
  * @param {String} num String containing a number and appended with '%'
  */  
-
   function totalSpecificShots(num){
         
         var shotBoxes = $(".shotbox");
@@ -1526,7 +1481,6 @@ if (voiceMode) {
 /**
  * Creates a pop up modal (window) which contains all base commands
  */
-
   function formCommandsModal(){
 
         var allCommands = "";
@@ -1543,7 +1497,6 @@ if (voiceMode) {
  * Builds a dictionary using the 3-grams words of commands
  * Each 3-gram is mapped to an array of IDs of commands containing that 3-gram
  */  
-
   function buildDictionary(){
       
         var number=1; 
@@ -1586,19 +1539,18 @@ if (voiceMode) {
                 }
             }
         }
-       //console.log(dictionary);
   }
-
-
 
 /**
  * Computes frequency of each command using dictionary 
  * Command with maximum frequency is used as a feedback
- * Frequency here signifies the number of words contained from unrecognized sentence
+ * Frequency here signifies the number of tri-grams that matches in unrecognized sentence
+ * Sets feedbackCommand to 1 and automatically executes query if normalized frequency is greater than 0.8
+ * If normalized frequency is less than 0.2 than feedbackCommand is set to undefined
+ *
  * @param {String} unrecognized sentence of user
  * @return {String} Feedback command
  */
-
   function userInterfaceFeedback(sentence){
     
         sentence = sentence.trim();
@@ -1678,10 +1630,10 @@ if (voiceMode) {
   
   $(document).ready(function (){
 
-        // Apply the language set in languageSpeech.js
+        // apply the language set in languageSpeech.js
         annyang.setLanguage(LANGUAGE);
 
-        // Add commands to annyang
+        // add commands to annyang
         annyang.addCommands(commands);
 
         // to print recognized speech in console
@@ -1695,12 +1647,13 @@ if (voiceMode) {
         annyang.addCallback('resultNoMatch', notRecognizedSentence);
         annyang.addCallback('resultMatch', recognizedSentence);
 
+        // instruction that is present on toggle button when it is ON
         SpeechKITT.setInstructionsText(INSTRUCTION); 
 
-        // Define a stylesheet for KITT to use
+        // Define a stylesheet for toogle botton to use
         SpeechKITT.setStylesheet('css/flat-pomegranate.css');
 
-        // Render KITT's interface
+        // Render Speech KITT's interface
         SpeechKITT.vroom();
 
         formCommandsModal();
