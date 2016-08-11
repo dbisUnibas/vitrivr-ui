@@ -1,3 +1,12 @@
+/**
+* Contains speech Commands, Error messages, Queries, colors, Language settings 
+* <P>
+* 
+* This file contains all language dependent things
+*
+* @author Prateek Goel
+*/
+
   // set langauge English(UK)
   const LANGUAGE = 'en-GB';
 
@@ -23,7 +32,7 @@
   // Static error messages
   const ERR1  = 'Window is open already';
   const ERR2  = 'There is no video playing';
-  const ERR3  = 'Query executed';
+  const ERR3  = 'Ok';
   const ERR4  = 'No feedback';
   const ERR5  = "Sorry I haven't understood you";
   const ERR6  = 'Query not executed as there is no video results retrieved';
