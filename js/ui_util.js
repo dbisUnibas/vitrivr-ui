@@ -207,7 +207,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
 	if(voiceMode){
 		$(".tophoverbox").hide();
-		$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);
+		$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);	// decideAction function is defined in speech.js
 	}
 }
 

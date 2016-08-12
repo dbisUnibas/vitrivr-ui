@@ -1598,9 +1598,8 @@ if (voiceMode) {
         var feedbackCommand;
         for(var phrase in commands){
 
-            var processedPhrase = phrase.replace(/[()]/g, '');
+            var processedPhrase = phrase.replace(/[()]/g, '');  // removes '(' and ')'
             var id = commandID[processedPhrase];
-
             if(maximumFrequency < frequencyCommand[id]){
 
                 maximumFrequency = frequencyCommand[id];
@@ -1638,7 +1637,7 @@ if (voiceMode) {
 
         // to print recognized speech in console
         annyang.debug(true);
-
+        // adding voice On/Off controls to toggle button
         SpeechKITT.setStartCommand(annyang.start);
         SpeechKITT.setAbortCommand(annyang.abort);
         annyang.addCallback('start', SpeechKITT.onStart);
