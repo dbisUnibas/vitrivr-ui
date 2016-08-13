@@ -14,9 +14,11 @@ This project extends Cineast user interface to support voice queries by converti
 * [Speech KITT](https://github.com/TalAter/SpeechKITT)
 * [Responsive voice](http://responsivevoice.org/)
 
-## Link to website
+## Important Links
 
-[Natural Language Query Interface](http://prateek1985.github.io/vitrivr-ui/)
+* [Link to Website](http://prateek1985.github.io/vitrivr-ui/)
+
+* [Link to GSoC Project](https://summerofcode.withgoogle.com/projects/#5587149046939648)
 
 ## List of functions which voice commands can do in interface:
 
