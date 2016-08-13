@@ -81,6 +81,6 @@ This project extends Cineast user interface to support voice queries by converti
 
 ## To switch off the voice mode
 
-* Set constant voiceMode to false
+* Set constant voiceMode in config.js to false
 
 * > default is true
