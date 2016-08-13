@@ -25,7 +25,7 @@ This project extends Cineast user interface to support voice queries by converti
 * Add text as query
 * Open/close top bar
 * Open/close sidebar
-* Search query
+* Search formed query
 * Adding a canvas
 * Split video into sequences
 * Increase pen size
@@ -60,10 +60,10 @@ This project extends Cineast user interface to support voice queries by converti
 * Show hidden video shots
 * Check total number of video shots
 * Check total number of video shots greater than particular score
-* Follow up commands for changing pen size
-* Follow up commands for browsing video container
-* Follow up commands for adding new canvas
-* Command to execute feedback response
+* Change pen size using follow-up commands
+* Browsing video container using follow-up commands
+* Adding new canvas using follow-up commands
+* Execution of feedback response given by system
 * Add playing video to positive feedback
 * Add playing video to negative feedback
 * Display all base commands
