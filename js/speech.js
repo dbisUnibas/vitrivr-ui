@@ -104,7 +104,7 @@ if (voiceMode) {
  */
   function replayVideo(){
 
-        if(!$('#video-modal').css('display') == 'none'){
+        if(!($('#video-modal').css('display') == 'none')){
             var player = videojs('videoPlayer');
             player.currentTime(shotStartTime);
             player.play();
@@ -232,7 +232,7 @@ if (voiceMode) {
 
         if(!(command == COMMAND_A || command == COMMAND_B)){
     
-            $(VOICE_TEXTBOX).val(phrase);
+            $(VOICE_TEXTBOX).val(phrase.toLowerCase());
             $(VOICE_TEXTBOX).css('color',FONT_COLOR);
             
             scrollTextBox();

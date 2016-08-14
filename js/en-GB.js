@@ -33,7 +33,7 @@
   const ERR1  = 'Window is open already';
   const ERR2  = 'There is no video playing';
   const ERR3  = 'Ok';
-  const ERR4  = 'No feedback';
+  const ERR4  = 'Please say yes just after my feedback';
   const ERR5  = "Sorry I haven't understood you";
   const ERR6  = 'Query not executed as there is no video results retrieved';
   const ERR7  = 'Please wait till search is in progress';
