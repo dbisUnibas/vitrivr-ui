@@ -213,7 +213,6 @@ if (voiceMode) {
             displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand].toLowerCase());
             setTimeout(feedbackResponse,5000,feedbackCommand);
         }
-
   }
   
 /**
@@ -371,7 +370,7 @@ if (voiceMode) {
             var arr = tag.split(" ");
             console.log("starting sketch-based search");
             removeItem = "and";
-            arr = $.grep(arr, function(value) {
+            arr = $.grep(arr, function(value) {   // removes "and" from arr
                return value != removeItem;
             });
             clearResults();
@@ -610,8 +609,7 @@ if (voiceMode) {
   function increasePenSize(unit){
         
         if(unit == undefined){
-            unit = 5;
-           
+            unit = 5;        
         }
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
@@ -630,8 +628,7 @@ if (voiceMode) {
                 shotInputs[el].color.setLineWidth(100);
             }
             $('#draw-radius').get(0).noUiSlider.set(100);
-        }
-      
+        }     
   }
 
 /**
@@ -642,8 +639,7 @@ if (voiceMode) {
   function decreasePenSize(unit){
         
         if(unit == undefined){
-            unit = 5;
-            
+            unit = 5;            
         }
         var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
         
@@ -662,8 +658,7 @@ if (voiceMode) {
                 shotInputs[el].color.setLineWidth(1);
             }
             $('#draw-radius').get(0).noUiSlider.set(1);
-        }
-      
+        }  
   }
 
 /**
@@ -1032,7 +1027,6 @@ if (voiceMode) {
    function addImageCanvas(thumbnail){
  
         var url = thumbnail.attr('src');
-  
         var canvas = $(".query-input-container");
         var id = canvas[canvas.length - 1].id; 
         shotInputs[id].color.loadImageFromUrl(url);

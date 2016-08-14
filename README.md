@@ -84,3 +84,7 @@ This project extends Cineast user interface to support voice queries by converti
 * Set constant voiceMode in config.js to false
 
 * > default is true
+
+## For installation of complete vitrivr stack
+
+* Consider this [link](https://vitrivr.org/getting_started.html)
