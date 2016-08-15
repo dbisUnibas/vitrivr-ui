@@ -51,8 +51,9 @@
   const ERR19 = 'Please also say shot number';
   const ERR20 = 'There is no shot retrieved';
   const ERR21 = 'Please also say score';
-  const ERR22 = 'Please check the query';
+  const ERR22 = 'Please check the voice query';
   const ERR23 = 'No window is open';
+  const ERR24 = 'Please also say which color';
 
 
 // voice queries/commands linked to their corresponding functions

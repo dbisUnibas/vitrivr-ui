@@ -450,21 +450,26 @@ if (voiceMode) {
  * @param {string} color Color name in voice query
  */ 
   function selectColor(color){
-
-        colorByVoice = color.replace(/\s/g, '');      // remove spaces
-        colorByVoice = colorByVoice.toLowerCase();
-    
-        colorByVoice = colourToHex[colorByVoice];
-        if(colorByVoice==undefined){
-            displayErrorMessage(color +" color is not available");
-            return;
+        try{
+            colorByVoice = color.replace(/\s/g, '');      // remove spaces
+            colorByVoice = colorByVoice.toLowerCase();
+        
+            colorByVoice = colourToHex[colorByVoice];
+            if(colorByVoice==undefined){
+                displayErrorMessage(color +" color is not available");
+                return;
+            }
+            $('span').removeClass("sp-thumb-active");
+            $('.sp-preview-inner').css("background-color",colorByVoice);
+            for (el in shotInputs) {
+                
+                shotInputs[el].color.setColor(colorByVoice);
+            } 
         }
-        $('span').removeClass("sp-thumb-active");
-        $('.sp-preview-inner').css("background-color",colorByVoice);
-        for (el in shotInputs) {
-            
-            shotInputs[el].color.setColor(colorByVoice);
-        }    
+        catch(e){
+            displayErrorMessage(ERR24);
+            console.warn(e);
+        }   
   }
 
   $(document).ready(function(){
@@ -493,7 +498,6 @@ if (voiceMode) {
               },100);
           });
       });
-
   });
 
 /**
@@ -505,24 +509,29 @@ if (voiceMode) {
  * @param {String} color Name of the color in voice query
  */   
   function fillCanvas(num , color){
-
-        fillColor = color.replace(/\s/g, '');  // removes the spaces
-        fillColor = fillColor.toLowerCase();
-    
-        fillColor = colourToHex[fillColor];
-        if(fillColor==undefined){
-            displayErrorMessage(color +" color is not available");
-            return;
+        try{
+            fillColor = color.replace(/\s/g, '');  // removes the spaces
+            fillColor = fillColor.toLowerCase();
+        
+            fillColor = colourToHex[fillColor];
+            if(fillColor==undefined){
+                displayErrorMessage(color +" color is not available");
+                return;
+            }
+            var canvas = $(".query-input-container");
+            if(num > canvas.length){
+                displayErrorMessage("Canvas "+num+" is not present");
+                return;
+            }
+            var id = canvas[num-1].id;
+            shotInputs[id].color.setColor(fillColor);
+            shotInputs[id].color.fill();
+            shotInputs[id].color.setColor(colorByVoice);
         }
-        var canvas = $(".query-input-container");
-        if(num > canvas.length){
-            displayErrorMessage("Canvas "+num+" is not present");
-            return;
+        catch(e){
+            displayErrorMessage(ERR22);
+            console.warn(e);
         }
-        var id = canvas[num-1].id;
-        shotInputs[id].color.setColor(fillColor);
-        shotInputs[id].color.fill();
-        shotInputs[id].color.setColor(colorByVoice);
   }
 
 /**
@@ -1392,7 +1401,6 @@ if (voiceMode) {
         if(shotBoxes.length==0)
             displayErrorMessage(ERR20);
         else {
-
             try{
                 num = parseInt(num.substring(0,num.length-1));
                 for(var i=0;i < shotBoxes.length;i++){
@@ -1631,6 +1639,7 @@ if (voiceMode) {
 
         // to print recognized speech in console
         annyang.debug(true);
+
         // adding voice On/Off controls to toggle button
         SpeechKITT.setStartCommand(annyang.start);
         SpeechKITT.setAbortCommand(annyang.abort);
