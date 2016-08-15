@@ -20,7 +20,7 @@ This project extends Cineast user interface to support voice queries by converti
 
 * [Link to GSoC Project](https://summerofcode.withgoogle.com/projects/#5587149046939648)
 
-## List of functions which voice commands can do in interface:
+## List of functions which voice commands can do in the interface:
 
 * Add text as query
 * Open/close top bar
