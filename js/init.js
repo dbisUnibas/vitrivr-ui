@@ -13,6 +13,7 @@ function updateSliders() {
 	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
 	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
 	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
+	ScoreWeights.meta = $('#meta-weight').get(0).noUiSlider.get();
 	normalizeScoreWeights();
 
 	updateScores(true);
@@ -25,6 +26,7 @@ function readSliders() {
 	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
 	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
 	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
+	ScoreWeights.meta = $('#meta-weight').get(0).noUiSlider.get();
 		
 }
 
@@ -98,6 +100,18 @@ $(function() {
 			decimals : 0
 		})
 	});
+
+	noUiSlider.create($('#meta-weight').get(0), {
+		start : 100 * ScoreWeights.meta,
+		step : 1,
+		range : {
+			'min' : 0,
+			'max' : 100
+		},
+		format : wNumb({
+			decimals : 0
+		})
+	});
 	
 	$('#global-color-weight').get(0).noUiSlider.on('change', function(_, __, val){
 		
@@ -109,6 +123,7 @@ $(function() {
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		}
 		updateScores(true);
@@ -123,6 +138,7 @@ $(function() {
 				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		}
 		updateScores(true);
@@ -137,6 +153,7 @@ $(function() {
 				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		}
 		updateScores(true);
@@ -151,6 +168,22 @@ $(function() {
 				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
+			}
+		}
+		updateScores(true);
+	});
+	$('#meta-weight').get(0).noUiSlider.on('change', function(_, __, val){
+		
+		if(val > ScoreWeights.meta){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights.meta);
+				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
+				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
+				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
 			}
 		}
 		updateScores(true);

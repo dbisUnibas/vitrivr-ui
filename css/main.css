@@ -60,6 +60,24 @@ body {
 	left: 0px;
 }
 
+#voiceTextbox , #voiceSearchQuery {
+	border:1px; border-style:solid; 
+	border-color:#F44336; 
+	padding: 0.5em;
+	width: 100%;
+	max-width: 100%;
+	word-wrap: break-word;
+	height: 50px;
+}
+
+#voiceSearchQuery {
+	color:#F44336;
+}
+
+.filteredShot {
+	border: 2px solid yellow;
+}
+
 #sidebarextension {
 	position: fixed;
 	width: 600px;
@@ -256,6 +274,12 @@ body {
 	color: #FFFFFF;
 	display: inline-block;
 	font-size: 15px;
+}
+
+.preview .bottomhoverbox div {
+	color: #FFFFFF;
+	font-size: 12px;
+	text-align: center;
 }
 
 .preview .tophoverbox {

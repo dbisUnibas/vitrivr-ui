@@ -1,0 +1,647 @@
+<!--
+* Contains all possible meaningfull functional voice commands 
+*
+* @author Prateek Goel
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Voice Commands</title>
+		
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+		
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<style>
+			.query{
+
+				padding: 10px 6px 10px 50px;
+			}
+			.description{
+				width:50%;
+				padding: 0.5em;
+				color:#F44336;
+			}
+		</style>
+	
+		<h3 align="center" style="color:#F44336;width:50%;"> Voice Commands </h3>
+	</head> 
+	<body>
+		  <ul class="collapsible popout description" data-collapsible="accordion" style="">
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add text as query</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Voice search : ______</li>
+			      			<li>&bull;	______ voice search : ______</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Open/close top bar</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Toggle top bar</li>
+			      			<li>&bull;	Open top bar</li>
+			      			<li>&bull;  Close top bar</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Open/close sidebar</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Toggle sidebar</li>
+			      			<li>&bull;	Open sidebar</li>
+			      			<li>&bull;  Close sidebar</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Search query</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search canvas</li>
+			      			<li>&bull;	Search the canvas</li>
+			      			<li>&bull;  Search my canvas</li>
+			      			<li>&bull;	Search sketch</li>
+			      			<li>&bull;  Search the sketch</li>
+			      			<li>&bull;  Search my sketch</li>
+			      			<li>&bull;  Search painting</li>
+			      			<li>&bull;  Search the painting</li>
+			      			<li>&bull;  Search my painting</li>
+			      			<li>&bull;  Query Search</li>
+			      			<li>&bull;  Do query search</li>
+			      			<li>&bull;  Perform query search</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Adding a canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Add canvas</li>
+			      			<li>&bull;	Add a canvas</li>
+			      			<li>&bull;  Add new canvas</li>
+			      			<li>&bull;	Add a new canvas</li>
+			      			<li>&bull;  Add canvas sheet</li>
+			      			<li>&bull;  Add a canvas sheet</li>
+			      			<li>&bull;  Add new canvas sheet</li>
+			      			<li>&bull;  Add a new canvas sheet</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Split video into sequences</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Split</li>
+			      			<li>&bull;	Split video</li>
+			      			<li>&bull;  Split into sequences</li>
+			      			<li>&bull;	Split video into sequences</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Increase pen size</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Increase size</li>
+			      			<li>&bull;	Increase size of pen</li>
+			      			<li>&bull;  Increase size of brush</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Decrease pen size</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Decrease size</li>
+			      			<li>&bull;	Decrease size of pen</li>
+			      			<li>&bull;  Decrease size of brush</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Browse next video container</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Next</li>
+			      			<li>&bull;	Next video</li>
+			      			<li>&bull;  Next container</li>
+			      			<li>&bull;	Next video container</li>
+			      			<li>&bull;  Move to next</li>
+			      			<li>&bull;  Move to next video</li>
+			      			<li>&bull;	Move to next container</li>
+			      			<li>&bull;  Move to next video container</li>
+			      			<li>&bull;	Show me next</li>
+			      			<li>&bull;  Show me next video</li>
+			      			<li>&bull;	Show me next container</li>
+			      			<li>&bull;  Show me next video container</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Browse previous video container</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Previous</li>
+			      			<li>&bull;	Previous video</li>
+			      			<li>&bull;  Previous container</li>
+			      			<li>&bull;	Previous video container</li>
+			      			<li>&bull;  Move to previous</li>
+			      			<li>&bull;  Move to previous video</li>
+			      			<li>&bull;	Move to previous container</li>
+			      			<li>&bull;  Move to previous video container</li>
+			      			<li>&bull;	Show me previous</li>
+			      			<li>&bull;  Show me previous video</li>
+			      			<li>&bull;	Show me previous container</li>
+			      			<li>&bull;  Show me previous video container</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Search particular canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search canvas _____ and _____</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Motion sketch</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Motion sketch</li>
+			      			<li>&bull;	Motion sketch tool</li>
+			      			<li>&bull;  Motion sketch option</li>
+			      			<li>&bull;	Show me motion sketch</li>
+			      			<li>&bull;  Show me motion sketch tool</li>
+			      			<li>&bull;  Show me motion sketch option</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Colour sketch</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Colour sketch</li>
+			      			<li>&bull;	Colour sketch tool</li>
+			      			<li>&bull;  Colour sketch option</li>
+			      			<li>&bull;	Show me colour sketch</li>
+			      			<li>&bull;  Show me colour sketch tool</li>
+			      			<li>&bull;  Show me colour sketch option</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Select colour</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Select _____ colour</li>
+			      			<li>&bull;	Select _____ colour pen</li>
+			      			<li>&bull;  Select _____ colour brush</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Fill canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Fill canvas _____ with _____ colour</li>
+			      			<li>&bull;	Fill canvas _____ with _____ </li>
+			      			<li>&bull;  Fill canvas number _____ with _____ colour</li>
+			      			<li>&bull;	Fill canvas number _____ with _____ </li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Download particular canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Download canvas number _____</li>
+			      			<li>&bull;	Download canvas  _____</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Delete canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Delete canvas number _____</li>
+			      			<li>&bull;	Delete canvas  _____</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Clear canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Clearcanvas number _____</li>
+			      			<li>&bull;	Clearcanvas  _____</li>
+			      			<li>&bull;  Clear canvas number _____</li>
+			      			<li>&bull;	Clear canvas  _____</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Play video shot after click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Play</li>
+			      			<li>&bull;	Play this</li>
+			      			<li>&bull;  Play video</li>
+			      			<li>&bull;	Play this video</li>
+			      			<li>&bull;  Play my video</li>
+			      			<li>&bull;  Play video clip</li>
+			      			<li>&bull;	Play this video clip</li>
+			      			<li>&bull;  Play my video clip</li>
+			      			<li>&bull;	Play shot</li>
+			      			<li>&bull;  Play this shot</li>
+			      			<li>&bull;	Play my shot</li>
+			      			<li>&bull;  Play video shot</li>
+			      			<li>&bull;	Play this video shot</li>
+			      			<li>&bull;  Play my video shot</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Search video shot by its ID after click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search id</li>
+			      			<li>&bull;	Search this id</li>
+			      			<li>&bull;  Search video id</li>
+			      			<li>&bull;	Search this video id</li>
+			      			<li>&bull;  Search my video id</li>
+			      			<li>&bull;  Search video clip id</li>
+			      			<li>&bull;  Search this video clip id</li>
+			      			<li>&bull;  Search my video clip id</li>
+			      			<li>&bull;  Search shot id</li>
+			      			<li>&bull;  Search this shot id</li>
+			      			<li>&bull;	Search my shot id</li>
+			      			<li>&bull;  Search video shot id</li>
+			      			<li>&bull;	Search this video shot id</li>
+			      			<li>&bull;  Search my video shot id</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add video shot to positive feedback after click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Include</li>
+			      			<li>&bull;	Include this</li>
+			      			<li>&bull;  Include video</li>
+			      			<li>&bull;	Include this video</li>
+			      			<li>&bull;  Include video clip</li>
+			      			<li>&bull;	Include this video clip</li>
+			      			<li>&bull;  Include shot</li>
+			      			<li>&bull;	Include this shot</li>
+			      			<li>&bull;  Include video shot</li>
+			      			<li>&bull;  Include this video shot</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add video shot to negative feedback after click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Remove</li>
+			      			<li>&bull;	Remove this</li>
+			      			<li>&bull;  Remove video</li>
+			      			<li>&bull;	Remove this video</li>
+			      			<li>&bull;  Remove video clip</li>
+			      			<li>&bull;	Remove this video clip</li>
+			      			<li>&bull;  Remove shot</li>
+			      			<li>&bull;	Remove this shot</li>
+			      			<li>&bull;  Remove video shot</li>
+			      			<li>&bull;  Remove this video shot</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add serial numbers to particular container after click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Add numbers here</li>
+			      			<li>&bull;	Add serial numbers here</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Relevance feedback</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search feedback</li>
+			      			<li>&bull;	Search my feedback</li>
+			      			<li>&bull;  Search this feedback</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Drop image of shot on canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Drop image on canvas</li>
+			      			<li>&bull;	Drop this image on canvas</li>
+			      			<li>&bull;  Put image on canvas</li>
+			      			<li>&bull;	Put this image on canvas</li>
+			      			<li>&bull;  Drop shot on canvas</li>
+			      			<li>&bull;  Drop this shot on canvas</li>
+			      			<li>&bull;	Put shot on canvas</li>
+			      			<li>&bull;  Put this shot on canvas</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Play first video shot of video container</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Play first shot</li>
+			      			<li>&bull;	Play first video</li>
+			      			<li>&bull;  Play first video shot</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Play video shot by its number</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Play video number ______</li>
+			      			<li>&bull;	Play video with serial number ______</li>
+			      			<li>&bull;  Play video shot number ______</li>
+			      			<li>&bull;	Play video shot with serial number ______</li>
+			      			<li>&bull;  Play video clip number ______</li>
+			      			<li>&bull;  Play video clip with serial number ______</li>
+			      			<li>&bull;	Play me video number ______</li>
+			      			<li>&bull;  Play me video with serial number ______</li>
+			      			<li>&bull;	Play me video shot number ______</li>
+			      			<li>&bull;  Play me video shot with serial number ______</li>
+			      			<li>&bull;	Play me video clip number ______</li>
+			      			<li>&bull;  Play me video clip with serial number ______</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Search video shot by  ID using its number</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search video number ______</li>
+			      			<li>&bull;	Search video with serial number ______</li>
+			      			<li>&bull;  Search video shot number ______</li>
+			      			<li>&bull;	Search video shot with serial number ______</li>
+			      			<li>&bull;  Search video clip number ______</li>
+			      			<li>&bull;  Search video clip with serial number ______</li>
+			      			<li>&bull;	Search me video number ______</li>
+			      			<li>&bull;  Search me video with serial number ______</li>
+			      			<li>&bull;	Search me video shot number ______</li>
+			      			<li>&bull;  Search me video shot with serial number ______</li>
+			      			<li>&bull;	Search me video clip number ______</li>
+			      			<li>&bull;  Search me video clip with serial number ______</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Drop image of shot on canvas by its number</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Drop image number ______ on canvas</li>
+			      			<li>&bull;	Drop shot number ______ on canvas</li>
+			      			<li>&bull;  Put image number ______ on canvas</li>
+			      			<li>&bull;	Put shot number ______ on canvas</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add video shot to positive feedback by its number</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Include number ______</li>
+			      			<li>&bull;	Include video number ______</li>
+			      			<li>&bull;  Include shot number ______</li>
+			      			<li>&bull;	Include video shot number ______</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add video shot to negative feedback by its number</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Remove number ______</li>
+			      			<li>&bull;	Remove video number ______</li>
+			      			<li>&bull;  Remove shot number ______</li>
+			      			<li>&bull;	Remove video shot number ______</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Open/Close top and sidebar simultaneously</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Toggle top and sidebar</li>
+			      			<li>&bull;	Open top and sidebar</li>
+			      			<li>&bull;  Close  top and sidebar</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Search and play video shot simultaneously on click</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Search and play</li>
+			      			<li>&bull;	Search and play video</li>
+			      			<li>&bull;  Search and play shot</li>
+			      			<li>&bull;	Search and play this</li>
+			      			<li>&bull;  Search and play this video</li>
+			      			<li>&bull;  Search and play this shot</li>
+			      			<li>&bull;  Search and play this video shot</li>
+			      			<li>&bull;  Search and play my video</li>
+			      			<li>&bull;  Search and play my shot</li>
+			      			<li>&bull;  Search and play my video shot</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Mark video shot greater than particular score</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Show video greater than ______ %</li>
+			      			<li>&bull;	Show video greater than score ______ %</li>
+			      			<li>&bull;  Show shot greater than ______ %</li>
+			      			<li>&bull;	Show shot greater than score ______ %</li>
+			      			<li>&bull;  Show video shot greater than ______ %</li>
+			      			<li>&bull;  Show video shot greater than score ______ %</li>
+			      			<li>&bull;	Show me video greater than ______ %</li>
+			      			<li>&bull;  Show me video greater than score ______ %</li>
+			      			<li>&bull;	Show me shot greater than ______ %</li>
+			      			<li>&bull;  Show me shot greater than score ______ %</li>
+			      			<li>&bull;	Show me video shot greater than ______ %</li>
+			      			<li>&bull;  Show me video shot greater than score ______ %</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Hide video shot below particular score</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Hide video below ______ %</li>
+			      			<li>&bull;	Hide video below score ______ %</li>
+			      			<li>&bull;  Hide shots below ______ %</li>
+			      			<li>&bull;	Hide shots below score ______ %</li>
+			      			<li>&bull;  Hide all shots below ______ %</li>
+			      			<li>&bull;	Hide all shots below score ______ %</li>
+			      			<li>&bull;  Hide video shots below ______ %</li>
+			      			<li>&bull;	Hide video shots below score ______ %</li>
+			      			<li>&bull;  Hide all video shots below ______ %</li>
+			      			<li>&bull;	Hide all video shots below score ______ %</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Show hidden video shots</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Show again</li>
+			      			<li>&bull;	Show shots again</li>
+			      			<li>&bull;  Show all shots again</li>
+			      			<li>&bull;  Show video again</li>
+			      			<li>&bull;	Show video shots again</li>
+			      			<li>&bull;  Show all video shots again</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Check total number of video shots</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Total shots retrieved</li>
+			      			<li>&bull;	Total number of shots retrieved</li>
+			      			<li>&bull;  Total videos retrieved</li>
+			      			<li>&bull;	Total number of videos retrieved</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Check total number of video shots greater than particular score</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Total shots greater than ______ %</li>
+			      			<li>&bull;	Total number of shots greater than ______ %</li>
+			      			<li>&bull;  Total shots greater than score ______ %</li>
+			      			<li>&bull;	Total number of shots greater than score ______ %</li>
+			      			<li>&bull;  Total videos greater than ______ %</li>
+			      			<li>&bull;  Total number of videos greater than ______ %</li>
+			      			<li>&bull;	Total videos greater than score ______ %</li>
+			      			<li>&bull;  Total number of videos greater than score ______ %</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Follow up commands for changing pen size</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  More</li>
+			      			<li>&bull;	Even more</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Follow up commands for browsing video container</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Further</li>
+			      			<li>&bull;	Even further</li>
+			      		</ul>
+			      </div>
+			    </li>
+			     <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Follow up commands for adding new canvas</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  One more</li>
+			      			<li>&bull;	Again one more</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Command to execute feedback response</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Yes</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add playing video to positive feedback</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Add it</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Add playing video to negative feedback</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Remove it</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Display all base commands</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  What can I say</li>
+			      			<li>&bull;	All commands</li>
+			      			<li>&bull;  Show all commands</li>
+			      			<li>&bull;	Display all commands</li>
+			      			<li>&bull;  Overview of all commands</li>
+			      			<li>&bull;  Display overview of all commands</li>
+			      			<li>&bull;	Show overview of all commands</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Close playing video or opened commands window</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Close this window</li>
+			      			<li>&bull;	Close this box</li>
+			      		</ul>
+			      </div>
+			    </li>
+			     <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Replay the playing video</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Replay</li>
+			      			<li>&bull;	Replay video</li>
+			      			<li>&bull;  Replay the video</li>
+			      		</ul>
+			      </div>
+			    </li>
+			     <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Pause the playing video</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Pause</li>
+			      			<li>&bull;	Pause video</li>
+			      			<li>&bull;  Pause the video</li>
+			      		</ul>
+			      </div>
+			    </li>
+			    <li>
+			      <div class="collapsible-header" style="font-weight: bold">&bull;  Start the paused video</div>
+			      <div class="collapsible-body">
+			      		<ul class="query">
+			      			<li>&bull;  Start</li>
+			      			<li>&bull;	Start video</li>
+			      			<li>&bull;  Start the video</li>
+			      		</ul>
+			      </div>
+			    </li>
+  		</ul>
+	</body>
+</html>

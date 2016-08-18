@@ -72,6 +72,7 @@ function motionCanvas(canvas){
 				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		
 		updateScores(true);

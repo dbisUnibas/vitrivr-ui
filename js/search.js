@@ -5,6 +5,11 @@ var Scores = {};
 var rf_positive = new Array();
 var rf_negative = new Array();
 
+/*
+*	splitVideoExecuted variable allows to execute sequenceSegmentation() function only once per search
+*/
+var splitVideoExecuted;
+
 function getCategories(){
 	var categories = [];
 	if(ScoreWeights.globalcolor > 0){
@@ -19,6 +24,9 @@ function getCategories(){
 	if(ScoreWeights.motion > 0){
 		categories.push('motion');
 	}
+	if(ScoreWeights.meta > 0){
+       categories.push('meta');
+    }
 	return categories;
 }
 
@@ -27,13 +35,15 @@ var ScoreWeights = {
 	localcolor: 0.6,
 	edge: 0.3,
 	motion: 0,
+	meta: 0.5,
 };
 
 function sumWeights(){
 	var sum = parseInt(ScoreWeights.globalcolor) + 
 		parseInt(ScoreWeights.localcolor) + 
 		parseInt(ScoreWeights.edge) + 
-		parseInt(ScoreWeights.motion);
+		parseInt(ScoreWeights.motion)+
+		parseInt(ScoreWeights.meta);
 		return sum > 0 ? sum : 1;
 }
 
@@ -46,6 +56,7 @@ function normalizeScoreWeights(){
 		ScoreWeights.localcolor /= sum;
 		ScoreWeights.edge /= sum;
 		ScoreWeights.motion /= sum;
+		ScoreWeights.meta /= sum;
 	}
 }
 
@@ -139,6 +150,12 @@ function buildQuery(){ //TODO categories from sketch complete
 		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
 		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
 		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
+	
+		if(voiceMode){
+			voiceText = new Array($('#voiceSearchQuery').val());
+			query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
+		}
+	
 		query += "\"id\": " + 0 + "\n";
 		query += "},";
 	}
@@ -146,7 +163,8 @@ function buildQuery(){ //TODO categories from sketch complete
 	query = query.slice(0, -1);
 	query += "],";
 	query += "\"resultname\":\"" + getResultName() + "\"}";
-		
+
+	voiceText = new Array();
 	return query;
 	
 }
@@ -184,9 +202,16 @@ function oboerequest(query, noContext) {
 			
 			sortVideos();
 				$('#sequence-segmentation-button').show();
+				splitVideoExecuted = false;
+
 				hideProgress();
 
 			searchRunning = false;
+
+			if(voiceMode){
+				row = 0;     // this global var is declared in speech.js
+				addSerialNumber();
+			}
 			
 		}).node('{type}', function(data) {
 			var type = data.type;

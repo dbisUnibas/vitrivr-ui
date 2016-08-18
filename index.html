@@ -33,6 +33,12 @@
 		<script type="text/javascript" src="js/ui_util.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 
+		<script type="text/javascript" src="js/annyang.js" ></script>
+		<script type="text/javascript" src="js/speechkitt.js"></script>
+		<script type="text/javascript" src="js/speech.js"></script>
+		<script type="text/javascript" src="js/en-GB.js"></script>
+		<script type="text/javascript" src="js/responsivevoice.min.js"></script>
+
 	</head>
 
 	<body class="cbp-spmenu-push">
@@ -64,6 +70,10 @@
 					<label for="motion-weight">Motion:</label>
 					<div id="motion-weight" ></div>
 				</div>
+				<div class="weight-slider voice">
+					<label for="meta-weight">Meta:</label>
+					<div id="meta-weight" ></div>
+				</div>
 			</div>
 		</div>
 		<div class="progress" id="loading">
@@ -86,6 +96,10 @@
 					<span id="filterbutton"><i class="mdi mdi-filter"> </i></span>
 				</li>-->
 			</ul>
+			<div class="voice">
+				<b style="color: #F44336">Voice Query:</b> 
+				<textarea id = "voiceTextbox"></textarea>
+			</div>
 			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">search</i>Search
 			</button>
@@ -97,7 +111,10 @@
 			<button id="sequence-segmentation-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">settings_ethernet</i>Split video into sequences
 			</button>
-
+			<div class="voice">
+				<b style="color: #F44336">Voice Search Query:</b> 
+				<textarea id = "voiceSearchQuery"></textarea>
+			</div>
 			<div class="tool-pane" id="color-tool-pane" style="display: block; margin: 10px; height: 40px;">
 				<div style="width: calc(100% - 60px - 10px); margin-right: 10px; float: left;">
 					<label for="draw-radius">Pen Size:</label>
@@ -139,6 +156,17 @@
 			</div>
 
 		</div>
+ 			 <!-- display commands in voice mode -->
+		  <div id="commands-modal" class="modal modal-fixed-footer voice">
+			    <div class="modal-content">
+				      <h4>Base Commands</h4>
+				      <p></p>
+			    </div>
+			    <div class="modal-footer">
+			      	<a class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+			      	<div style="padding:0.5em">Click <a target="_blank" href="voicecommands.html">here</a> to see all available voice commands</div>
+			    </div>
+		  </div>
 	</body>
 
 </html>

@@ -62,7 +62,11 @@ function newShotInput() {
 
 	var colorcanvas = new sketchCanvas(color);
 	colorcanvas.setLineWidth($('#draw-radius').get(0).noUiSlider.get());
-	colorcanvas.setColor($("#colorInput").spectrum('get'));
+
+	if(voiceMode)
+		colorcanvas.setColor(colorByVoice);
+	else
+		colorcanvas.setColor($("#colorInput").spectrum('get'));
 
 
 	shotInputs[id] = {
@@ -198,9 +202,13 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
 	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
 	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
-	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
+    $('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
+	if(voiceMode){
+		$(".tophoverbox").hide();
+		$('#s' + shotInfo.shotid + '>span>.thumbnail').on('click', decideAction);	// decideAction function is defined in speech.js
+	}
 }
 
 function updateScoreInShotContainer(id, score){
@@ -256,6 +264,14 @@ function sortVideos(){
 function updateScores(segmentedVideos) {
 	readSliders();
 	var weightSum = sumWeights();
+
+	// below three lines are to reset browsing row when top sliders are changed
+	var containerArray = $(".videocontainer");
+	if(containerArray.length>0 && voiceMode){
+		$('div').removeClass('filteredShot');
+		document.getElementById(containerArray[row].id).style = "";
+		row=0;
+	}
 	
 	for (var key in Shots) {
 		var shotId = Shots[key].shotid;
@@ -291,6 +307,7 @@ function updateScores(segmentedVideos) {
 
 function sequenceSegmentation(){
 	$('#sequence-segmentation-button').hide();
+	splitVideoExecuted = true;
 	for(var key in Videos){
 		var videoId = Videos[key].videoid;
 		var ids = new Array();
@@ -317,7 +334,8 @@ function sequenceSegmentation(){
 		
 	}
 	updateScores(true);
-	
+	if(voiceMode)
+		addSerialNumber();
 }
 
 function playShot(event){
@@ -342,8 +360,12 @@ function playShot(event){
   });
 }
 
-function similaritySearch(event){
-	var shotBox = $(this).parent().parent().parent();
+function similaritySearch(object){
+	var shotBox;
+	if(voiceMode)
+		shotBox = object.parent().parent();
+	else
+		shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	search(shotId);
 }
@@ -392,8 +414,12 @@ function relevanceFeedback(event){
 	console.log(rf_negative);
 }
 
-function prepare_playback(event){
-	var shotBox = $(this).parent().parent().parent();
+function prepare_playback(object){
+	var shotBox;
+	if(voiceMode)
+		shotBox = object.parent().parent();
+	else
+		shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var frame = Math.floor((shotInfo.start + shotInfo.end) / 2);
@@ -521,6 +547,7 @@ function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
+				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
 			}
 		
 		updateScores(true);
