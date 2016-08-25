@@ -171,6 +171,7 @@ for(var key in shotInputs){
 	var container = {
 		img : shotInput.color.getDataURL(),
 		motion: shotInput.motion.getPaths(),
+		motionbackground: shotInput.motion.getBgPaths(),
 		categories: getCategories()
 	};
 
