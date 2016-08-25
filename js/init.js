@@ -221,6 +221,7 @@ $(function() {
 		$('.motionsketch').hide();
 		$('.objectsketch').hide();
 		$('#color-tool-pane').show();
+		$('#motion-tool-pane').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -231,6 +232,7 @@ $(function() {
 		$('.motionsketch').show();
 		$('.objectsketch').show();
 		$('#color-tool-pane').hide();
+		$('#motion-tool-pane').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -276,6 +278,14 @@ $(function() {
 			$('#new_filter').val('');
 		}
 		
+	});
+	
+	$('#fgbgswitch-button').click(function(){
+		this.textContent = (this.textContent == "Foreground") ? "Background" : "Foreground";
+		this.className = (this.className == "waves-effect waves-light btn btn-small red") ? "waves-effect waves-light btn btn-small green" : "waves-effect waves-light btn btn-small red";
+		for(var key in shotInputs){
+			shotInputs[key].motion.switchFgBg();
+		}
 	});
 
 	/*  add first canvas  */
