@@ -2,39 +2,35 @@ var Videos = {};
 var Shots = {};
 var Scores = {};
 
+var ScoreWeights = {};
+
 var rf_positive = new Array();
 var rf_negative = new Array();
 
 function getCategories(){
 	var categories = [];
-	if(ScoreWeights.globalcolor > 0){
-		categories.push('globalcolor');
-	}
-	if(ScoreWeights.localcolor > 0){
-		categories.push('localcolor');
-	}
-	if(ScoreWeights.edge > 0){
-		categories.push('edge');
-	}
-	if(ScoreWeights.motion > 0){
-		categories.push('motion');
-	}
+	
+	var ks = Object.keys(categoryConfig);
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];	  					
+  		if(ScoreWeights[key] > 0){
+  			categories.push(key);
+  		}			
+  	}
+  	
 	return categories;
 }
 
-var ScoreWeights = {
-	globalcolor: 0.1,
-	localcolor: 0.6,
-	edge: 0.3,
-	motion: 0,
-};
-
 function sumWeights(){
-	var sum = parseInt(ScoreWeights.globalcolor) +
-		parseInt(ScoreWeights.localcolor) +
-		parseInt(ScoreWeights.edge) +
-		parseInt(ScoreWeights.motion);
-		return sum > 0 ? sum : 1;
+	var sum = 0;
+	
+	var ks = Object.keys(categoryConfig);
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];
+  		sum += parseInt(ScoreWeights[key]);
+  	}
+	
+	return sum > 0 ? sum : 1;
 }
 
 function normalizeScoreWeights(){
@@ -42,10 +38,11 @@ function normalizeScoreWeights(){
 	var sum = sumWeights();
 
 	if(sum > 0){
-		ScoreWeights.globalcolor /= sum;
-		ScoreWeights.localcolor /= sum;
-		ScoreWeights.edge /= sum;
-		ScoreWeights.motion /= sum;
+		var ks = Object.keys(categoryConfig);
+		for (var i = 0, len = ks.length; i < len; i++) {
+	  		var key = ks[i];
+	  		ScoreWeights[key] /= sum;
+	  	}
 	}
 }
 

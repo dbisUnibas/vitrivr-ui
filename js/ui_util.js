@@ -252,7 +252,7 @@ function sortVideos(){
 			order : 'desc'
 		});
 	}catch (e){
-		console.warn(e);
+		//console.warn(e);
 	}
 }
 
