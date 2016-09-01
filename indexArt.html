@@ -4,6 +4,7 @@
 		<title>vitrivr-Art</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="utf-8" />
+		
 		<link rel="shortcut icon" href="favicon.ico">
 
 		<!--Materialize -->
@@ -24,7 +25,7 @@
 		<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
 
 		<!--Main Config -->
-		<script type="text/javascript" src="js/config.js"></script> 
+		<script type="text/javascript" src="js/config.js"></script>
 		<!--JQuery -->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		<!--JS Drag and Drop -->
@@ -47,7 +48,13 @@
 		<script type="text/javascript" src="js/tinysort.js"></script>
 		<!--Video Framework -->
 		<script type="text/javascript" src="video.js"></script>
+
+		<!--D3.js-->
+		<script src="//d3js.org/d3.v3.min.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+	
 		
+
 		<!-- Have to be edited
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/ui_util.js"></script>
@@ -56,48 +63,87 @@
 	</head>
 
 	<body>
+		<div class="container">
+			<!--<div class="row">
+			<div class="col s3">-->
+			<div id="slide-out" class="side-nav open">
+				<div class="input-field">
+					<select>
+						<option value="" disabled selected>Choose your Movie</option>
+						<option value="1">Movie 1</option>
+						<option value="2">Movie 2</option>
+						<option value="3">Movie 3</option>
+					</select>
+					<label>Movie</label>
+				</div>
+				<div class="input-field">
+					<select>
+						<option value="" disabled selected>Choose your Visualization</option>
+						<option value="1">Visualization 1</option>
+						<option value="2">Visualization 2</option>
+						<option value="3">Visualization 3</option>
+					</select>
+					<label>Visualization</label>
+				</div>
+				<div class="input-field">
+					<select>
+						<option value="" disabled selected>Choose your Type</option>
+						<option value="1">Type 1</option>
+						<option value="2">Type 2</option>
+						<option value="3">Type 3</option>
+					</select>
+					<label>Type</label>
+				</div>
+				<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+					<i class="material-icons left">search</i>Search
+				</button>
+			</div>
+			<!--</div>-->
 
-		<div id="slide-out" class="side-nav">
-			<div class="input-field">
-				<select>
-					<option value="" disabled selected>Choose your Movie</option>
-					<option value="1">Movie 1</option>
-					<option value="2">Movie 2</option>
-					<option value="3">Movie 3</option>
-				</select>
-				<label>Movie</label>
+			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+			<!--<div class="col s9">-->
+			<div id="shots">
+				Here shots
 			</div>
-			<div class="input-field">
-				<select>
-					<option value="" disabled selected>Choose your Visualization</option>
-					<option value="1">Visualization 1</option>
-					<option value="2">Visualization 2</option>
-					<option value="3">Visualization 3</option>
-				</select>
-				<label>Visualization</label>
+			<!--</div>-->
+
+			<div id="movies">
+				Here movies
 			</div>
-			<div class="input-field">
-				<select>
-					<option value="" disabled selected>Choose your Type</option>
-					<option value="1">Type 1</option>
-					<option value="2">Type 2</option>
-					<option value="3">Type 3</option>
-				</select>
-				<label>Type</label>
+
+			<div>
+				<form>
+					<label>
+						<input type="radio" name="mode" value="size">
+						Size</label>
+					<label>
+						<input type="radio" name="mode" value="count" checked>
+						Count</label>
+				</form>
 			</div>
-			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
-				<i class="material-icons left">search</i>Search
-			</button>
+
+			<div>
+				<button onclick="transition()">Update</button>
+			</div>
+			
+			<div>
+				<svg width="960" height="600"></svg>
+			</div>
+
+			<script>
+				$(".button-collapse").sideNav();
+				$(document).ready(function() {
+					$('select').material_select();
+				});
+			</script>
+			
+			<!--d3 graphs-->
+			<script src="./d3/sunburst.js"></script>
+			<script src="./d3/streamgraph.js"></script>
+			<script src="./d3/forceDirectedGraph.js"></script>
+			<script src="./d3/raindrops.js"></script>
 		</div>
-
-		<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
-		<script>
-			$(".button-collapse").sideNav();
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-		</script>
-
+		<!--</div>-->
 	</body>
 </html>
