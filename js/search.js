@@ -22,7 +22,11 @@ function getCategories() {
 	return categories;
 }
 
-function getConcepts() {
+function getTags() {
+	var tags = {
+		concepts: ["cat"]
+	};
+	
 	var concepts = [];
 
 	concepts[0] = "cat";
@@ -176,7 +180,7 @@ function buildQuery() {
 			motion : shotInput.motion.getPaths(),
 			motionbackground : shotInput.motion.getBgPaths(),
 			categories : getCategories(),
-			tags : getConcepts()
+			tags : getTags()
 		};
 
 		containers.push(container);
