@@ -24,14 +24,10 @@ function getCategories() {
 
 function getTags() {
 	var tags = {
-		concepts: ["cat"]
+		concepts : ["cat"]
 	};
-	
-	var concepts = [];
 
-	concepts[0] = "cat";
-
-	return concepts;
+	return tags;
 }
 
 function sumWeights() {
