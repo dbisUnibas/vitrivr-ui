@@ -12,18 +12,31 @@ function setUpCategories(){
   			key + '-weight">' + 
   			(categoryConfig[key]['displayName'] || key) + ':</label><div id="' + 
   			key + '-weight" ></div></div>');
-  		
-  		noUiSlider.create($('#' + key + '-weight').get(0), {
-			start : 100 * ScoreWeights[key],
-			step : 1,
-			range : {
-				'min' : 0,
-				'max' : 100
-			},
-			format : wNumb({
-				decimals : 0
-			})
-		});
+  		if (categoryConfig[key]['displayName'] == 'NN') {
+  			noUiSlider.create($('#' + key + '-weight').get(0), {
+				start : 100 * ScoreWeights[key],
+				step : 100,
+				range : {
+					'min' : 0,
+					'max' : 100
+				},
+				format : wNumb({
+					decimals : 0
+				})
+			});
+  		} else {
+	  		noUiSlider.create($('#' + key + '-weight').get(0), {
+				start : 100 * ScoreWeights[key],
+				step : 1,
+				range : {
+					'min' : 0,
+					'max' : 100
+				},
+				format : wNumb({
+					decimals : 0
+				})
+			});
+		}
 		
 		$('#' + key + '-weight').get(0).noUiSlider.on('change', buildSliderCallback(key));
 	}

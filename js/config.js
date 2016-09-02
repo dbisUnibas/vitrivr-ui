@@ -7,5 +7,6 @@ const categoryConfig = {
 	globalColor:{displayName: "Global Color", defaultValue: 0.1},
 	localColor:{displayName: "Local Color", defaultValue: 0.6},
 	edge:{displayName: "Edge", defaultValue: 0.3},
-	motion:{displayName: "Motion", defaultValue: 0}
+	motion:{displayName: "Motion", defaultValue: 0},
+	neuralNet:{displayName: "NN", defaultValue: 0}
 };
