@@ -20,6 +20,13 @@ function newShotInput() {
 	motion.addClass('queryinput').addClass('motionsketch');
 	motion.attr('width', '360').attr('height', '288');
 	container.append(motion);
+	
+	/**
+	 *NeuralNet 
+	 */
+	/*var neuralNet = $('<div>');
+	neuralNet.addClass('queryinput').addClass('neuralNet');
+	container.append(neuralNet);*/
 
 	/*var objects = $('<div>');
 	 objects.addClass('queryinput').addClass('objectsketch').addClass('dropzone');

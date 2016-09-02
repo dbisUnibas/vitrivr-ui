@@ -22,6 +22,9 @@ function getCategories() {
 	return categories;
 }
 
+/**
+ *Tags for NeuralNet search 
+ */
 function getTags() {
 	var tags = {
 		concepts : ["cat"]

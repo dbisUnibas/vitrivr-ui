@@ -181,6 +181,8 @@ $(function() {
 		$('.objectsketch').hide();
 		$('#color-tool-pane').show();
 		$('#motion-tool-pane').hide();
+		$('#query-container-pane').show();
+		$('#btnAddCanvas').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -192,11 +194,28 @@ $(function() {
 		$('.objectsketch').show();
 		$('#color-tool-pane').hide();
 		$('#motion-tool-pane').show();
+		$('#query-container-pane').show();
+		$('#btnAddCanvas').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
 
+	});
+	
+	/* button for neural net */
+	$('#neuralnetsearchbutton').on('click', function(event) {
+		$('.motionsketch').hide();
+		$('.objectsketch').hide();
+		$('#color-tool-pane').hide();
+		$('#motion-tool-pane').hide();
+		$('#query-container-pane').hide();
+		$('#btnAddCanvas').hide();
+		$('#sidebarextension').removeClass('open');
+		$('#btnShowSidebar').removeClass('open');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		
 	});
 	
 	
