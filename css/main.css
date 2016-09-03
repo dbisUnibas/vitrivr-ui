@@ -382,3 +382,29 @@ input[type="text"]:invalid{
     box-shadow: 0 1px 0 0 #f44336 !important;
 }
 
+/*
+ * Automcompletion
+ */
+
+.input-field .prefix ~ .autocomplete-content {
+  margin-left: 3rem;
+  width: 92%;
+  width: calc(100% - 3rem);
+}
+
+.autocomplete-content {
+  margin-top: -15px;
+  display: block;
+  opacity: 1;
+  position: static;
+}
+
+.autocomplete-content li .highlight {
+  color: #444;
+}
+
+.autocomplete-content li img {
+  height: 40px;
+  width: 40px;
+  margin: 5px 15px;
+}
