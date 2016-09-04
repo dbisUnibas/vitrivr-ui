@@ -1,5 +1,7 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
+var data = {};
+data["data"] = {};
 
 function setUpCategories(){
 	var ks = Object.keys(categoryConfig);
@@ -90,6 +92,12 @@ function readSliders() {
 		
 }
 
+function getAvailableTags() {
+	data["data"]["cat"] = null;
+	data["data"]["umbrella"] = null;
+	data["data"]["penguin"] = null;
+}
+
 
 $(function() {
 	/*  sliders  */
@@ -165,7 +173,16 @@ $(function() {
 	$("#btnAddTag").click(function(e) {
 		e.preventDefault();
 		var tag = $('#autocomplete-input').val();
-		addTags(tag);
+		$('#autocomplete-input').val("");
+		/**
+		 *TODO: Here nicer alert! 
+		 */
+		if (tags.concepts.indexOf(tag) != -1) {
+			alert("already in tags");
+		} else {
+			addTags(tag);
+			alert("added tag successfull");
+		}	
 	});
 
 	$('#btnShowSidebar').click(function() {
@@ -217,7 +234,9 @@ $(function() {
 
 	});
 	
-	/* button for neural net */
+	/**
+	 *Button for Neural Net 
+	 */
 	$('#neuralnetsearchbutton').on('click', function(event) {
 		$('.motionsketch').hide();
 		$('.objectsketch').hide();
@@ -297,14 +316,10 @@ $(function() {
 	/*
 	 * Automcompletion for the NN-search
 	 */
-	
-  $('input.autocomplete').autocomplete({
-    data: {
-      "cat": null,
-      "penguin": null,
-      "umbrella": null
-    }
-  });
+	getAvailableTags();
+  	$('input.autocomplete').autocomplete(
+    	data
+  	);
         
 	
 });
