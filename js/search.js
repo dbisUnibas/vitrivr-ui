@@ -6,6 +6,7 @@ var ScoreWeights = {};
 
 var rf_positive = new Array();
 var rf_negative = new Array();
+var tags = {concepts: []};
 
 function getCategories() {
 	var categories = [];
@@ -26,11 +27,14 @@ function getCategories() {
  *Tags for NeuralNet search 
  */
 function getTags() {
-	var tags = {
-		concepts : ["cat"]
-	};
-
 	return tags;
+}
+
+/**
+ *Add Concepts to Tags 
+ */
+function addTags(concept) {
+	tags.concepts.push(concept);
 }
 
 function sumWeights() {

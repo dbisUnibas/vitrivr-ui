@@ -158,6 +158,15 @@ $(function() {
 		e.preventDefault();
 		newShotInput();
 	});
+	
+	/**
+	 *button add tag 
+	 */
+	$("#btnAddTag").click(function(e) {
+		e.preventDefault();
+		var tag = $('#autocomplete-input').val();
+		addTags(tag);
+	});
 
 	$('#btnShowSidebar').click(function() {
 		if ($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
