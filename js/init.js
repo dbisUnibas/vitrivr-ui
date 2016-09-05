@@ -2,6 +2,7 @@ videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
 var data = {};
 data["data"] = {};
+setAvailableTags();
 
 function setUpCategories(){
 	var ks = Object.keys(categoryConfig);
@@ -92,7 +93,10 @@ function readSliders() {
 		
 }
 
-function getAvailableTags() {
+/**
+ *set tags for NN 
+ */
+function setAvailableTags() {
 	data["data"]["cat"] = null;
 	data["data"]["umbrella"] = null;
 	data["data"]["penguin"] = null;
@@ -174,11 +178,15 @@ $(function() {
 		e.preventDefault();
 		var tag = $('#autocomplete-input').val();
 		$('#autocomplete-input').val("");
-		if (tags.concepts.indexOf(tag) != -1) {
-			Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
+		if (!data.data.hasOwnProperty(tag)){
+			Materialize.toast('\"' + tag +'\" is not availbale.', 4000);
 		} else {
-			addTags(tag);
-			Materialize.toast('Added tag \"' + tag +'\" successfull.', 4000);
+			if (tags.concepts.indexOf(tag) != -1) {
+				Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
+			} else {
+				addTags(tag);
+				Materialize.toast('Added tag \"' + tag +'\" successfull.', 4000);
+			}
 		}	
 	});
 
@@ -313,7 +321,7 @@ $(function() {
 	/*
 	 * Automcompletion for the NN-search
 	 */
-	getAvailableTags();
+	
   	$('input.autocomplete').autocomplete(
     	data
   	);
