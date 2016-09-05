@@ -174,14 +174,11 @@ $(function() {
 		e.preventDefault();
 		var tag = $('#autocomplete-input').val();
 		$('#autocomplete-input').val("");
-		/**
-		 *TODO: Here nicer alert! 
-		 */
 		if (tags.concepts.indexOf(tag) != -1) {
-			alert("already in tags");
+			Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
 		} else {
 			addTags(tag);
-			alert("added tag successfull");
+			Materialize.toast('Added tag \"' + tag +'\" successfull.', 4000);
 		}	
 	});
 
