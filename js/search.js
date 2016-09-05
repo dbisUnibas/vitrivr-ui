@@ -8,6 +8,7 @@ var rf_positive = new Array();
 var rf_negative = new Array();
 var tags = {concepts: []};
 
+
 function getCategories() {
 	var categories = [];
 
@@ -35,6 +36,18 @@ function getTags() {
  */
 function addTags(concept) {
 	tags.concepts.push(concept);
+}
+
+/**
+ *Delete Concepts From Tags 
+ */
+function deleteTags(id) {
+	tags.concepts.splice(tags.concepts.indexOf($(id).clone().children().remove().end().text()), 1);
+	if (tags.concepts.length == 0) {
+		$('#enteredTags').empty();
+	} else {
+		displayTags();
+	}
 }
 
 function sumWeights() {

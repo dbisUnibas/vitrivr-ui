@@ -102,6 +102,23 @@ function setAvailableTags() {
 	data["data"]["penguin"] = null;
 }
 
+/**
+ *display chosen tags 
+ */
+function displayTags() {
+	$('#enteredTags').empty();
+	$('#enteredTags').append("<br><p>Entered Tags:</p>");
+	var display = "";
+	for (var i = 0; i < tags.concepts.length; i++){
+		display += "<p id=\"tag" + i + "\">"+ tags.concepts[i];
+		display += "<button id=\"tagDeleteButton"+ i +"\" class=\"btn-floating waves-effect waves-light red\" style=\"float: right\" onclick=\"deleteTags(\'#tag"+i+"\')\">";
+		display += "<i class=\"material-icons\">delete</i></button>";
+		display += "</p>";
+		$('#enteredTags').append(display);
+		display = "";
+	}
+}
+
 
 $(function() {
 	/*  sliders  */
@@ -176,8 +193,7 @@ $(function() {
 	 */
 	$("#btnAddTag").click(function(e) {
 		e.preventDefault();
-		$('#enteredTags').empty();
-		$('#enteredTags').append("<p>Entered Tags:</p>");
+		
 		var tag = $('#autocomplete-input').val();
 		$('#autocomplete-input').val("");
 		if (!data.data.hasOwnProperty(tag)){
@@ -190,11 +206,8 @@ $(function() {
 				Materialize.toast('Added tag \"' + tag +'\" successfully.', 4000);
 			}
 		}
-		var display ="";
-		for (var i = 0; i < tags.concepts.length; i++){
-			display += "<p>" + tags.concepts[i] + "</p>";
-		}
-		$('#enteredTags').append(display);	
+		displayTags();
+			
 	});
 
 	$('#btnShowSidebar').click(function() {
