@@ -187,7 +187,7 @@ $(function() {
 				Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
 			} else {
 				addTags(tag);
-				Materialize.toast('Added tag \"' + tag +'\" successfull.', 4000);
+				Materialize.toast('Added tag \"' + tag +'\" successfully.', 4000);
 			}
 		}
 		var display ="";
