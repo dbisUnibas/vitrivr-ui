@@ -176,6 +176,8 @@ $(function() {
 	 */
 	$("#btnAddTag").click(function(e) {
 		e.preventDefault();
+		$('#enteredTags').empty();
+		$('#enteredTags').append("<p>Entered Tags:</p>");
 		var tag = $('#autocomplete-input').val();
 		$('#autocomplete-input').val("");
 		if (!data.data.hasOwnProperty(tag)){
@@ -187,7 +189,12 @@ $(function() {
 				addTags(tag);
 				Materialize.toast('Added tag \"' + tag +'\" successfull.', 4000);
 			}
-		}	
+		}
+		var display ="";
+		for (var i = 0; i < tags.concepts.length; i++){
+			display += "<p>" + tags.concepts[i] + "</p>";
+		}
+		$('#enteredTags').append(display);	
 	});
 
 	$('#btnShowSidebar').click(function() {
@@ -217,6 +224,7 @@ $(function() {
 		$('#btnAddCanvas').show();
 		$('#btnAddTag').hide();
 		$('#textNN').hide();
+		$('#enteredTags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -232,6 +240,7 @@ $(function() {
 		$('#btnAddCanvas').show();
 		$('#btnAddTag').hide();
 		$('#textNN').hide();
+		$('#enteredTags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -251,6 +260,7 @@ $(function() {
 		$('#btnAddCanvas').hide();
 		$('#btnAddTag').show();
 		$('#textNN').show();
+		$('#enteredTags').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
