@@ -4,11 +4,11 @@
 		<title>vitrivr-Art</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="utf-8" />
-		
+
 		<link rel="shortcut icon" href="favicon.ico">
 
 		<!--Materialize -->
-		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/materialize0.97.7.min.css" media="screen,projection"/>
 		<!--Materialize Design Icons -->
 		<link type="text/css" rel="stylesheet" href="css/materialdesignicons.css" media="all"/>
 		<!--Material Icons -->
@@ -16,13 +16,13 @@
 		<!--Colorpicker -->
 		<!--<link type="text/css" rel="stylesheet" href="css/spectrum.css" media="screen,projection" />-->
 		<!-- -->
-		<link type="text/css" rel="stylesheet" href="css/context.standalone.css" media="screen,projection" />
+		<!--<link type="text/css" rel="stylesheet" href="css/context.standalone.css" media="screen,projection" />-->
 		<!--Range Slider -->
 		<!--<link type="text/css" rel="stylesheet" href="css/nouislider.css" media="screen,projection" />-->
 		<!--Video Framework CSS -->
-		<link type="text/css" rel="stylesheet" href="video-js.css" media="screen,projection" />
+		<!--<link type="text/css" rel="stylesheet" href="video-js.css" media="screen,projection" />-->
 		<!--Main -->
-		<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+		<!--<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>-->
 
 		<!--Main Config -->
 		<script type="text/javascript" src="js/config.js"></script>
@@ -33,7 +33,7 @@
 		<!--Rigth Click for menu -->
 		<!---<script type="text/javascript" src="js/context.js"></script>-->
 		<!--Streaming -->
-		<script type="text/javascript" src="js/oboe-browser.js"></script>
+		<!--<script type="text/javascript" src="js/oboe-browser.js"></script>-->
 		<!--Motion Canvas -->
 		<!--<script type="text/javascript" src="js/motionCanvas.js"></script>-->
 		<!--Sketch Canvas -->
@@ -45,12 +45,14 @@
 		<!--Range Slider -->
 		<!--<script type="text/javascript" src="js/nouislider.js"></script>-->
 		<!--Tinysort for Sorting Results -->
-		<script type="text/javascript" src="js/tinysort.js"></script>
+		<!--<script type="text/javascript" src="js/tinysort.js"></script>-->
 		<!--Video Framework -->
-		<script type="text/javascript" src="video.js"></script>
+		<!---<script type="text/javascript" src="video.js"></script>-->
 
 		<!--D3.js-->
-		<script type="text/javascript" src="js/d3.min.js"></script>
+
+		<script type="text/javascript" src="js/d3_3.5.17.min.js"></script>
+		<script type="text/javascript" src="js/d3_4.2.2.min.js"></script>
 
 		<!-- Have to be edited
 		<script type="text/javascript" src="js/search.js"></script>
@@ -60,87 +62,45 @@
 	</head>
 
 	<body>
-		<div class="container">
-			<!--<div class="row">
-			<div class="col s3">-->
-			<div id="slide-out" class="side-nav open">
-				<div class="input-field">
-					<select>
-						<option value="" disabled selected>Choose your Movie</option>
-						<option value="1">Movie 1</option>
-						<option value="2">Movie 2</option>
-						<option value="3">Movie 3</option>
-					</select>
-					<label>Movie</label>
+
+		<ul id="slide-out" class="side-nav">
+			<li>
+				<div class="userView">
+
+					<a href="#!name"><span class="white-text name">John Doe</span></a>
+					<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 				</div>
-				<div class="input-field">
-					<select>
-						<option value="" disabled selected>Choose your Visualization</option>
-						<option value="1">Visualization 1</option>
-						<option value="2">Visualization 2</option>
-						<option value="3">Visualization 3</option>
-					</select>
-					<label>Visualization</label>
-				</div>
-				<div class="input-field">
-					<select>
-						<option value="" disabled selected>Choose your Type</option>
-						<option value="1">Type 1</option>
-						<option value="2">Type 2</option>
-						<option value="3">Type 3</option>
-					</select>
-					<label>Type</label>
-				</div>
-				<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
-					<i class="material-icons left">search</i>Search
-				</button>
-			</div>
-			<!--</div>-->
+			</li>
+			<li>
+				<a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a>
+			</li>
+			<li>
+				<a href="#!">Second Link</a>
+			</li>
+			<li>
+				<div class="divider"></div>
+			</li>
+			<li>
+				<a class="subheader">Subheader</a>
+			</li>
+			<li>
+				<a class="waves-effect" href="#!">Third Link With Waves</a>
+			</li>
+		</ul>
+		<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
 
-			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+		<script>
+			$(".button-collapse").sideNav();
+			$(document).ready(function() {
+				$('select').material_select();
+			});
+		</script>
 
-			<!--<div class="col s9">-->
-			<div id="shots">
-				Here shots
-			</div>
-			<!--</div>-->
+		<!--d3 graphs-->
+		<script src="./d3/sunburst.js"></script>
+		<script src="./d3/streamgraph.js"></script>
+		<script src="./d3/forceDirectedGraph.js"></script>
+		<script src="./d3/raindrops.js"></script>
 
-			<div id="movies">
-				Here movies
-			</div>
-
-			<div>
-				<form>
-					<label>
-						<input type="radio" name="mode" value="size">
-						Size</label>
-					<label>
-						<input type="radio" name="mode" value="count" checked>
-						Count</label>
-				</form>
-			</div>
-
-			<div>
-				<button onclick="transition()">Update</button>
-			</div>
-			
-			<div>
-				<svg width="960" height="600"></svg>
-			</div>
-
-			<script>
-				$(".button-collapse").sideNav();
-				$(document).ready(function() {
-					$('select').material_select();
-				});
-			</script>
-			
-			<!--d3 graphs-->
-			<script src="./d3/sunburst.js"></script>
-			<script src="./d3/streamgraph.js"></script>
-			<script src="./d3/forceDirectedGraph.js"></script>
-			<script src="./d3/raindrops.js"></script>
-		</div>
-		<!--</div>-->
 	</body>
 </html>
