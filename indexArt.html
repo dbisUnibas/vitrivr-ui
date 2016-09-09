@@ -13,6 +13,8 @@
 		<link type="text/css" rel="stylesheet" href="css/materialdesignicons.css" media="all"/>
 		<!--Material Icons -->
 		<link type="text/css" rel="stylesheet" href="css/material-icons.css" media="all"/>
+		<!-- Art css-->
+		<link type="text/css" rel="stylesheet" href="css/art.css"/>
 		<!--Colorpicker -->
 		<!--<link type="text/css" rel="stylesheet" href="css/spectrum.css" media="screen,projection" />-->
 		<!-- -->
@@ -48,6 +50,8 @@
 		<!--<script type="text/javascript" src="js/tinysort.js"></script>-->
 		<!--Video Framework -->
 		<!---<script type="text/javascript" src="video.js"></script>-->
+		<!--Art from Data-->
+		<script type="text/javascript" src="js/art.js"></script>
 
 		<!--D3.js-->
 
@@ -62,39 +66,48 @@
 	</head>
 
 	<body>
-
-		<ul id="slide-out" class="side-nav">
+		<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
+		<ul id="slide-out" class="side-nav fixed">
 			<li>
-				<div class="userView">
-
-					<a href="#!name"><span class="white-text name">John Doe</span></a>
-					<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+				<div class="input-field col s12">
+					<select id="movie">
+						<option value="" disabled selected>Movie</option>
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+						<option value="3">Option 3</option>
+					</select>
+					<label>Movie selection</label>
 				</div>
 			</li>
 			<li>
-				<a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a>
+				<div class="input-field col s12">
+					<select id="type">
+						<option value="" disabled selected>Type</option>
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+						<option value="3">Option 3</option>
+					</select>
+					<label>Type selection</label>
+				</div>
 			</li>
 			<li>
-				<a href="#!">Second Link</a>
+				<div class="input-field col s12">
+					<select id="visualization">
+						<option value="" disabled selected>Visualization</option>
+						<option value="sunburst">Sunburst</option>
+						<option value="streamgraph">Streamgraph</option>
+						<option value="forceDirectedGraph">forceDirectedGraph</option>
+						<option value="raindrops">Raindrops</option>
+					</select>
+					<label>Visualization selection</label>
+				</div>
 			</li>
-			<li>
-				<div class="divider"></div>
-			</li>
-			<li>
-				<a class="subheader">Subheader</a>
-			</li>
-			<li>
-				<a class="waves-effect" href="#!">Third Link With Waves</a>
-			</li>
+			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+				<i class="material-icons left">search</i>Search
+			</button>
 		</ul>
-		<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-
-		<script>
-			$(".button-collapse").sideNav();
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-		</script>
+		
+		<div id="graph"></div>
 
 		<!--d3 graphs-->
 		<script src="./d3/sunburst.js"></script>

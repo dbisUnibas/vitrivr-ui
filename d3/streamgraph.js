@@ -1,4 +1,4 @@
-$(document).ready(function() {
+function streamgraph() {
 
 	var n = 20, // number of layers
 	    m = 200, // number of samples per layer
@@ -31,7 +31,7 @@ $(document).ready(function() {
 		return y(d.y0 + d.y);
 	});
 
-	var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);
 
 	svg.selectAll("path").data(layers0).enter().append("path").attr("d", area).style("fill", function() {
 		return color(Math.random());
@@ -72,4 +72,4 @@ $(document).ready(function() {
 		});
 	}
 
-}); 
+} 

@@ -1,9 +1,9 @@
-$(document).ready(function() {
+function raindrops() {
 
 	var width = 960,
 	    height = 500;
 
-	var svg = d3.select("body").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 	var gradient = svg.append("defs").append("linearGradient").attr("id", "gradient").attr("x1", "0%").attr("y1", "20%").attr("x2", "20%").attr("y2", "100%");
 
@@ -26,4 +26,4 @@ $(document).ready(function() {
 		return "M" + r + ",0" + "A" + r + "," + r + " 0 1,1 " + -r + ",0" + "C" + -r + "," + -r + " 0," + -r + " 0," + -3 * r + "C0," + -r + " " + r + "," + -r + " " + r + ",0" + "Z";
 	}
 
-}); 
+} 

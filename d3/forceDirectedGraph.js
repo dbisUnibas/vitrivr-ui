@@ -1,8 +1,8 @@
-$(document).ready(function() {
+function forceDirectedGraph() {
 
-	var svg = d3.select("svg"),
-	    width = +svg.attr("width"),
-	    height = +svg.attr("height");
+	var width = 960,
+	    height = 600,
+	    svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -69,4 +69,4 @@ $(document).ready(function() {
 		d.fy = null;
 	}
 
-}); 
+}
