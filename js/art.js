@@ -7,17 +7,31 @@ $(function() {
 	var query = {
 		queryType : "getMultimediaobjects"
 	};
+
 	
-	var query2 = {
-		queryType : "getSegments",
-		multimediaobjectId : "110"
-	};
 
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(query));
+	});
+
+	$('#movie').on('change', function() {
+		$('#shots').empty();
+		var movieID = $(this).val();
+		var query2 = {
+			queryType : "getSegments",
+			multimediaobjectId : movieID
+		};
 		oboerequest(JSON.stringify(query2));
 	});
 	
+	$('#type').on('change', function() {
+		if ($(this).val() == "movie")  {
+			$('#shots').hide();
+		}
+		if ($(this).val() == "shot") {
+			$('#shots').show();
+		}
+	});
 
 	$('#search-button').click(function() {
 		$("#graph").empty();
@@ -62,22 +76,25 @@ function oboerequest(query, noContext) {
 			console.log(data);
 			console.log(data.array[0]);
 			searchRunning = false;
-			
+
 			switch(Object.keys(data.array[0])[0]) {
-				case "multimediaobjects":
-					console.log(data.array[0].multimediaobjects.length);
-					console.log("mObj");
-					for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-						$("#movie").append('<option value="' +  data.array[0].multimediaobjects[i] + '">Movie ' + i + '</option>');
-					}
-					$('select').material_select();
-					break;
-				case "segments":
-					console.log("seg");
-					break;
-				default:
-					console.log(data.array[0]);
-					break;
+			case "multimediaobjects":
+				//console.log(data.array[0].multimediaobjects.length);
+				//console.log("mObj");
+				for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
+					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i] + '">Movie ' + i + '</option>');
+				}
+				$('select').material_select();
+				break;
+			case "segments":
+				//console.log("seg");
+				for (var i = 0; i < data.array[0].segments.length; i++) {
+					$("#shots").append(data.array[0].segments[i] + ', ');
+				} 
+				break;
+			default:
+				console.log(data.array[0]);
+				break;
 			}
 		}).fail(function(data) {
 			console.log("FAIL");
