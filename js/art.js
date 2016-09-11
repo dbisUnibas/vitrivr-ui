@@ -49,7 +49,36 @@ $(function() {
 	$('#visualization').on('change', function() {
 		$('#search-button').prop('disabled', false);
 	});
-	
+
+	$('#search-button').click(function() {
+		$("#graph").empty();
+		var movie = $('#movie').val();
+		//console.log(movie);
+		var type = $('#type').val();
+		//console.log(type);
+		var visualization = $('#visualization').val();
+		//console.log(visualization);
+
+		if (type == "VISUALIZATION_MULTIMEDIAOBJECT") {
+			var queryArt = {
+				queryType : "getArt",
+				visualizationType : type,
+				visualization : visualization,
+				multimediaobjectId: movie
+			};
+			oboerequest(JSON.stringify(queryArt));
+		}
+		/*if (type == "VISUALIZATION_SEGMENT") {
+			var queryArt = {
+				queryType : "getArt",
+				visualizationType : type,
+				visualization : visualization,
+				segmentId: ...
+			};
+		}*/
+
+	});
+
 	$('#d3').on('change', function() {
 		$('#search-button-d3').prop('disabled', false);
 	});
@@ -144,6 +173,16 @@ function oboerequest(query, noContext) {
 				}
 
 				break;
+			case "resultData":
+			console.log(data.array[0].resultType);
+				if(data.array[0].resultType == "IMAGE") {
+					$("#graph").empty();
+					var picture = data.array[0].resultData;
+					$("#graph").append('<img src="' + picture + '" />');
+					/*console.log(picture);
+					var encodedPicture = window.atob(picture);
+					console.log(encodedPicture);*/
+				}
 			default:
 				console.log(data.array[0]);
 				break;
