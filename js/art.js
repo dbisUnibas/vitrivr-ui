@@ -4,33 +4,42 @@ $(function() {
 		$('select').material_select();
 	});
 
-	var query = {
+	var queryMultimediaObjects = {
 		queryType : "getMultimediaobjects"
 	};
 
-	
+	/*var queryVisualizationCategories = {
+	 queryType : "getVisualizationCategories"
+	 };*/
+
+	var queryVisualizations = {
+		queryType : "getVisualizations"
+	};
 
 	$(document).ready(function() {
-		oboerequest(JSON.stringify(query));
+		oboerequest(JSON.stringify(queryMultimediaObjects));
+		//oboerequest(JSON.stringify(queryVisualizationCategories));
+		
 	});
 
 	$('#movie').on('change', function() {
 		$('#shots').empty();
 		var movieID = $(this).val();
-		var query2 = {
+		var querySegmentIds = {
 			queryType : "getSegments",
 			multimediaobjectId : movieID
 		};
-		oboerequest(JSON.stringify(query2));
+		oboerequest(JSON.stringify(querySegmentIds));
 	});
-	
+
 	$('#type').on('change', function() {
-		if ($(this).val() == "movie")  {
+		if ($(this).val() == "movie") {
 			$('#shots').hide();
 		}
 		if ($(this).val() == "shot") {
 			$('#shots').show();
 		}
+		oboerequest(JSON.stringify(queryVisualizations));
 	});
 
 	$('#search-button').click(function() {
@@ -90,7 +99,36 @@ function oboerequest(query, noContext) {
 				//console.log("seg");
 				for (var i = 0; i < data.array[0].segments.length; i++) {
 					$("#shots").append(data.array[0].segments[i] + ', ');
-				} 
+				}
+				break;
+			/*case "visualizationCategories":
+			 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
+			 $("#type").append('<option value="' + data.array[0].visualizationCategories[i] + '">' + data.array[0].visualizationCategories[i] + '</option>');
+			 }
+			 $('select').material_select();
+			 break;*/
+			case "visualizations":
+				if ($('#type').val() == "movie") {
+					for (var i = 0; i < data.array[0].visualizations.length; i++) {
+						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
+								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+							}
+						}	
+					}
+					$('select').material_select();
+				}
+				if ($('#type').val() == "shot") {
+					for (var i = 0; i < data.array[0].visualizations.length; i++) {
+						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
+								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+							}
+						}	
+					}
+					$('select').material_select();
+				}
+
 				break;
 			default:
 				console.log(data.array[0]);
