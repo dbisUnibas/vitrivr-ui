@@ -2,6 +2,7 @@ $(function() {
 	$(".button-collapse").sideNav();
 	$(document).ready(function() {
 		$('select').material_select();
+		//$('select').prop('disabled', 'disabled');
 	});
 
 	var queryMultimediaObjects = {
@@ -19,11 +20,13 @@ $(function() {
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
-		
+
 	});
 
 	$('#movie').on('change', function() {
 		$('#shots').empty();
+		$('#type').prop('disabled', false);
+		$('select').material_select();
 		var movieID = $(this).val();
 		var querySegmentIds = {
 			queryType : "getSegments",
@@ -33,19 +36,28 @@ $(function() {
 	});
 
 	$('#type').on('change', function() {
-		if ($(this).val() == "movie") {
+		$('#visualization').prop('disabled', false);
+		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
 		}
-		if ($(this).val() == "shot") {
+		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
 		}
 		oboerequest(JSON.stringify(queryVisualizations));
 	});
 
-	$('#search-button').click(function() {
+	$('#visualization').on('change', function() {
+		$('#search-button').prop('disabled', false);
+	});
+	
+	$('#d3').on('change', function() {
+		$('#search-button-d3').prop('disabled', false);
+	});
+
+	$('#search-button-d3').click(function() {
 		$("#graph").empty();
-		//console.log($('#visualization').val());
-		var value = $('#visualization').val();
+		//console.log($('#d3').val());
+		var value = $('#d3').val();
 		switch (value) {
 		case "sunburst":
 			sunburst();
@@ -108,23 +120,25 @@ function oboerequest(query, noContext) {
 			 $('select').material_select();
 			 break;*/
 			case "visualizations":
-				if ($('#type').val() == "movie") {
+				$("#visualization").empty();
+				$("#visualization").append('<option value="" disabled selected>Visualization</option>');
+				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
 								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 							}
-						}	
+						}
 					}
 					$('select').material_select();
 				}
-				if ($('#type').val() == "shot") {
+				if ($('#type').val() == "VISUALIZATION_SEGMENT") {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
 								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 							}
-						}	
+						}
 					}
 					$('select').material_select();
 				}

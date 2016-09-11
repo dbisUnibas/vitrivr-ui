@@ -78,28 +78,39 @@
 			</li>
 			<li>
 				<div class="input-field col s12">
-					<select id="type">
+					<select id="type" disabled>
 						<option value="" disabled selected>Type</option>
-						<option value="movie">Movie</option>
-						<option value="shot">Shot</option>
+						<option value="VISUALIZATION_MULTIMEDIAOBJECT">Movie</option>
+						<option value="VISUALIZATION_SEGMENT">Shot</option>
 					</select>
 					<label>Type selection</label>
 				</div>
 			</li>
 			<li>
 				<div class="input-field col s12">
-					<select id="visualization">
+					<select id="visualization" disabled>
 						<option value="" disabled selected>Visualization</option>
+					</select>
+					<label>Visualization selection</label>
+				</div>
+			</li>
+			<li>
+				<div class="input-field col s12">
+					<select id="d3">
+						<option value="" disabled selected>d3</option>
 						<option value="sunburst">Sunburst</option>
 						<option value="streamgraph">Streamgraph</option>
 						<option value="forceDirectedGraph">forceDirectedGraph</option>
 						<option value="raindrops">Raindrops</option>
 					</select>
-					<label>Visualization selection</label>
+					<label>d3 selection</label>
 				</div>
 			</li>
-			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
+			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
 				<i class="material-icons left">search</i>Search
+			</button>
+			<button id="search-button-d3" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
+				<i class="material-icons left">search</i>Search-TestD3
 			</button>
 		</ul>
 		
