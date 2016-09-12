@@ -20,8 +20,8 @@ const categoryConfig = {
 		displayName : "Motion",
 		defaultValue : 0
 	},
-	neuralNet : {
-		displayName : "NN",
+	neuralnet : {
+		displayName : "Neural Net",
 		defaultValue : 0
 	}
 };
