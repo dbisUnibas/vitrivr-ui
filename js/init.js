@@ -197,7 +197,7 @@ $(function() {
 		var tag = $('#autocomplete-input').val();
 		$('#autocomplete-input').val("");
 		if (!data.data.hasOwnProperty(tag)){
-			Materialize.toast('\"' + tag +'\" is not availbale.', 4000);
+			Materialize.toast('\"' + tag +'\" is not available.', 4000);
 		} else {
 			if (tags.concepts.indexOf(tag) != -1) {
 				Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
