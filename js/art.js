@@ -1,4 +1,6 @@
-$(function() {
+var segmentsArray = [];
+
+$(function() {	
 	$(".button-collapse").sideNav();
 	$(document).ready(function() {
 		$('select').material_select();
@@ -24,6 +26,7 @@ $(function() {
 	});
 
 	$('#movie').on('change', function() {
+		segmentsArray = [];
 		$('#shots').empty();
 		$('#type').prop('disabled', false);
 		$('select').material_select();
@@ -68,14 +71,18 @@ $(function() {
 			};
 			oboerequest(JSON.stringify(queryArt));
 		}
-		/*if (type == "VISUALIZATION_SEGMENT") {
+		if (type == "VISUALIZATION_SEGMENT") {
+			var shot = $("input[name=shotIDs]:checked").val();
+			//console.log(shot);
+			
 			var queryArt = {
 				queryType : "getArt",
 				visualizationType : type,
 				visualization : visualization,
-				segmentId: ...
+				segmentId: shot
 			};
-		}*/
+			oboerequest(JSON.stringify(queryArt));
+		}
 
 	});
 
@@ -132,15 +139,22 @@ function oboerequest(query, noContext) {
 				//console.log(data.array[0].multimediaobjects.length);
 				//console.log("mObj");
 				for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i] + '">Movie ' + i + '</option>');
+					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i] + '">Movie ' + (i+1) + '</option>');
 				}
 				$('select').material_select();
 				break;
 			case "segments":
 				//console.log("seg");
+				$("#shots").append('<form action="#">');
 				for (var i = 0; i < data.array[0].segments.length; i++) {
-					$("#shots").append(data.array[0].segments[i] + ', ');
+					$("#shots").append('<p><input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="'+ data.array[0].segments[i] +'">' + data.array[0].segments[i] + '</label></p>');
+					segmentsArray.push(data.array[0].segments[i]);
+					//$("#shots").append(data.array[0].segments[i] + ', ');}
 				}
+				$("#shots").append('</form>');
+				var id = '#' + data.array[0].segments[0];
+				$(id).prop('checked', true);
+				//console.log(segmentsArray);
 				break;
 			/*case "visualizationCategories":
 			 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
@@ -183,6 +197,7 @@ function oboerequest(query, noContext) {
 					var encodedPicture = window.atob(picture);
 					console.log(encodedPicture);*/
 				}
+				break;
 			default:
 				console.log(data.array[0]);
 				break;
