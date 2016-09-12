@@ -119,6 +119,25 @@ function displayTags() {
 	}
 }
 
+/**
+ *check entered tag and clear input
+ */
+function checkTag() {
+	var tag = $('#autocomplete-input').val();
+	$('#autocomplete-input').val("");
+	if (!data.data.hasOwnProperty(tag)){
+		Materialize.toast('\"' + tag +'\" is not available.', 4000);
+	} else {
+		if (tags.concepts.indexOf(tag) != -1) {
+			Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
+		} else {
+			addTags(tag);
+			Materialize.toast('Added tag \"' + tag +'\" successfully.', 4000);
+		}
+	}
+	displayTags();
+}
+
 
 $(function() {
 	/*  sliders  */
@@ -193,22 +212,24 @@ $(function() {
 	 */
 	$("#btnAddTag").click(function(e) {
 		e.preventDefault();
-		
-		var tag = $('#autocomplete-input').val();
-		$('#autocomplete-input').val("");
-		if (!data.data.hasOwnProperty(tag)){
-			Materialize.toast('\"' + tag +'\" is not available.', 4000);
-		} else {
-			if (tags.concepts.indexOf(tag) != -1) {
-				Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
-			} else {
-				addTags(tag);
-				Materialize.toast('Added tag \"' + tag +'\" successfully.', 4000);
-			}
-		}
-		displayTags();
-			
+		checkTag();		
 	});
+	
+	
+	/**
+	 *submit tag by pressing Enter
+	 */
+	$("#autocomplete-input").keypress(function(event) {
+	    if (event.which == 13) {
+	    	if (data.data.hasOwnProperty($('#autocomplete-input').val())){
+				event.preventDefault();
+	        	checkTag();
+			}
+	    }
+	});
+	
+
+
 
 	$('#btnShowSidebar').click(function() {
 		if ($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
@@ -347,7 +368,5 @@ $(function() {
 	
   	$('input.autocomplete').autocomplete(
     	data
-  	);
-        
-	
+  	);        
 });
