@@ -4,11 +4,11 @@ const videoHost = "collection/";
 const thumbnailFileType = "jpg";
 const maxFrameGap = 250;
 const categoryConfig = {
-	globalColor : {
+	globalcolor : {
 		displayName : "Global Color",
 		defaultValue : 0.1
 	},
-	localColor : {
+	localcolor : {
 		displayName : "Local Color",
 		defaultValue : 0.6
 	},
