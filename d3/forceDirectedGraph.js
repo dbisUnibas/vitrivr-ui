@@ -2,7 +2,7 @@ function forceDirectedGraph() {
 
 	var width = 960,
 	    height = 600,
-	    svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);
+	    svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height);
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20);
 

@@ -5,7 +5,7 @@ function sunburst() {
 	    radius = Math.min(width, height) / 2,
 	    color = d3.scale.category20c();
 
-	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
+	var svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
 
 	var partition = d3.layout.partition().sort(null).size([2 * Math.PI, radius * radius]).value(function(d) {
 		return 1;

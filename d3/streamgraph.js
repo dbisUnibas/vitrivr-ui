@@ -31,7 +31,7 @@ function streamgraph() {
 		return y(d.y0 + d.y);
 	});
 
-	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height);
+	var svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height);
 
 	svg.selectAll("path").data(layers0).enter().append("path").attr("d", area).style("fill", function() {
 		return color(Math.random());

@@ -33,6 +33,7 @@ $(function() {
 	});
 
 	$('#movie').on('change', function() {
+		$("#graph").empty();
 		segmentsArray = [];
 		$('#shots').empty();
 		$('#type').prop('disabled', false);
@@ -47,6 +48,8 @@ $(function() {
 	});
 
 	$('#type').on('change', function() {
+		$("#graph").empty();
+		$('#search-button').prop('disabled', true);
 		$('#visualization').prop('disabled', false);
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
@@ -58,6 +61,7 @@ $(function() {
 	});
 
 	$('#visualization').on('change', function() {
+		$("#graph").empty();
 		$('#search-button').prop('disabled', false);
 	});
 
@@ -100,6 +104,7 @@ $(function() {
 
 	$('#search-button-d3').click(function() {
 		$("#graph").empty();
+		$("#graphd3").empty();
 		//console.log($('#d3').val());
 		var value = $('#d3').val();
 		switch (value) {
@@ -122,9 +127,20 @@ $(function() {
 
 });
 
+var progressCounter = 0;
+function showProgress(progress) {
+	$('#loading').show();
+	$('#loading>.determinate').css('width', Math.round(100 * progress) + '%');
+	progressCounter = progress;
+}
+
+function hideProgress() {
+	$('#loading').hide();
+}
+
 function oboerequest(query, noContext) {
 	searchRunning = true;
-	//showProgress(0);
+	showProgress(0);
 	if (noContext === undefined) {
 		noContext = false;
 	}
@@ -138,6 +154,7 @@ function oboerequest(query, noContext) {
 			body : "query=" + query,
 			headers : headers
 		}).done(function(data) {
+			hideProgress();
 			console.log(data);
 			console.log(data.array[0]);
 			searchRunning = false;
@@ -201,9 +218,6 @@ function oboerequest(query, noContext) {
 					$("#graph").empty();
 					var picture = data.array[0].resultData;
 					$("#graph").append('<img src="' + picture + '" />');
-					/*console.log(picture);
-					var encodedPicture = window.atob(picture);
-					console.log(encodedPicture);*/
 				}
 				break;
 			default:
@@ -213,7 +227,7 @@ function oboerequest(query, noContext) {
 		}).fail(function(data) {
 			console.log("FAIL");
 			console.log(data);
-			//hideProgress();
+			hideProgress();
 			searchRunning = false;
 		});
 	} catch(e) {
