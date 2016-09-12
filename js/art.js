@@ -25,19 +25,11 @@ $(function() {
 			shotid : "7274499"
 		}
 	};*/
-	
-	/**
-	 * just testing here, has to be removed because not needed
-	 */
-	var queryLabels = {
-		queryType : "getLabels"
-	};
 
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
 		//oboerequest(JSON.stringify(queryShot));
-		oboerequest(JSON.stringify(queryLabels));
 	});
 
 	$('#movie').on('change', function() {
@@ -163,7 +155,7 @@ function oboerequest(query, noContext) {
 				//console.log("seg");
 				$("#shots").append('<form action="#">');
 				for (var i = 0; i < data.array[0].segments.length; i++) {
-					$("#shots").append('<p><input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="'+ data.array[0].segments[i] +'">' + data.array[0].segments[i] + '</label></p>');
+					$("#shots").append('<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="'+ data.array[0].segments[i] +'">' + data.array[0].segments[i] + '</label>');
 					segmentsArray.push(data.array[0].segments[i]);
 					//$("#shots").append(data.array[0].segments[i] + ', ');}
 				}
