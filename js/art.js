@@ -18,11 +18,26 @@ $(function() {
 	var queryVisualizations = {
 		queryType : "getVisualizations"
 	};
+	
+	/*var queryShot = {
+		queryType : "video",
+		query : {
+			shotid : "7274499"
+		}
+	};*/
+	
+	/**
+	 * just testing here, has to be removed because not needed
+	 */
+	var queryLabels = {
+		queryType : "getLabels"
+	};
 
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
-
+		//oboerequest(JSON.stringify(queryShot));
+		oboerequest(JSON.stringify(queryLabels));
 	});
 
 	$('#movie').on('change', function() {
@@ -31,6 +46,7 @@ $(function() {
 		$('#type').prop('disabled', false);
 		$('select').material_select();
 		var movieID = $(this).val();
+		console.log(movieID);
 		var querySegmentIds = {
 			queryType : "getSegments",
 			multimediaobjectId : movieID
@@ -139,7 +155,7 @@ function oboerequest(query, noContext) {
 				//console.log(data.array[0].multimediaobjects.length);
 				//console.log("mObj");
 				for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i] + '">Movie ' + (i+1) + '</option>');
+					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>');
 				}
 				$('select').material_select();
 				break;
