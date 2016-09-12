@@ -1,6 +1,6 @@
 var segmentsArray = [];
 
-$(function() {	
+$(function() {
 	$(".button-collapse").sideNav();
 	$(document).ready(function() {
 		$('select').material_select();
@@ -18,13 +18,13 @@ $(function() {
 	var queryVisualizations = {
 		queryType : "getVisualizations"
 	};
-	
+
 	/*var queryShot = {
-		queryType : "video",
-		query : {
-			shotid : "7274499"
-		}
-	};*/
+	 queryType : "video",
+	 query : {
+	 shotid : "7274499"
+	 }
+	 };*/
 
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
@@ -68,31 +68,29 @@ $(function() {
 	$('#search-button').click(function() {
 		$("#graph").empty();
 		var movie = $('#movie').val();
-		//console.log(movie);
 		var type = $('#type').val();
-		//console.log(type);
 		var visualization = $('#visualization').val();
-		//console.log(visualization);
 
 		if (type == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			var queryArt = {
 				queryType : "getArt",
 				visualizationType : type,
 				visualization : visualization,
-				multimediaobjectId: movie
+				multimediaobjectId : movie
 			};
+			
 			oboerequest(JSON.stringify(queryArt));
 		}
 		if (type == "VISUALIZATION_SEGMENT") {
 			var shot = $("input[name=shotIDs]:checked").val();
-			//console.log(shot);
-			
+
 			var queryArt = {
 				queryType : "getArt",
 				visualizationType : type,
 				visualization : visualization,
-				segmentId: shot
+				segmentId : shot
 			};
+
 			oboerequest(JSON.stringify(queryArt));
 		}
 
@@ -105,23 +103,23 @@ $(function() {
 	$('#search-button-d3').click(function() {
 		$("#graph").empty();
 		$("#graphd3").empty();
-		//console.log($('#d3').val());
+		
 		var value = $('#d3').val();
 		switch (value) {
-		case "sunburst":
-			sunburst();
-			break;
-		case "streamgraph":
-			streamgraph();
-			break;
-		case "raindrops":
-			raindrops();
-			break;
-		case "forceDirectedGraph":
-			forceDirectedGraph();
-			break;
-		default:
-			break;
+			case "sunburst":
+				sunburst();
+				break;
+			case "streamgraph":
+				streamgraph();
+				break;
+			case "raindrops":
+				raindrops();
+				break;
+			case "forceDirectedGraph":
+				forceDirectedGraph();
+				break;
+			default:
+				break;
 		}
 	});
 
@@ -160,69 +158,64 @@ function oboerequest(query, noContext) {
 			searchRunning = false;
 
 			switch(Object.keys(data.array[0])[0]) {
-			case "multimediaobjects":
-				//console.log(data.array[0].multimediaobjects.length);
-				//console.log("mObj");
-				for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-					$("#movie").append('<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>');
-				}
-				$('select').material_select();
-				break;
-			case "segments":
-				//console.log("seg");
-				$("#shots").append('<form action="#">');
-				for (var i = 0; i < data.array[0].segments.length; i++) {
-					$("#shots").append('<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="'+ data.array[0].segments[i] +'">' + data.array[0].segments[i] + '</label>');
-					segmentsArray.push(data.array[0].segments[i]);
-					//$("#shots").append(data.array[0].segments[i] + ', ');}
-				}
-				$("#shots").append('</form>');
-				var id = '#' + data.array[0].segments[0];
-				$(id).prop('checked', true);
-				//console.log(segmentsArray);
-				break;
-			/*case "visualizationCategories":
-			 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
-			 $("#type").append('<option value="' + data.array[0].visualizationCategories[i] + '">' + data.array[0].visualizationCategories[i] + '</option>');
-			 }
-			 $('select').material_select();
-			 break;*/
-			case "visualizations":
-				$("#visualization").empty();
-				$("#visualization").append('<option value="" disabled selected>Visualization</option>');
-				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
-					for (var i = 0; i < data.array[0].visualizations.length; i++) {
-						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
-							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
-								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
-							}
-						}
+				case "multimediaobjects":
+					for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
+						$("#movie").append('<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>');
 					}
 					$('select').material_select();
-				}
-				if ($('#type').val() == "VISUALIZATION_SEGMENT") {
-					for (var i = 0; i < data.array[0].visualizations.length; i++) {
-						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
-							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
-								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+					break;
+				case "segments":
+					$("#shots").append('<form action="#">');
+					for (var i = 0; i < data.array[0].segments.length; i++) {
+						$("#shots").append('<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="' + data.array[0].segments[i] + '">' + data.array[0].segments[i] + '</label>');
+						segmentsArray.push(data.array[0].segments[i]);
+						//$("#shots").append(data.array[0].segments[i] + ', ');}
+					}
+					$("#shots").append('</form>');
+					var id = '#' + data.array[0].segments[0];
+					$(id).prop('checked', true);
+					break;
+				/*case "visualizationCategories":
+				 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
+				 $("#type").append('<option value="' + data.array[0].visualizationCategories[i] + '">' + data.array[0].visualizationCategories[i] + '</option>');
+				 }
+				 $('select').material_select();
+				 break;*/
+				case "visualizations":
+					$("#visualization").empty();
+					$("#visualization").append('<option value="" disabled selected>Visualization</option>');
+					if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
+						for (var i = 0; i < data.array[0].visualizations.length; i++) {
+							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
+									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								}
 							}
 						}
+						$('select').material_select();
 					}
-					$('select').material_select();
-				}
-
-				break;
-			case "resultData":
-			console.log(data.array[0].resultType);
-				if(data.array[0].resultType == "IMAGE") {
-					$("#graph").empty();
-					var picture = data.array[0].resultData;
-					$("#graph").append('<img src="' + picture + '" />');
-				}
-				break;
-			default:
-				console.log(data.array[0]);
-				break;
+					if ($('#type').val() == "VISUALIZATION_SEGMENT") {
+						for (var i = 0; i < data.array[0].visualizations.length; i++) {
+							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
+									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								}
+							}
+						}
+						$('select').material_select();
+					}
+	
+					break;
+				case "resultData":
+					if (data.array[0].resultType == "IMAGE") {
+						$("#graph").empty();
+						var picture = data.array[0].resultData;
+						$("#graph").append('<img src="' + picture + '" />');
+					}
+					break;
+				default:
+					console.log(data.array[0]);
+					break;
 			}
 		}).fail(function(data) {
 			console.log("FAIL");
