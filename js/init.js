@@ -97,9 +97,50 @@ function readSliders() {
  *set tags for NN 
  */
 function setAvailableTags() {
+	var queryLabels = {
+		queryType : "getLabels"
+	};
+	
+	getTags(JSON.stringify(queryLabels));
+	
 	data["data"]["cat"] = null;
 	data["data"]["umbrella"] = null;
 	data["data"]["penguin"] = null;
+}
+
+/**
+ *get tags from DB 
+ */
+function getTags(query, noContext) {
+	//showProgress(0);
+	if (noContext === undefined) {
+		noContext = false;
+	}
+	try {
+		var headers = {
+			'Content-Type' : 'application/x-www-form-urlencoded'
+		};
+		oboe({
+			url : cineastHost, //see config.js
+			method : 'POST',
+			body : "query=" + query,
+			headers : headers
+		}).done(function(data) {
+			console.log(data);
+			console.log(data.array[0]);
+			
+			for (var i = 0; i < data.array[0].concepts.length; i++) {
+				data["data"][data.array[0].concepts[i]] = null;
+			}	
+		}).fail(function(data) {
+			console.log("FAIL");
+			console.log(data);
+			//hideProgress();
+			searchRunning = false;
+		});
+	} catch(e) {
+		console.warn(e.message + " | " + e.lineNumber);
+	}
 }
 
 /**
