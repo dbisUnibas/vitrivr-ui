@@ -14,46 +14,46 @@
   const INSTRUCTION = "Say 'show all commands' for overview of voice queries";
 
   // These queries are used in follow up commands
-  const QUERY_A = 'increase size (of pen) (of brush)';
-  const QUERY_B = 'decrease size (of pen) (of brush)';
-  const QUERY_C = '(show) (me) (move to) next (video) (container)';
-  const QUERY_D = '(show) (me) (move to) previous (video) (container)'; 
-  const QUERY_E = 'add (a) (new) Canvas (sheet)';
-  const QUERY_F = 'add it';
-  const QUERY_G = 'remove it'; 	
+  const QUERY_INCREASE_PENSIZE = 'increase size (of pen) (of brush)';
+  const QUERY_DECREASE_PENSIZE = 'decrease size (of pen) (of brush)';
+  const QUERY_NEXT_VIDEOCONTAINER = '(show) (me) (move to) next (video) (container)';
+  const QUERY_PREVIOUS_VIDEOCONTAINER = '(show) (me) (move to) previous (video) (container)'; 
+  const QUERY_ADDCANVAS = 'add (a) (new) Canvas (sheet)';
+  const QUERY_ADDVIDEO = 'add it';
+  const QUERY_REMOVEVIDEO = 'remove it'; 	
 
-  const COMMAND_A = "voice search *tag";
-  const COMMAND_B = "*tag1 voice search *tag2";
+  const QUERY_VOICE_SEARCH = "voice search *tag";
+  const QUERY_VOICE_SEARCH_2 = "*tag1 voice search *tag2";
 
-  var followUpCommands = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
+  const QUERY_FOLLOW_UP = ['even more','more','even further','further','one more','again one more','One More', 'yes'];
 
   const PERSON = "UK English Female";   // accent of voice response by UI
 
   // Static error messages
-  const ERR1  = 'Window is open already';
-  const ERR2  = 'There is no video playing';
-  const ERR3  = 'Ok';
-  const ERR4  = 'Please say yes just after my feedback';
-  const ERR5  = "Sorry I haven't understood you";
-  const ERR6  = 'Query not executed as there is no video results retrieved';
-  const ERR7  = 'Please wait till search is in progress';
-  const ERR8  = 'Query already executed';
-  const ERR9  = 'Please say canvas number after the query';
-  const ERR10 = 'Size of pen can not be increase';
-  const ERR11 = 'Size of pen can not be decrease';
-  const ERR12 = 'You are at the bottom';
-  const ERR13 = 'You are at the top';
-  const ERR14 = 'First say some query';
-  const ERR15 = 'This command works while playing a video';
-  const ERR16 = 'User has not clicked any shot';
-  const ERR17 = 'Please say an action query';
-  const ERR18 = 'There must be atleast one video added as positive feedback';
-  const ERR19 = 'Please also say shot number';
-  const ERR20 = 'There is no shot retrieved';
-  const ERR21 = 'Please also say score';
-  const ERR22 = 'Please check the voice query';
-  const ERR23 = 'No window is open';
-  const ERR24 = 'Please also say which color';
+  const ERR_WINDOW_OPEN  = 'Window is open already';
+  const ERR_VIDEO_PLAYING  = 'There is no video playing';
+  const OK  = 'Ok';
+  const ERR_YES  = 'Please say yes just after my feedback';
+  const ERR_NOT_UNDERSTOOD  = "Sorry I haven't understood you";
+  const ERR_NO_RESULTS  = 'Query not executed as there is no video results retrieved';
+  const ERR_WAIT_IN_PROGRESS  = 'Please wait while search is in progress';
+  const ERR_QUERY_EXECUTED_ALREADY  = 'Query already executed';
+  const ERR_CANVAS_NUMBER_MISSING  = 'Please say canvas number after the query';
+  const ERR_INCREASING_PENSIZE = 'Size of pen can not be increased';
+  const ERR_DECREASING_PENSIZE = 'Size of pen can not be decreased';
+  const ERR_BOTTOM = 'You are at the bottom';
+  const ERR_TOP = 'You are at the top';
+  const ERR_QUERY_NECESSARY = 'First say some query';
+  const ERR_PLAYING_VIDEO = 'This command works while playing a video';
+  const ERR_NO_CLICK = 'User has not clicked any shot';
+  const ERR_ACTION_QUERY = 'Please say an action query';
+  const ERR_MISSING_VIDEO_FEEDBACK = 'There must be at least one video added as positive feedback';
+  const ERR_SAY_NUMBER = 'Please also say shot number';
+  const ERR_NO_SHOT = 'There is no shot retrieved';
+  const ERR_SAY_SCORE = 'Please also say score';
+  const ERR_CHECK_VOICE = 'Please check the voice query';
+  const ERR_NO_WINDOW_OPEN = 'No window is open';
+  const ERR_WHICH_COLOR = 'Please also say which color';
 
 
 // voice queries/commands linked to their corresponding functions
@@ -238,88 +238,3 @@ var colourToHex = {
     "thistle":"#d8bfd8","tomato":"#ff6347","turquoise":"#40e0d0","violet":"#ee82ee","wheat":"#f5deb3","white":"#ffffff",
     "whitesmoke":"#f5f5f5","yellow":"#ffff00","yellowgreen":"#9acd32"
   };
-
-/** 
-
-Languages and there respective code to be added as a parameter in  annyang.setLanguage(parameter)
-
-Afrikaans af
-Basque eu
-Bulgarian bg
-Catalan ca
-Arabic (Egypt) ar-EG
-Arabic (Jordan) ar-JO
-Arabic (Kuwait) ar-KW
-Arabic (Lebanon) ar-LB
-Arabic (Qatar) ar-QA
-Arabic (UAE) ar-AE
-Arabic (Morocco) ar-MA
-Arabic (Iraq) ar-IQ
-Arabic (Algeria) ar-DZ
-Arabic (Bahrain) ar-BH
-Arabic (Lybia) ar-LY
-Arabic (Oman) ar-OM
-Arabic (Saudi Arabia) ar-SA
-Arabic (Tunisia) ar-TN
-Arabic (Yemen) ar-YE
-Czech cs
-Dutch nl-NL
-English (Australia) en-AU
-English (Canada) en-CA
-English (India) en-IN
-English (New Zealand) en-NZ
-English (South Africa) en-ZA
-English(UK) en-GB
-English(US) en-US
-Finnish fi
-French fr-FR
-Galician gl
-German de-DE
-Hebrew he
-Hungarian hu
-Icelandic is
-Italian it-IT
-Indonesian id
-Japanese ja
-Korean ko
-Latin la
-Mandarin Chinese zh-CN
-Traditional Taiwan zh-TW
-Simplified China zh-CN ?
-Simplified Hong Kong zh-HK
-Yue Chinese (Traditional Hong Kong) zh-yue
-Malaysian ms-MY
-Norwegian no-NO
-Polish pl
-Pig Latin xx-piglatin
-Portuguese pt-PT
-Portuguese (Brasil) pt-BR
-Romanian ro-RO
-Russian ru
-Serbian sr-SP
-Slovak sk
-Spanish (Argentina) es-AR
-Spanish (Bolivia) es-BO
-Spanish (Chile) es-CL
-Spanish (Colombia) es-CO
-Spanish (Costa Rica) es-CR
-Spanish (Dominican Republic) es-DO
-Spanish (Ecuador) es-EC
-Spanish (El Salvador) es-SV
-Spanish (Guatemala) es-GT
-Spanish (Honduras) es-HN
-Spanish (Mexico) es-MX
-Spanish (Nicaragua) es-NI
-Spanish (Panama) es-PA
-Spanish (Paraguay) es-PY
-Spanish (Peru) es-PE
-Spanish (Puerto Rico) es-PR
-Spanish (Spain) es-ES
-Spanish (US) es-US
-Spanish (Uruguay) es-UY
-Spanish (Venezuela) es-VE
-Swedish sv-SE
-Turkish tr
-Zulu zu
-
-*/

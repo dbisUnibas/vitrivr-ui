@@ -5,11 +5,6 @@ var Scores = {};
 var rf_positive = new Array();
 var rf_negative = new Array();
 
-/*
-*	splitVideoExecuted variable allows to execute sequenceSegmentation() function only once per search
-*/
-var splitVideoExecuted;
-
 function getCategories(){
 	var categories = [];
 	if(ScoreWeights.globalcolor > 0){
@@ -31,11 +26,11 @@ function getCategories(){
 }
 
 var ScoreWeights = {
-	globalcolor: 0.1,
-	localcolor: 0.6,
-	edge: 0.3,
+	globalcolor: 0.05,
+	localcolor: 0.4,
+	edge: 0.25,
 	motion: 0,
-	meta: 0.5,
+	meta: 0.3,
 };
 
 function sumWeights(){
@@ -201,10 +196,10 @@ function oboerequest(query, noContext) {
 			}
 			
 			sortVideos();
-				$('#sequence-segmentation-button').show();
-				splitVideoExecuted = false;
+			$('#sequence-segmentation-button').show();
+			splitVideoExecuted = false;
 
-				hideProgress();
+			hideProgress();
 
 			searchRunning = false;
 

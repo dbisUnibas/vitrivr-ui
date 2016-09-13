@@ -63,11 +63,11 @@ function newShotInput() {
 	var colorcanvas = new sketchCanvas(color);
 	colorcanvas.setLineWidth($('#draw-radius').get(0).noUiSlider.get());
 
-	if(voiceMode)
+	if(voiceMode){
 		colorcanvas.setColor(colorByVoice);
-	else
+	} else {
 		colorcanvas.setColor($("#colorInput").spectrum('get'));
-
+	}
 
 	shotInputs[id] = {
 		color : colorcanvas,
@@ -202,7 +202,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	//$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', playShot);
 	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
 	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
-    $('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
+	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
 	if(voiceMode){
@@ -305,6 +305,12 @@ function updateScores(segmentedVideos) {
 	sortVideos();
 }
 
+
+/*
+*	splitVideoExecuted variable allows to execute sequenceSegmentation() function only once per search
+*/
+var splitVideoExecuted = false;
+
 function sequenceSegmentation(){
 	$('#sequence-segmentation-button').hide();
 	splitVideoExecuted = true;
@@ -334,8 +340,9 @@ function sequenceSegmentation(){
 		
 	}
 	updateScores(true);
-	if(voiceMode)
+	if(voiceMode){
 		addSerialNumber();
+	}
 }
 
 function playShot(event){
@@ -362,10 +369,11 @@ function playShot(event){
 
 function similaritySearch(object){
 	var shotBox;
-	if(voiceMode)
+	if(voiceMode){
 		shotBox = object.parent().parent();
-	else
+	} else {
 		shotBox = $(this).parent().parent().parent();
+	}
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	search(shotId);
 }
@@ -416,10 +424,11 @@ function relevanceFeedback(event){
 
 function prepare_playback(object){
 	var shotBox;
-	if(voiceMode)
+	if(voiceMode) {
 		shotBox = object.parent().parent();
-	else
+	} else {
 		shotBox = $(this).parent().parent().parent();
+	}
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
 	var frame = Math.floor((shotInfo.start + shotInfo.end) / 2);

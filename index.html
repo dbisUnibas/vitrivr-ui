@@ -32,6 +32,8 @@
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/ui_util.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
+		<script type="text/javascript" src="js/functions.js"></script>
+
 
 		<script type="text/javascript" src="js/annyang.js" ></script>
 		<script type="text/javascript" src="js/speechkitt.js"></script>
@@ -97,8 +99,7 @@
 				</li>-->
 			</ul>
 			<div class="voice">
-				<b style="color: #F44336">Voice Query:</b> 
-				<textarea id = "voiceTextbox"></textarea>
+				<div class="voicetextbox" style="height: 115px"><label>voice input</label><div id ="voiceTextbox" style="font-size: 12px; font-family: 'Inconsolata', Monaco, Consolas, 'Andale Mono', monospace"></div></div>
 			</div>
 			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">search</i>Search
@@ -111,10 +112,15 @@
 			<button id="sequence-segmentation-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">settings_ethernet</i>Split video into sequences
 			</button>
-			<div class="voice">
-				<b style="color: #F44336">Voice Search Query:</b> 
-				<textarea id = "voiceSearchQuery"></textarea>
-			</div>
+
+            <div class="tool-pane" id="text-tool-pane" style="display: block; margin: 10px; margin-top: 20px;">
+                <div class="voice">
+                    <label for="voiceSearchQuery">Text search:</label>
+                    <textarea id = "voiceSearchQuery" class="voicesearchquery"></textarea>
+            	</div>
+            </div>
+            
+            
 			<div class="tool-pane" id="color-tool-pane" style="display: block; margin: 10px; height: 40px;">
 				<div style="width: calc(100% - 60px - 10px); margin-right: 10px; float: left;">
 					<label for="draw-radius">Pen Size:</label>
@@ -157,7 +163,7 @@
 
 		</div>
  			 <!-- display commands in voice mode -->
-		  <div id="commands-modal" class="modal modal-fixed-footer voice">
+		  <div id="commands-modal" class="modal modal-fixed-footer">
 			    <div class="modal-content">
 				      <h4>Base Commands</h4>
 				      <p></p>
