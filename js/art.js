@@ -159,19 +159,27 @@ function oboerequest(query, noContext) {
 
 			switch(Object.keys(data.array[0])[0]) {
 				case "multimediaobjects":
+					var movies = '';
 					for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-						$("#movie").append('<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>');
+						movies += '<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>';
 					}
+					$("#movie").append(movies);
 					$('select').material_select();
 					break;
 				case "segments":
-					$("#shots").append('<form action="#">');
+					var movieID = $('#movie').val();
+					var segs = '';
+					segs += '<form action="#">';
 					for (var i = 0; i < data.array[0].segments.length; i++) {
-						$("#shots").append('<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" /><label for="' + data.array[0].segments[i] + '">' + data.array[0].segments[i] + '</label>');
+						segs += '<label class="rad">';
+						segs += '<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
+						segs += '<img class="thumbnail" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
+						segs += '</label>';
 						segmentsArray.push(data.array[0].segments[i]);
 						//$("#shots").append(data.array[0].segments[i] + ', ');}
 					}
-					$("#shots").append('</form>');
+					segs += '</form>';
+					$("#shots").append(segs);
 					var id = '#' + data.array[0].segments[0];
 					$(id).prop('checked', true);
 					break;
