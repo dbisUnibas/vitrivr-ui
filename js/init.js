@@ -1,6 +1,56 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
 
+function setUpCategories(){
+	var ks = Object.keys(categoryConfig);
+	var sliderBox = $(".weight-slider-box").first();
+	
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];
+  		ScoreWeights[key] = categoryConfig[key]['defaultValue'] || 0;
+  		sliderBox.append('<div class="weight-slider"><label for="' + 
+  			key + '-weight">' + 
+  			(categoryConfig[key]['displayName'] || key) + ':</label><div id="' + 
+  			key + '-weight" ></div></div>');
+  		
+  		noUiSlider.create($('#' + key + '-weight').get(0), {
+			start : 100 * ScoreWeights[key],
+			step : 1,
+			range : {
+				'min' : 0,
+				'max' : 100
+			},
+			format : wNumb({
+				decimals : 0
+			})
+		});
+		
+		$('#' + key + '-weight').get(0).noUiSlider.on('change', buildSliderCallback(key));
+	}
+}
+
+function buildSliderCallback(key){
+	
+	return function(_, __, val){
+		if(val > ScoreWeights[key]){
+			readSliders();
+			var sum = sumWeights();
+			if(sum > 100){
+				var scale = (100 - val) / (sum - ScoreWeights[key]);
+				var ks = Object.keys(categoryConfig);
+				for (var i = 0, len = ks.length; i < len; i++) {
+  					var k = ks[i];	  					
+  					if(k != key){
+  						$('#' + k + '-weight').get(0).noUiSlider.set(ScoreWeights[k] * scale);
+  					}
+  				}
+			}
+		}
+		updateScores(true);
+	};
+	
+}
+
 function remove_element(arr, val) {
     var i = arr.indexOf(val);
          return i>-1 ? arr.splice(i, 1) : [];
@@ -8,12 +58,7 @@ function remove_element(arr, val) {
 
 
 function updateSliders() {
-
-	ScoreWeights.globalcolor = $('#global-color-weight').get(0).noUiSlider.get();
-	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
-	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
-	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
-	ScoreWeights.meta = $('#meta-weight').get(0).noUiSlider.get();
+	readSliders();
 	normalizeScoreWeights();
 
 	updateScores(true);
@@ -21,13 +66,11 @@ function updateSliders() {
 }
 
 function readSliders() {
-
-	ScoreWeights.globalcolor = $('#global-color-weight').get(0).noUiSlider.get();
-	ScoreWeights.localcolor = $('#local-color-weight').get(0).noUiSlider.get();
-	ScoreWeights.edge = $('#edge-weight').get(0).noUiSlider.get();
-	ScoreWeights.motion = $('#motion-weight').get(0).noUiSlider.get();
-	ScoreWeights.meta = $('#meta-weight').get(0).noUiSlider.get();
-		
+	var ks = Object.keys(categoryConfig);
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];
+  		ScoreWeights[key] = $('#' + key + '-weight').get(0).noUiSlider.get();
+  	}
 }
 
 
@@ -52,143 +95,9 @@ $(function() {
 		}
 
 	}); 
-	
-	noUiSlider.create($('#global-color-weight').get(0), {
-		start : 100 * ScoreWeights.globalcolor,
-		step : 1,
-		range : {
-			'min' : 0,
-			'max' : 100
-		},
-		format : wNumb({
-			decimals : 0
-		})
-	});
-	
-	noUiSlider.create($('#local-color-weight').get(0), {
-		start : 100 * ScoreWeights.localcolor,
-		step : 1,
-		range : {
-			'min' : 0,
-			'max' : 100
-		},
-		format : wNumb({
-			decimals : 0
-		})
-	});
-	
-	noUiSlider.create($('#edge-weight').get(0), {
-		start : 100 * ScoreWeights.edge,
-		step : 1,
-		range : {
-			'min' : 0,
-			'max' : 100
-		},
-		format : wNumb({
-			decimals : 0
-		})
-	});
-	
-	noUiSlider.create($('#motion-weight').get(0), {
-		start : 100 * ScoreWeights.motion,
-		step : 1,
-		range : {
-			'min' : 0,
-			'max' : 100
-		},
-		format : wNumb({
-			decimals : 0
-		})
-	});
 
-	noUiSlider.create($('#meta-weight').get(0), {
-		start : 100 * ScoreWeights.meta,
-		step : 1,
-		range : {
-			'min' : 0,
-			'max' : 100
-		},
-		format : wNumb({
-			decimals : 0
-		})
-	});
+	setUpCategories();
 	
-	$('#global-color-weight').get(0).noUiSlider.on('change', function(_, __, val){
-		
-		if(val > ScoreWeights.globalcolor){
-			readSliders();
-			var sum = sumWeights();
-			if(sum > 100){
-				var scale = (100 - val) / (sum - ScoreWeights.globalcolor);
-				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
-				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
-				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
-				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
-			}
-		}
-		updateScores(true);
-	});
-	$('#local-color-weight').get(0).noUiSlider.on('change', function(_, __, val){
-		
-		if(val > ScoreWeights.localcolor){
-			readSliders();
-			var sum = sumWeights();
-			if(sum > 100){
-				var scale = (100 - val) / (sum - ScoreWeights.localcolor);
-				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
-				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
-				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
-				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
-			}
-		}
-		updateScores(true);
-	});
-	$('#edge-weight').get(0).noUiSlider.on('change', function(_, __, val){
-		
-		if(val > ScoreWeights.edge){
-			readSliders();
-			var sum = sumWeights();
-			if(sum > 100){
-				var scale = (100 - val) / (sum - ScoreWeights.edge);
-				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
-				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
-				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
-				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
-			}
-		}
-		updateScores(true);
-	});
-	$('#motion-weight').get(0).noUiSlider.on('change', function(_, __, val){
-		
-		if(val > ScoreWeights.motion){
-			readSliders();
-			var sum = sumWeights();
-			if(sum > 100){
-				var scale = (100 - val) / (sum - ScoreWeights.motion);
-				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
-				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
-				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
-				$('#meta-weight').get(0).noUiSlider.set(ScoreWeights.meta * scale);
-			}
-		}
-		updateScores(true);
-	});
-	$('#meta-weight').get(0).noUiSlider.on('change', function(_, __, val){
-		
-		if(val > ScoreWeights.meta){
-			readSliders();
-			var sum = sumWeights();
-			if(sum > 100){
-				var scale = (100 - val) / (sum - ScoreWeights.meta);
-				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
-				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
-				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
-				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
-			}
-		}
-		updateScores(true);
-	});
-
 	/*  color picker  */
 	$("#colorInput").spectrum({
 		showPaletteOnly : true,
@@ -254,6 +163,7 @@ $(function() {
 		$('.motionsketch').hide();
 		$('.objectsketch').hide();
 		$('#color-tool-pane').show();
+		$('#motion-tool-pane').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -264,6 +174,7 @@ $(function() {
 		$('.motionsketch').show();
 		$('.objectsketch').show();
 		$('#color-tool-pane').hide();
+		$('#motion-tool-pane').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -309,6 +220,14 @@ $(function() {
 			$('#new_filter').val('');
 		}
 		
+	});
+	
+	$('#fgbgswitch-button').click(function(){
+		this.textContent = (this.textContent == "Foreground") ? "Background" : "Foreground";
+		this.className = (this.className == "waves-effect waves-light btn btn-small red") ? "waves-effect waves-light btn btn-small green" : "waves-effect waves-light btn btn-small red";
+		for(var key in shotInputs){
+			shotInputs[key].motion.switchFgBg();
+		}
 	});
 
 	/*  add first canvas  */

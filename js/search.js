@@ -2,44 +2,34 @@ var Videos = {};
 var Shots = {};
 var Scores = {};
 
+var ScoreWeights = {};
+
 var rf_positive = new Array();
 var rf_negative = new Array();
 
 function getCategories(){
 	var categories = [];
-	if(ScoreWeights.globalcolor > 0){
-		categories.push('globalcolor');
-	}
-	if(ScoreWeights.localcolor > 0){
-		categories.push('localcolor');
-	}
-	if(ScoreWeights.edge > 0){
-		categories.push('edge');
-	}
-	if(ScoreWeights.motion > 0){
-		categories.push('motion');
-	}
-	if(ScoreWeights.meta > 0){
-       categories.push('meta');
-    }
+	var ks = Object.keys(categoryConfig);
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];	  					
+  		if(ScoreWeights[key] > 0){
+  			categories.push(key);
+  		}			
+  	}
+  	
 	return categories;
 }
 
-var ScoreWeights = {
-	globalcolor: 0.05,
-	localcolor: 0.4,
-	edge: 0.25,
-	motion: 0,
-	meta: 0.3,
-};
-
 function sumWeights(){
-	var sum = parseInt(ScoreWeights.globalcolor) + 
-		parseInt(ScoreWeights.localcolor) + 
-		parseInt(ScoreWeights.edge) + 
-		parseInt(ScoreWeights.motion)+
-		parseInt(ScoreWeights.meta);
-		return sum > 0 ? sum : 1;
+	var sum = 0;
+	
+	var ks = Object.keys(categoryConfig);
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];
+  		sum += parseInt(ScoreWeights[key]);
+  	}
+	
+	return sum > 0 ? sum : 1;
 }
 
 function normalizeScoreWeights(){
@@ -47,11 +37,11 @@ function normalizeScoreWeights(){
 	var sum = sumWeights();
 
 	if(sum > 0){
-		ScoreWeights.globalcolor /= sum;
-		ScoreWeights.localcolor /= sum;
-		ScoreWeights.edge /= sum;
-		ScoreWeights.motion /= sum;
-		ScoreWeights.meta /= sum;
+		var ks = Object.keys(categoryConfig);
+		for (var i = 0, len = ks.length; i < len; i++) {
+	  		var key = ks[i];
+	  		ScoreWeights[key] /= sum;
+	  	}
 	}
 }
 
@@ -80,88 +70,117 @@ function search(id, positive, negative){
 		console.log("starting id-based search");
 		oboerequest(buildIdQuery(id));
 	}
-	
+
 }
 
 
 function buildIdQuery(id) {
 
-	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
+	var query = {
+		queryType: "query",
+		query:[
+			{
+				id: id.toString(),
+				categories: getCategories()
+			}
+		]
+	};
 
-	query += "{\"categories\":" + JSON.stringify(getCategories()) + ",\n";	//see config.js
-	query += "\"id\": " + id + "}\n";
 
-	query += "]}";
-
-	return query;
+	return JSON.stringify(query);
 
 }
 
 function buildRFQuery() {
 
-	var query = "{\"queryType\":\"relevanceFeedback\", \"query\":";
-		query += "{\"positive\": " + JSON.stringify(rf_positive) + ",\n";
-		query += "\"negative\": " + JSON.stringify(rf_negative) + ",\n";
-		query += "\"categories\":" + JSON.stringify(getCategories()) + "\n";	//see config.js
-		query += "}}";
+	var query = {
+		queryType: "query"
+	};
 
-	return query;
+	var elements = new Array();
+
+	for(var key in rf_positive){
+		elements.push({
+			id: rf_positive[key].toString(),
+			weight: 1,
+			categories: getCategories()
+		});
+	}
+
+	for(var key in rf_negative){
+		elements.push({
+			id: rf_negative[key].toString(),
+			weight: -1,
+			categories: getCategories()
+		});
+	}
+
+	query.query = elements;
+	return JSON.stringify(query);
 
 }
 
 function buildContextQuery() {
 
 	var shotids = new Array();
-	
+
 	for(var key in Shots){
 		shotids.push(Shots[key].shotid);
 	}
 
-	var query = "{\"queryType\":\"context\", \"query\":";
-		query += "{\"shotidlist\": " + JSON.stringify(shotids);
-		query += "}}";
+	var query = {
+		queryType: "context",
+		query: {
+			shotidlist: shotids.toString()
+		}
+	};
 
-	return query;
+	return JSON.stringify(query);
 
 }
 
 function buildVideoQuery(shotid){
-	var query = "{\"queryType\":\"video\", \"query\":";
-		query += "{\"shotid\": " + shotid;
-		query += "}}";
 
-	return query;
-	
+	var query = {
+		queryType: "video",
+		query: {
+			shotid: shotid.toString()
+		}
+	};
+
+	return JSON.stringify(query);
 }
 
-function buildQuery(){ //TODO categories from sketch complete
-	
-	var query = "{\"queryType\":\"multiSketch\", \"query\":[";
-	
-	for(var key in shotInputs){
-		var shotInput = shotInputs[key];
-		
-		query += "{\"img\": \"" + shotInput.color.getDataURL() + "\",\n";
-		query += "\"motion\":" + shotInput.motion.getPaths() + ",\n";
-		query += "\"categories\":" + JSON.stringify(getCategories()) + ",\n"; //see config.js
-		query += "\"concepts\":" + JSON.stringify(shotInput.conceptList) + ", \n";
-	
-		if(voiceMode){
-			voiceText = new Array($('#voiceSearchQuery').val());
-			query += "\"subelements\":" + JSON.stringify(voiceText) + ", \n";
-		}
-	
-		query += "\"id\": " + 0 + "\n";
-		query += "},";
-	}
-	
-	query = query.slice(0, -1);
-	query += "],";
-	query += "\"resultname\":\"" + getResultName() + "\"}";
+function buildQuery(){
+
+var query = {
+	queryType: "query",
+
+};
+
+var containers = new Array();
+
+
+for(var key in shotInputs){
+	var shotInput = shotInputs[key];
+
+	var container = {
+		img : shotInput.color.getDataURL(),
+		motion: shotInput.motion.getPaths(),
+		motionbackground: shotInput.motion.getBgPaths(),
+		categories: getCategories(),
+		subelements :  JSON.stringify(voiceText) + ", \n"
+	};
 
 	voiceText = new Array();
-	return query;
-	
+
+	containers.push(container);
+
+}
+
+query.query = containers;
+
+return JSON.stringify(query);
 }
 
 function getResultName(){
@@ -189,12 +208,12 @@ function oboerequest(query, noContext) {
 			headers : headers
 		}).done(function(data) {
 			console.log("request done");
-			
+
 			for(key in Videos){
 				sortVideoContainer(key);
 				updateVideoScore(key);
 			}
-			
+
 			sortVideos();
 			$('#sequence-segmentation-button').show();
 			splitVideoExecuted = false;
@@ -211,56 +230,56 @@ function oboerequest(query, noContext) {
 		}).node('{type}', function(data) {
 			var type = data.type;
 			switch(type) {
-			
+
 			case "error":
-			
+
 				console.warn(data);
 				Materialize.toast(data.msg, 5000, 'orange');
 				
 				break;
-				
+
 			case "result":
-				
+
 				addResults([data]);
 
 				break;
 			case "shot":
-								
+
 				addShots([data]);
-				
+
 				break;
 			case "video":
-				
+
 				addVideos([data]);
-				
+
 				break;
 			case "resultname":
-				
+
 				addResultSetFilter(data.name);
-				
+
 				break;
-				
+
 			case "batch":
 				switch(data.inner){
 					case "result":
-						
+
 						addResults(data.array);
-		
+
 						break;
 					case "shot":
-										
+
 						addShots(data.array);
-						
+
 						break;
 					case "video":
-						
+
 						addVideos(data.array);
-						
+
 						break;
 				}
-				
+
 				break;
-				
+
 			default:
 				console.warn("type not recognized" + JSON.stringify(data));
 			}
@@ -309,13 +328,13 @@ function addShots(shotArray){
 }
 
 function addResults(resultArray){
-	
+
 	if(resultArray.length < 1){
 		return;
 	}
-	
+
 	var shotsToUpdateScore = {};
-	
+
 	for(var iter = 0; iter < resultArray.length; ++iter){
 		var data = resultArray[iter];
 		if (!(data.shotid in Scores)) {
@@ -331,18 +350,18 @@ function addResults(resultArray){
 			shotsToUpdateScore[data.shotid] = undefined;
 		}
 	}
-	
+
 	var shotIdsToUpdateScore = Object.keys(shotsToUpdateScore);
 	var weightSum = sumWeights();
 	for(var i = 0; i < shotIdsToUpdateScore.length; ++i){
 		var scoreContainer = Scores[shotIdsToUpdateScore[i]];
-		
+
 		var score = 0;
 		for (var key in ScoreWeights) {
 			score += scoreContainer[key] * ScoreWeights[key];
 		}
 		updateScoreInShotContainer(shotIdsToUpdateScore[i], score / weightSum);
-		
+
 	}
 
 	var categories = getCategories();
@@ -372,10 +391,10 @@ function updateVideoScore(videoid){
 	for(var i = 0; i < arr.length; ++i){
 		score = Math.max(score, arr[i]);
 	}
-	
+
 	if(score != score){
 		score = 0;
 	}
-	
+
 	$('#v' + videoid).data('score', score).attr('data-score', score); //second part is necessary to write score to html
 }

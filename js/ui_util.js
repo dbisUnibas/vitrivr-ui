@@ -69,9 +69,13 @@ function newShotInput() {
 		colorcanvas.setColor($("#colorInput").spectrum('get'));
 	}
 
+	var motioncanvas = new motionCanvas(motion);
+	var t = $('#fgbgswitch-button').get(0).textContent;
+	motioncanvas.setFgbgSwitch($('#fgbgswitch-button').get(0).textContent == "Foreground" ? 1 : 0);
+
 	shotInputs[id] = {
 		color : colorcanvas,
-		motion : new motionCanvas(motion),
+		motion : motioncanvas,
 		id : '#' + id,
 		conceptList : new Array()
 	};
@@ -113,6 +117,7 @@ function newShotInput() {
 		action : function(e) {
 			e.preventDefault();
 			shotInputs[id].motion.clearPaths();
+			shotInputs[id].motion.clearBgPaths();
 		}
 	}, {
 		divider : true
@@ -256,7 +261,7 @@ function sortVideos(){
 			order : 'desc'
 		});
 	}catch (e){
-		console.warn(e);
+		//console.warn(e);
 	}
 }
 
