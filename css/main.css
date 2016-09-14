@@ -382,6 +382,19 @@ input[type="text"]:invalid{
     box-shadow: 0 1px 0 0 #f44336 !important;
 }
 
+
+.autocomplete-input {
+	margin-top: 20px;
+}
+
+#btnAddTag {
+	margin-right: 10px;
+}
+
+.btn-floating {
+	margin-right: 10px;
+}
+
 /*
  * Automcompletion
  */
