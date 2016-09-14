@@ -222,7 +222,12 @@ function oboerequest(query, noContext) {
 					if (data.array[0].resultType == "IMAGE") {
 						$("#graph").empty();
 						var picture = data.array[0].resultData;
-						$("#graph").append('<img src="' + picture + '" />');
+						$("#graph").append('<img class="materialboxed" src="' + picture + '" />');
+						
+						  $(document).ready(function(){
+						    $('.materialboxed').materialbox();
+						  });
+        
 					}
 					break;
 				default:
