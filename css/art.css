@@ -39,6 +39,11 @@ header, main, footer, body {
   border:2px solid #f44336;
 }
 
+.shot {
+	height: 500px;
+	overflow: auto;
+}
+
 /**
  * 	imported from main.css
  */
