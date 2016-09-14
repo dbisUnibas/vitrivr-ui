@@ -76,7 +76,7 @@ This project extends Cineast user interface to support voice queries by converti
 
 ## Important files that deals with voice
 
-* speech.js
+* voice.js
 * en-GB.js
 
 ## To switch off the voice mode

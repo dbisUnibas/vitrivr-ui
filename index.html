@@ -3,7 +3,7 @@
 	<head>
 		<title>vitrivr</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta charset="utf-8" /> 
+		<meta charset="utf-8" />
 		<link rel="shortcut icon" href="favicon.ico">
 
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
@@ -14,6 +14,7 @@
 		<link type="text/css" rel="stylesheet" href="css/nouislider.css" media="screen,projection" />
 		<link type="text/css" rel="stylesheet" href="video-js.css" media="screen,projection" />
 		<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="css/voice.css"  media="screen,projection"/>
 
 		<script type="text/javascript" src="js/config.js"></script>
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
@@ -27,7 +28,7 @@
 		<script type="text/javascript" src="js/nouislider.js"></script>
 		<script type="text/javascript" src="js/tinysort.js"></script>
 		<script type="text/javascript" src="video.js"></script>
-		
+
 
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/ui_util.js"></script>
@@ -37,7 +38,7 @@
 
 		<script type="text/javascript" src="js/annyang.js" ></script>
 		<script type="text/javascript" src="js/speechkitt.js"></script>
-		<script type="text/javascript" src="js/speech.js"></script>
+		<script type="text/javascript" src="js/voice.js"></script>
 		<script type="text/javascript" src="js/en-GB.js"></script>
 		<script type="text/javascript" src="js/responsivevoice.min.js"></script>
 
@@ -55,13 +56,7 @@
 			</div>
 		</div>
 		<div id="topbar">
-			<div class="weight-slider-box">
-				
-				</div>
-				<div class="weight-slider voice">
-					<label for="meta-weight">Meta:</label>
-					<div id="meta-weight" ></div>
-				</div>
+			<div class="weight-slider-box"></div>
 			</div>
 		</div>
 		<div class="progress" id="loading">
@@ -90,11 +85,11 @@
 			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">search</i>Search
 			</button>
-			
+
 			<button id="rf-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">youtube_searched_for</i>Relevance Feedback
 			</button>
-			
+
 			<button id="sequence-segmentation-button" class="waves-effect waves-light btn btn-large red" style="width: 100%">
 				<i class="material-icons left">settings_ethernet</i>Split video into sequences
 			</button>
@@ -105,8 +100,8 @@
                     <textarea id = "voiceSearchQuery" class="voicesearchquery"></textarea>
             	</div>
             </div>
-            
-            
+
+
 			<div class="tool-pane" id="color-tool-pane" style="display: block; margin: 10px; height: 40px;">
 				<div style="width: calc(100% - 60px - 10px); margin-right: 10px; float: left;">
 					<label for="draw-radius">Pen Size:</label>
@@ -132,10 +127,10 @@
 		<div id="sidebarextension" class="side-nav z-depth-4">
 			<div id="filter-selection">
 				<div id="resultset-filter-selection">
-					
+
 					<p><input class="with-gap" name="result-set" type="radio" id="no-filter"  checked/>
       				<label for="no-filter">No Filter</label></p>
-					
+
 				</div>
 			        <div class="input-field">
           				<input id="new_filter" type="text" pattern="[0-9]+(-[0-9]+)*" required>
@@ -155,17 +150,6 @@
 			</div>
 
 		</div>
- 			 <!-- display commands in voice mode -->
-		  <div id="commands-modal" class="modal modal-fixed-footer">
-			    <div class="modal-content">
-				      <h4>Base Commands</h4>
-				      <p></p>
-			    </div>
-			    <div class="modal-footer">
-			      	<a class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
-			      	<div style="padding:0.5em">Click <a target="_blank" href="voicecommands.html">here</a> to see all available voice commands</div>
-			    </div>
-		  </div>
 	</body>
 
 </html>

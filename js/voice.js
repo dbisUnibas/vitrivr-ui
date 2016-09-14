@@ -22,32 +22,51 @@ if (voiceMode) {
     var dictionary = {};            // dictionary used in feedback system
     var commandID = [];             // maps commmands to their IDs in dictionary of feedback system
 
-// declaring constants
-    const VOICE_TEXTBOX = "#voiceTextbox";
+    // declaring constants
+    const VOICE_BOX_ID = "voice"
+    const VOICE_TEXTBOX = "voiceTextbox";
     const NAVIGATION_COLOR = "#009688";        // boundary color of current browsing video container
     const POSITIVE_COLOR = "#43a047";       // boundary color over positive feedback shot
     const NEGATIVE_COLOR = "##e53935";       // boundary color over nagative feedback shot
+
+
+    $(document).ready(function () {
+        //set-up voice text box
+        var voicetextboxStr = "";
+        voicetextboxStr += "<div class=\"voicetextbox\">";
+        voicetextboxStr += "<label>voice input<\/label>";
+        voicetextboxStr += "<div id =" + VOICE_TEXTBOX + "><\/div>";
+        voicetextboxStr += "<\/div>";
+
+        $("#" + VOICE_BOX_ID).html(voicetextboxStr);
+
+
+        //set-up modal
+        var modalStr = "";
+        modalStr += " <!-- display commands in voice mode -->";
+        modalStr += "		  <div id=\"commands-modal\" class=\"modal modal-fixed-footer\">";
+        modalStr += "			    <div class=\"modal-content\">";
+        modalStr += "				      <h4>Base Commands<\/h4>";
+        modalStr += "				      <p><\/p>";
+        modalStr += "			    <\/div>";
+        modalStr += "			    <div class=\"modal-footer\">";
+        modalStr += "			      	<a class=\" modal-action modal-close waves-effect waves-green btn-flat\">Ok<\/a>";
+        modalStr += "			      	<div style=\"padding:0.5em\">Click <a target=\"_blank\" href=\"voicecommands.html\">here<\/a> to see all available voice commands<\/div>";
+        modalStr += "			    <\/div>";
+        modalStr += "		  <\/div>";
+
+        $("body").append(modalStr);
+    });
+
 
     /**
      * Scroll the textbox whenever it overflows due to display of recognized words/sentences
      */
     function scrollTextBox() {
-        var textarea = $(VOICE_TEXTBOX);
+        var textarea = $("#" + VOICE_TEXTBOX);
         if (textarea.length) {
             textarea.scrollTop(textarea[0].scrollHeight - textarea.height());
         }
-    }
-
-    /**
-     * pop up the error message as a toast and voice response
-     *
-     * @param {string} message The error to be displayed
-     */
-    function displayErrorMessage(message) {
-        if (feedbackCount <= 3) {
-            responsiveVoice.speak(message, PERSON);    // voice response of UI
-        }
-        Materialize.toast(message, 3000);
     }
 
     /**
@@ -145,8 +164,8 @@ if (voiceMode) {
             sentences = sentences[0];
         }
 
-        $(VOICE_TEXTBOX).html($(VOICE_TEXTBOX).html() + " " + sentences);
-        $(VOICE_TEXTBOX).css('color', NEGATIVE_COLOR);
+        $("#" + VOICE_TEXTBOX).html($("#" + VOICE_TEXTBOX).html() + " " + sentences);
+        $("#" + VOICE_TEXTBOX).css('color', NEGATIVE_COLOR);
         scrollTextBox();
         sentences = preProcess(sentences);
         var feedbackCommand = userInterfaceFeedback(sentences);
@@ -154,14 +173,15 @@ if (voiceMode) {
         if (feedbackCommand == undefined) {
             factor = 0;
             feedbackCount++;
-            displayErrorMessage(ERR_NOT_UNDERSTOOD);
+
+            displayErrorMessage(ERR_NOT_UNDERSTOOD, feedbackCount <= 3);
         } else if (feedbackCommand == 1) {
             feedbackCount = 0;
-            displayErrorMessage(OK);
+            displayMessage(OK);
         } else {
             response = 0;
             feedbackCount++;
-            displayErrorMessage("Did you mean: " + baseCommands[feedbackCommand].toLowerCase());
+            displayMessage("Did you mean: " + baseCommands[feedbackCommand].toLowerCase());
             setTimeout(feedbackResponse, 5000, feedbackCommand);
         }
     }
@@ -181,7 +201,7 @@ if (voiceMode) {
         }
 
         if (!(command == QUERY_VOICE_SEARCH || command == QUERY_VOICE_SEARCH_2)) {
-            $(VOICE_TEXTBOX).html(phrase.toLowerCase());
+            $("#" + VOICE_TEXTBOX).html(phrase.toLowerCase());
             scrollTextBox();
         }
     }
@@ -210,7 +230,7 @@ if (voiceMode) {
      * @param {string} tag2 String after "voice search"; Will be used as voice search text query
      */
     function voiceSearch_2(tag1, tag2) {
-        $(VOICE_TEXTBOX).html(tag2);
+        $("#" + VOICE_TEXTBOX).html(tag2);
         scrollTextBox();
         $('#voiceSearchQuery').val(tag2);
     }
@@ -221,11 +241,10 @@ if (voiceMode) {
      * @param {string} tag String after "voice search"; Will be used as voice search text query
      */
     function voiceSearch_1(tag) {
-        $(VOICE_TEXTBOX).html(tag);
+        $("#" + VOICE_TEXTBOX).html(tag);
         scrollTextBox();
         $('#voiceSearchQuery').val(tag);
     }
-
 
 
     /**
@@ -702,7 +721,7 @@ if (voiceMode) {
 
     /**
      * Used for pre-processing of string containing integer numbers
-     * Repalces english number word with its integer value upto 10
+     * Replaces english number word with its integer value upto 10
      * Example - 'one' -> '1'
      *
      * @param {Integer} num Number of the video that is going to be played
@@ -862,14 +881,13 @@ if (voiceMode) {
     }
 
 
-
     /**
      * Creates a pop up modal (window) which contains all base commands
      */
     function formCommandsModal() {
         var allCommands = "";
         for (var phrase in baseCommands) {
-            allCommands += "&bull;  " + baseCommands[phrase].toLowerCase() + "<br>";
+            allCommands += baseCommands[phrase].toLowerCase() + "<br>";
         }
         $('#commands-modal > div > p').html(allCommands);
     }

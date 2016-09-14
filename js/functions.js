@@ -1,4 +1,48 @@
 /**
+ * pop up the error message
+ *
+ * @param {string} message The error to be displayed
+ * @param {boolean} spoken Whether voice feedback should be given, default true
+ */
+function displayErrorMessage(message, spoken) {
+    spoken = typeof spoken !== 'undefined' ? spoken : true;
+
+    displayMessage("Error: " + message, spoken);
+}
+
+/**
+ * pop up the message to display
+ *
+ * @param {string} message The message to be displayed
+ * @param {boolean} spoken Whether voice feedback should be given, default true
+ */
+function displayMessage(message, spoken) {
+    spoken = typeof spoken !== 'undefined' ? spoken : true;
+
+    Materialize.toast(message, 3000);
+
+    if(spoken){
+        speakMessage(message);
+    }
+}
+
+/**
+ * message to speak
+ * @param {string} message The message to be spoken.
+ */
+function speakErrorMessage(message){
+    responsiveVoice.speak("Error: " + message, PERSON);    // voice response of UI
+}
+
+/**
+ * message to speak
+ * @param {string} message The message to be spoken.
+ */
+function speakMessage(message){
+    responsiveVoice.speak(message, PERSON);    // voice response of UI
+}
+
+/**
  * Toggles the top bar
  */
 function toggleTopbar() {
@@ -232,24 +276,7 @@ function clearCanvas(num) {
  * @param {Integer} unit Increase in radius of pen
  */
 function increasePenSize(unit) {
-    if (unit == undefined) {
-        unit = 5;
-    }
-    var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
-
-    if (size == 100) {
-        displayErrorMessage(ERR_INCREASING_PENSIZE);
-    } else if (size <= 100 - unit) {
-        for (el in shotInputs) {
-            shotInputs[el].color.setLineWidth(size + unit);
-        }
-        $('#draw-radius').get(0).noUiSlider.set(size + unit);
-    } else {
-        for (el in shotInputs) {
-            shotInputs[el].color.setLineWidth(100);
-        }
-        $('#draw-radius').get(0).noUiSlider.set(100);
-    }
+    changePenSize(unit);
 }
 
 /**
@@ -258,25 +285,34 @@ function increasePenSize(unit) {
  * @param {Integer} unit Decrease in radius of pen
  */
 function decreasePenSize(unit) {
+    changePenSize(-unit);
+}
+
+
+/**
+ * Changes pen size
+ * @param unit
+ */
+function changePenSize(unit) {
     if (unit == undefined) {
         unit = 5;
     }
     var size = parseInt($('#draw-radius').get(0).noUiSlider.get());
 
-    if (size == 1) {
+    var newSize = size + unit;
+
+    if (newSize > 100) {
+        displayErrorMessage(ERR_INCREASING_PENSIZE);
+    } else if (newSize < 1) {
         displayErrorMessage(ERR_DECREASING_PENSIZE);
-    } else if (size >= unit) {
-        for (el in shotInputs) {
-            shotInputs[el].color.setLineWidth(size - unit);
-        }
-        $('#draw-radius').get(0).noUiSlider.set(size - unit);
     } else {
         for (el in shotInputs) {
-            shotInputs[el].color.setLineWidth(1);
+            shotInputs[el].color.setLineWidth(newSize);
         }
-        $('#draw-radius').get(0).noUiSlider.set(1);
+        $('#draw-radius').get(0).noUiSlider.set(newSize);
     }
 }
+
 
 /**
  * Fills a particular canvas with the color in voice query

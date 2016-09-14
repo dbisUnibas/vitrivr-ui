@@ -142,48 +142,22 @@ $(function() {
 	});
 
 	$('#btnShowSidebar').click(function() {
-		if ($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
-			$('#sidebarextension').removeClass('open');
-			$('#btnShowSidebar').removeClass('open');
-
-		} 
-		$('#sidebar').toggleClass('open');
-		$('body').toggleClass('push-toright');
+		toggleSidebar();
 	});
 
 	$('#btnShowTopbar').click(function() {
-		$('body').toggleClass('push-tobottom');
-		$('#btnShowTopbar').toggleClass('topOpen');
-		$('#btnShowSidebar').toggleClass('topOpen');
-		$('#sidebarextension').toggleClass('topOpen');
-		$('#topbar').toggleClass('open');
+		toggleTopbar();
 	});
 
 	$('#colorsketchbutton').on('click', function(event) {
-		$('.motionsketch').hide();
-		$('.objectsketch').hide();
-		$('#color-tool-pane').show();
-		$('#motion-tool-pane').hide();
-		$('#sidebarextension').removeClass('open');
-		$('#btnShowSidebar').removeClass('open');
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
+		showColorSketch();
 	});
 
 	$('#motionsketchbutton').on('click', function(event) {
-		$('.motionsketch').show();
-		$('.objectsketch').show();
-		$('#color-tool-pane').hide();
-		$('#motion-tool-pane').show();
-		$('#sidebarextension').removeClass('open');
-		$('#btnShowSidebar').removeClass('open');
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-
+		showMotionSketch();
 	});
-	
-	
-	
+
+
 	$('#filterbutton').on('click', function(event) {
 		$('.motionsketch').show();
 		$('.objectsketch').show();

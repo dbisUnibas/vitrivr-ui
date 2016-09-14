@@ -10,5 +10,6 @@ const categoryConfig = {
 	globalcolor:{displayName: "Global Color", defaultValue: 0.1},
 	localcolor:{displayName: "Local Color", defaultValue: 0.6},
 	edge:{displayName: "Edge", defaultValue: 0.3},
-	motion:{displayName: "Motion", defaultValue: 0}
+	motion:{displayName: "Motion", defaultValue: 0},
+	meta:{displayName: "Meta", defaultValue: 0}
 };
