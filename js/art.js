@@ -19,17 +19,9 @@ $(function() {
 		queryType : "getVisualizations"
 	};
 
-	/*var queryShot = {
-	 queryType : "video",
-	 query : {
-	 shotid : "7274499"
-	 }
-	 };*/
-
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
-		//oboerequest(JSON.stringify(queryShot));
 	});
 
 	$('#movie').on('change', function() {
@@ -39,7 +31,7 @@ $(function() {
 		$('#type').prop('disabled', false);
 		$('select').material_select();
 		var movieID = $(this).val();
-		console.log(movieID);
+		//console.log(movieID);
 		var querySegmentIds = {
 			queryType : "getSegments",
 			multimediaobjectId : movieID
@@ -170,6 +162,7 @@ function oboerequest(query, noContext) {
 					}
 					$("#movie").append(movies);
 					$('select').material_select();
+					break;
 				case "segments":
 					var movieID = $('#movie').val();
 					var segs = '';
@@ -180,7 +173,6 @@ function oboerequest(query, noContext) {
 						segs += '<img class="thumbnail" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
 						segs += '</label>';
 						segmentsArray.push(data.array[0].segments[i]);
-						//$("#shots").append(data.array[0].segments[i] + ', ');}
 					}
 					segs += '</form>';
 					$("#shots").append(segs);
@@ -222,7 +214,7 @@ function oboerequest(query, noContext) {
 					if (data.array[0].resultType == "IMAGE") {
 						$("#graph").empty();
 						var picture = data.array[0].resultData;
-						$("#graph").append('<img class="materialboxed" src="' + picture + '" />');
+						$("#graph").append('<br \><br \><img class="materialboxed" src="' + picture + '" />');
 						
 						  $(document).ready(function(){
 						    $('.materialboxed').materialbox();
