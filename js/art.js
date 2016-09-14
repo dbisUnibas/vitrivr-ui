@@ -160,12 +160,16 @@ function oboerequest(query, noContext) {
 			switch(Object.keys(data.array[0])[0]) {
 				case "multimediaobjects":
 					var movies = '';
+					data.array[0].multimediaobjects.sort(function(a, b) {
+				    	var textA = a.name.toUpperCase();
+					    var textB = b.name.toUpperCase();
+					    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+					});
 					for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
 						movies += '<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>';
 					}
 					$("#movie").append(movies);
 					$('select').material_select();
-					break;
 				case "segments":
 					var movieID = $('#movie').val();
 					var segs = '';
