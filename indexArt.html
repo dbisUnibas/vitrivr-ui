@@ -67,63 +67,64 @@
 
 	<body>
 		<div class="progress" id="loading">
-      		<div class="indeterminate"></div>
-  		</div>
-		
-		<div class="container">
-		<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
-		<ul id="slide-out" class="side-nav fixed">
-			<li>
-				<div class="input-field col s12">
-					<select id="movie">
-						<option value="" disabled selected>Movie</option>
-					</select>
-					<label>Movie selection</label>
-				</div>
-			</li>
-			<li>
-				<div class="input-field col s12">
-					<select id="type" disabled>
-						<option value="" disabled selected>Type</option>
-						<option value="VISUALIZATION_MULTIMEDIAOBJECT">Movie</option>
-						<option value="VISUALIZATION_SEGMENT">Shot</option>
-					</select>
-					<label>Type selection</label>
-				</div>
-			</li>
-			<li>
-				<div class="input-field col s12">
-					<select id="visualization" disabled>
-						<option value="" disabled selected>Visualization</option>
-					</select>
-					<label>Visualization selection</label>
-				</div>
-			</li>
-			<li>
-				<div class="input-field col s12">
-					<select id="d3">
-						<option value="" disabled selected>d3</option>
-						<option value="sunburst">Sunburst</option>
-						<option value="streamgraph">Streamgraph</option>
-						<option value="forceDirectedGraph">forceDirectedGraph</option>
-						<option value="raindrops">Raindrops</option>
-					</select>
-					<label>d3 selection</label>
-				</div>
-			</li>
-			<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
-				<i class="material-icons left">search</i>Search
-			</button>
-			<button id="search-button-d3" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
-				<i class="material-icons left">search</i>Search-TestD3
-			</button>
-		</ul>
+			<div class="indeterminate"></div>
+		</div>
 
-		<div id="shots" class="shot"></div>
-		 <div class="divider"></div>
-		<div id="graph"></div>
-		<div id="graphd3"></div>
-</div>
+		<div class="container">
+			<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
+			<ul id="slide-out" class="side-nav fixed">
+				<li>
+					<div class="input-field col s12">
+						<select id="movie">
+							<option value="" disabled selected>Movie</option>
+						</select>
+						<label>Movie selection</label>
+					</div>
+				</li>
+				<li>
+					<div class="input-field col s12">
+						<select id="type" disabled>
+							<option value="" disabled selected>Type</option>
+							<option value="VISUALIZATION_MULTIMEDIAOBJECT">Movie</option>
+							<option value="VISUALIZATION_SEGMENT">Shot</option>
+						</select>
+						<label>Type selection</label>
+					</div>
+				</li>
+				<li>
+					<div class="input-field col s12">
+						<select id="visualization" disabled>
+							<option value="" disabled selected>Visualization</option>
+						</select>
+						<label>Visualization selection</label>
+					</div>
+				</li>
+				
+				<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
+					<i class="material-icons left">visibility</i>Visualize
+				</button>
+				<li>
+					<div class="input-field col s12">
+						<select id="d3">
+							<option value="" disabled selected>d3</option>
+							<option value="sunburst">Sunburst</option>
+							<option value="streamgraph">Streamgraph</option>
+							<option value="forceDirectedGraph">forceDirectedGraph</option>
+							<option value="raindrops">Raindrops</option>
+						</select>
+						<label>d3 selection</label>
+					</div>
+				</li>
+				<button id="search-button-d3" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
+					<i class="material-icons left">search</i>TestD3
+				</button>
+			</ul>
+
+			<div id="shots" class="shot"></div>
+			<div class="divider"></div>
+			<div id="graph"></div>
+			<div id="graphd3"></div>
+		</div>
 		<!--d3 graphs-->
 		<script src="./d3/sunburst.js"></script>
 		<script src="./d3/streamgraph.js"></script>
