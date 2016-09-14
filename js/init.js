@@ -1,7 +1,7 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
-var data = {};
-data["data"] = {};
+var tagList = {};
+tagList["data"] = {};
 setAvailableTags();
 
 function setUpCategories(){
@@ -103,16 +103,15 @@ function setAvailableTags() {
 	
 	getTags(JSON.stringify(queryLabels));
 	
-	data["data"]["cat"] = null;
-	data["data"]["umbrella"] = null;
-	data["data"]["penguin"] = null;
+	tagList["data"]["test"] = null;
+	
+	//console.log(tagList);
 }
 
 /**
  *get tags from DB 
  */
 function getTags(query, noContext) {
-	//showProgress(0);
 	if (noContext === undefined) {
 		noContext = false;
 	}
@@ -130,12 +129,12 @@ function getTags(query, noContext) {
 			console.log(data.array[0]);
 			
 			for (var i = 0; i < data.array[0].concepts.length; i++) {
-				data["data"][data.array[0].concepts[i]] = null;
+				//console.log(data.array[0].concepts[i]);
+				tagList["data"][data.array[0].concepts[i]] = null;
 			}	
 		}).fail(function(data) {
 			console.log("FAIL");
 			console.log(data);
-			//hideProgress();
 			searchRunning = false;
 		});
 	} catch(e) {
@@ -166,7 +165,7 @@ function displayTags() {
 function checkTag() {
 	var tag = $('#autocomplete-input').val();
 	$('#autocomplete-input').val("");
-	if (!data.data.hasOwnProperty(tag)){
+	if (!tagList.data.hasOwnProperty(tag)){
 		Materialize.toast('\"' + tag +'\" is not available.', 4000);
 	} else {
 		if (tags.concepts.indexOf(tag) != -1) {
@@ -262,7 +261,7 @@ $(function() {
 	 */
 	$("#autocomplete-input").keypress(function(event) {
 	    if (event.which == 13) {
-	    	if (data.data.hasOwnProperty($('#autocomplete-input').val())){
+	    	if (tagList.data.hasOwnProperty($('#autocomplete-input').val())){
 				event.preventDefault();
 	        	checkTag();
 			}
@@ -408,6 +407,6 @@ $(function() {
 	 */
 	
   	$('input.autocomplete').autocomplete(
-    	data
+    	tagList
   	);        
 });
