@@ -25,17 +25,11 @@ function getCategories() {
 }
 
 /**
- *Tags for NeuralNet search 
- */
-function getTags() {
-	return tags;
-}
-
-/**
  *Add Concepts to Tags 
  */
 function addTags(concept) {
 	tags.concepts.push(concept);
+	//console.log(tags);
 }
 
 /**
@@ -196,7 +190,7 @@ function buildQuery() {
 			motion : shotInput.motion.getPaths(),
 			motionbackground : shotInput.motion.getBgPaths(),
 			categories : getCategories(),
-			tags : getTags()
+			tags : tags
 		};
 
 		containers.push(container);
@@ -204,6 +198,7 @@ function buildQuery() {
 	}
 
 	query.query = containers;
+	console.log(query);
 
 	return JSON.stringify(query);
 
