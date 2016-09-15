@@ -15,7 +15,7 @@ function setUpCategories(){
   			key + '-weight">' + 
   			(categoryConfig[key]['displayName'] || key) + ':</label><div id="' + 
   			key + '-weight" ></div></div>');
-  		if (categoryConfig[key]['displayName'] == 'NN') {
+  		if (key == 'neuralnet') {
   			noUiSlider.create($('#' + key + '-weight').get(0), {
 				start : 100 * ScoreWeights[key],
 				step : 100,
