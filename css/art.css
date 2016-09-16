@@ -1,3 +1,6 @@
+/*
+ * handling fixed sidebar
+ */
 header, main, footer, body {
 	padding-left: 400px;
 }
@@ -8,24 +11,80 @@ header, main, footer, body {
 	}
 }
 
+/*
+ * resizing images
+ */
 .pixelated {
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -o-crisp-edges;
-  image-rendering: pixelated;
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: pixelated;
+}
+
+/*
+ * result image
+ */
+#graph {
+	width: 100%;
 }
 
 #graph img {
 	min-width: 400px;
 	min-height: 50px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
+/*
+ * sidebar
+ */
 .side-nav {
 	width: 400px;
 }
 
+/*
+ * shots input without radio button
+ */
+.rad > input {/* HIDE RADIO */
+	visibility: hidden; /* Makes input not-clickable */
+	position: absolute; /* Remove input from document flow */
+}
+
+.rad > input + img {/* IMAGE STYLES */
+	cursor: pointer;
+	border: 2px solid transparent;
+}
+
+.rad > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
+	border: 5px solid #f44336;
+}
+
+/*
+ * shots
+ */
+.shot {
+	height: 500px;
+	overflow-y: auto;
+}
+
+#shots {
+	padding-top: 40px;
+}
+
+/*
+ * selects
+ */
+.input-field {
+	margin: 10px;
+	margin-top: 20px;
+}
+
+/*
+ * d3 graphs
+ */
 #graphd3 {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	margin: auto;
@@ -41,40 +100,6 @@ header, main, footer, body {
 .nodes circle {
 	stroke: #fff;
 	stroke-width: 1.5px;
-}
-
-.rad > input {/* HIDE RADIO */
-	visibility: hidden; /* Makes input not-clickable */
-	position: absolute; /* Remove input from document flow */
-}
-
-.rad > input + img {/* IMAGE STYLES */
-	cursor: pointer;
-	border: 2px solid transparent;
-}
-
-.rad > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
-	border: 2px solid #f44336;
-}
-
-.shot {
-	height: 500px;
-	overflow-y: auto;
-}
-
-.container #graph {
-	text-align: center;
-	vertical-align: middle;
-	display: table-cell;
-}
-
-#shots {
-	padding-top: 40px;
-}
-
-.input-field {
-	margin: 10px;
-	margin-top: 20px;
 }
 
 /**
