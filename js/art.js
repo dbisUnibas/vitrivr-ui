@@ -170,7 +170,7 @@ function oboerequest(query, noContext) {
 					for (var i = 0; i < data.array[0].segments.length; i++) {
 						segs += '<label class="rad">';
 						segs += '<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
-						segs += '<img class="thumbnail" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
+						segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
 						segs += '</label>';
 						segmentsArray.push(data.array[0].segments[i]);
 					}
@@ -214,7 +214,7 @@ function oboerequest(query, noContext) {
 					if (data.array[0].resultType == "IMAGE") {
 						$("#graph").empty();
 						var picture = data.array[0].resultData;
-						$("#graph").append('<br \><br \><img class="materialboxed" id="result" src="' + picture + '" />');
+						$("#graph").append('<br \><br \><img class="materialboxed pixelated" id="result" src="' + picture + '" />');
 						
 						  $(document).ready(function(){
 						    $('.materialboxed').materialbox();

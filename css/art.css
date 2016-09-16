@@ -8,6 +8,20 @@ header, main, footer, body {
 	}
 }
 
+.pixelated {
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: pixelated;
+}
+
+#graph img {
+	min-width: 400px;
+	min-height: 50px;
+}
+
 .side-nav {
 	width: 400px;
 }
