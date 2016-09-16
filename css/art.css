@@ -32,7 +32,8 @@ header, main, footer, body {
 
 #graph img {
 	min-width: 400px;
-	min-height: 50px;
+	min-height: 20px;
+	max-width: 90%;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
