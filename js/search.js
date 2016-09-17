@@ -6,7 +6,7 @@ var ScoreWeights = {};
 
 var rf_positive = new Array();
 var rf_negative = new Array();
-var tags = {concepts: []};
+var tags;
 
 
 function getCategories() {
@@ -25,24 +25,12 @@ function getCategories() {
 }
 
 /**
- *Add Concepts to Tags 
+ *Add tags to global variable for query
  */
-function addTags(concept) {
-	tags.concepts.push(concept);
-	//console.log(tags);
+function addTags(tagArray) {
+	tags = tagArray;
 }
 
-/**
- *Delete Concepts From Tags 
- */
-function deleteTags(id) {
-	tags.concepts.splice(tags.concepts.indexOf($(id).clone().children().remove().end().text()), 1);
-	if (tags.concepts.length == 0) {
-		$('#enteredTags').empty();
-	} else {
-		displayTags();
-	}
-}
 
 function sumWeights() {
 	var sum = 0;

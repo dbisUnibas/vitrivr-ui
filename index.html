@@ -28,6 +28,8 @@
 		<script type="text/javascript" src="js/tinysort.js"></script>
 		<script type="text/javascript" src="video.js"></script>
 		
+		<script type="text/javascript" src="./js/jquery.materialize-autocomplete.js"></script>
+		
 
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/ui_util.js"></script>
@@ -105,17 +107,29 @@
 			</div>
 			
 			<!--Autocompletion for NN -->
-			<div class="input-field" id="textNN" style="display: block; margin: 10px; height: 40px">
-				<input type="text" id="autocomplete-input" class="autocomplete"/>
-				<label for="autocomplete-input">Tags:</label>
-			</div>
+			<div class="row">
+                <div class="input-field col s12" id="autocomplete">
+                    <div class="autocomplete" id="multiple-autocomplete">
+                        
+                        <div class="ac-input">
+                            <input type="text" id="multiple-input" placeholder="Please input tags" data-activates="multiple-dropdown" data-beloworigin="true" autocomplete="off">
+                        </div>
+                        
+                        <ul id="multiple-dropdown" class="dropdown-content ac-dropdown"></ul>
+                        <input type="hidden" name="multipleHidden" />
+                    </div>
+                    <label class="active" for="multiple-input">Multiple autocomplete: </label>
+                </div>
+            </div>
+            
+            <!--Display entered Tag as chips -->
+            <div class="row">
+            	<div class="input-field col s12">
+            		<div class="ac-users" id="chip-tags"></div>
+            	</div>
+            </div>
 			
-			<!-- Button to add Tag to List-->
-			<button id="btnAddTag" class="btn-floating btn-large waves-effect waves-light red" style="float: right">
-				<i class="material-icons">add</i>
-			</button>
 			
-			<div id="enteredTags"></div>
 
 			<div id="query-container-pane" ></div>
 			<button id="btnAddCanvas" class="btn-floating btn-large waves-effect waves-light red">
@@ -149,6 +163,7 @@
 			</div>
 
 		</div>
+		
 	</body>
 
 </html>

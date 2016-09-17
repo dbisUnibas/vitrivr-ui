@@ -1,7 +1,7 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
-var tagList = {};
-tagList["data"] = {};
+var listTags = {};
+var tags = {concepts: []};
 setAvailableTags();
 
 function setUpCategories(){
@@ -102,10 +102,6 @@ function setAvailableTags() {
 	};
 	
 	getTags(JSON.stringify(queryLabels));
-	
-	tagList["data"]["test"] = null;
-	
-	//console.log(tagList);
 }
 
 /**
@@ -127,10 +123,27 @@ function getTags(query, noContext) {
 		}).done(function(data) {
 			console.log(data);
 			console.log(data.array[0]);
+			var word = "";
 			
 			for (var i = 0; i < data.array[0].concepts.length; i++) {
-				//console.log(data.array[0].concepts[i]);
-				tagList["data"][data.array[0].concepts[i]] = null;
+				var ks = Object.keys(listTags);
+				for (var j = 0; j < data.array[0].concepts[i].length; j++) {
+					word += data.array[0].concepts[i][j].toUpperCase();
+					if (ks.indexOf(word) == -1) {
+						listTags[word] = [];
+						var elem = {};
+						elem["id"] = data.array[0].concepts[i];
+						elem["text"] = data.array[0].concepts[i];
+						listTags[word].push(elem);
+					} else {
+						var elem = {};
+						elem["id"] = data.array[0].concepts[i];
+						elem["text"] = data.array[0].concepts[i];
+						listTags[word].push(elem);
+					}
+					
+				}
+				word ="";
 			}	
 		}).fail(function(data) {
 			console.log("FAIL");
@@ -141,43 +154,6 @@ function getTags(query, noContext) {
 		console.warn(e.message + " | " + e.lineNumber);
 	}
 }
-
-/**
- *display chosen tags 
- */
-function displayTags() {
-	$('#enteredTags').empty();
-	$('#enteredTags').append("<br><p>Entered Tags:</p>");
-	var display = "";
-	for (var i = 0; i < tags.concepts.length; i++){
-		display += "<p id=\"tag" + i + "\">"+ tags.concepts[i];
-		display += "<button id=\"tagDeleteButton"+ i +"\" class=\"btn-floating waves-effect waves-light red\" style=\"float: right\" onclick=\"deleteTags(\'#tag"+i+"\')\">";
-		display += "<i class=\"material-icons\">delete</i></button>";
-		display += "</p>";
-		$('#enteredTags').append(display);
-		display = "";
-	}
-}
-
-/**
- *check entered tag and clear input
- */
-function checkTag() {
-	var tag = $('#autocomplete-input').val();
-	$('#autocomplete-input').val("");
-	if (!tagList.data.hasOwnProperty(tag)){
-		Materialize.toast('\"' + tag +'\" is not available.', 4000);
-	} else {
-		if (tags.concepts.indexOf(tag) != -1) {
-			Materialize.toast('\"' + tag +'\" is already in tags.', 4000);
-		} else {
-			addTags(tag);
-			Materialize.toast('Added tag \"' + tag +'\" successfully.', 4000);
-		}
-	}
-	displayTags();
-}
-
 
 $(function() {
 	/*  sliders  */
@@ -248,25 +224,18 @@ $(function() {
 	});
 	
 	/**
-	 *button add tag 
+	 *click event on autocompletion 
 	 */
-	$("#btnAddTag").click(function(e) {
-		e.preventDefault();
-		checkTag();		
-	});
-	
-	
-	/**
-	 *submit tag by pressing Enter
-	 */
-	$("#autocomplete-input").keypress(function(event) {
-	    if (event.which == 13) {
-	    	if (tagList.data.hasOwnProperty($('#autocomplete-input').val())){
-				event.preventDefault();
-	        	checkTag();
-			}
-	    }
-	});
+	$("#multiple-input").click(function(event) {
+		var enteredTags = multiple.value;
+		tags["concepts"] = [];
+		console.log(tags["concepts"]);
+		console.log(enteredTags);
+		for (var i = 0; i < enteredTags.length; i++) {
+			tags.concepts.push(enteredTags[i].id);
+			console.log(tags["concepts"]);
+		}
+  });
 	
 
 
@@ -296,9 +265,8 @@ $(function() {
 		$('#motion-tool-pane').hide();
 		$('#query-container-pane').show();
 		$('#btnAddCanvas').show();
-		$('#btnAddTag').hide();
-		$('#textNN').hide();
-		$('#enteredTags').hide();
+		$('#autocomplete').hide();
+		$('#chip-tags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -312,9 +280,8 @@ $(function() {
 		$('#motion-tool-pane').show();
 		$('#query-container-pane').show();
 		$('#btnAddCanvas').show();
-		$('#btnAddTag').hide();
-		$('#textNN').hide();
-		$('#enteredTags').hide();
+		$('#autocomplete').hide();
+		$('#chip-tags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -332,9 +299,8 @@ $(function() {
 		$('#motion-tool-pane').hide();
 		$('#query-container-pane').hide();
 		$('#btnAddCanvas').hide();
-		$('#btnAddTag').show();
-		$('#textNN').show();
-		$('#enteredTags').show();
+		$('#autocomplete').show();
+		$('#chip-tags').show();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -402,11 +368,21 @@ $(function() {
 	$('#btnShowSidebar').click();
 	setTimeout(function(){$('#btnShowTopbar').click();}, 500);
 	
-	/*
-	 * Automcompletion for the NN-search
-	 */
-	
-  	$('input.autocomplete').autocomplete(
-    	tagList
-  	);        
+
+	/**
+	 *multiple autocompletion 
+	 */  	
+  	var multiple = $('#multiple-input').materialize_autocomplete({
+            multiple: {
+                enable: true
+            },
+            appender: {
+                el: '.ac-users'
+            },
+            dropdown: {
+                el: '#multiple-dropdown'
+            }
+        });
+        
+    multiple.resultCache = listTags;       
 });
