@@ -2,7 +2,7 @@ videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
 var listTags = {};
 var tags = {concepts: []};
-setAvailableTags();
+var NNload = false;
 
 function setUpCategories(){
 	var ks = Object.keys(categoryConfig);
@@ -293,6 +293,10 @@ $(function() {
 	 *Button for Neural Net 
 	 */
 	$('#neuralnetsearchbutton').on('click', function(event) {
+		if (!NNload) {
+			setAvailableTags();
+			NNload = true;
+		}
 		$('.motionsketch').hide();
 		$('.objectsketch').hide();
 		$('#color-tool-pane').hide();
