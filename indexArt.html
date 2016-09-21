@@ -75,16 +75,9 @@
 			<ul id="slide-out" class="side-nav fixed">
 				<li>
 					<div class="input-field col s12">
-						<select id="movie">
-							<option value="" disabled selected>Movie</option>
-						</select>
-						<label>Movie selection</label>
-					</div>
-				</li>
-				<li>
-					<div class="input-field col s12">
-						<select id="type" disabled>
+						<select id="type">
 							<option value="" disabled selected>Type</option>
+							<option value="" disabled>Collection</option>
 							<option value="VISUALIZATION_MULTIMEDIAOBJECT">Movie</option>
 							<option value="VISUALIZATION_SEGMENT">Shot</option>
 						</select>
@@ -93,8 +86,17 @@
 				</li>
 				<li>
 					<div class="input-field col s12">
+						<select id="movie" disabled>
+							<option value="" disabled selected>Movie</option>
+						</select>
+						<label>Movie selection</label>
+					</div>
+				</li>
+				
+				<li>
+					<div class="input-field col s12">
 						<select id="visualization" disabled>
-							<option value="" disabled selected>Visualization</option>
+							<option value="false" disabled selected>Visualization</option>
 						</select>
 						<label>Visualization selection</label>
 					</div>

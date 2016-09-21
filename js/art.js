@@ -23,33 +23,48 @@ $(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
 	});
-
-	$('#movie').on('change', function() {
-		$("#graph").empty();
-		segmentsArray = [];
-		$('#shots').empty();
-		$('#type').prop('disabled', false);
-		$('select').material_select();
-		var movieID = $(this).val();
-		//console.log(movieID);
-		var querySegmentIds = {
-			queryType : "getSegments",
-			multimediaobjectId : movieID
-		};
-		oboerequest(JSON.stringify(querySegmentIds));
-	});
-
+	
 	$('#type').on('change', function() {
 		$("#graph").empty();
-		$('#search-button').prop('disabled', true);
-		$('#visualization').prop('disabled', false);
+		
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
 		}
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
 		}
+		
+		$('#movie').prop('disabled', false);
+
 		oboerequest(JSON.stringify(queryVisualizations));
+	});
+
+	$('#movie').on('change', function() {
+		$("#graph").empty();
+		$('#shots').empty();
+		
+		segmentsArray = [];
+		
+		$('#visualization').prop('disabled', false);
+		
+		$('select').material_select();
+		
+		var movieID = $(this).val();
+		//console.log(movieID);
+		
+		var querySegmentIds = {
+			queryType : "getSegments",
+			multimediaobjectId : movieID
+		};
+		
+		oboerequest(JSON.stringify(querySegmentIds));
+		
+		if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
+			$('#shots').hide();
+		}
+		if ($('#type').val() == "VISUALIZATION_SEGMENT") {
+			$('#shots').show();
+		}
 	});
 
 	$('#visualization').on('change', function() {
@@ -187,7 +202,7 @@ function oboerequest(query, noContext) {
 				 break;*/
 				case "visualizations":
 					$("#visualization").empty();
-					$("#visualization").append('<option value="" disabled selected>Visualization</option>');
+					$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
 					if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 						for (var i = 0; i < data.array[0].visualizations.length; i++) {
 							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
@@ -208,6 +223,7 @@ function oboerequest(query, noContext) {
 						}
 						$('select').material_select();
 					}
+					$('#search-button').prop('disabled', true);
 	
 					break;
 				case "resultData":
