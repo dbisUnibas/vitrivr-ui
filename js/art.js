@@ -1,4 +1,10 @@
+var radioVisualizationMovie = [["Average", "Median", "Dominant"], ["Color"], ["Grid", "Gradient", "Stripe"], ["8", "Variable"], ["Square"]];
+var radioVisualizationShot  = [["Average", "Median", "Dominant"], ["Color", "Edge"], ["Grid", "Average"], ["8", "16", "Color"], ["Grid"], ["8", "16"]];
+console.log(radioVisualizationMovie);
+
+
 var segmentsArray = [];
+var visualizationArray = [];
 
 $(function() {
 	$(".button-collapse").sideNav();
@@ -26,17 +32,50 @@ $(function() {
 	
 	$('#type').on('change', function() {
 		$("#graph").empty();
+		$("#radio").empty();
 		
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
+			
+			var appendVis = '<form action="#">';
+			for(var i = 0; i < radioVisualizationMovie.length; i++){
+				appendVis += "<p>";
+					for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
+						console.log(radioVisualizationMovie[i][j]);
+						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + '" value="' + radioVisualizationMovie[i][j] + '" />';
+						appendVis += '<label for="' + radioVisualizationMovie[i][j] + '">'+ radioVisualizationMovie[i][j] + '</label>';
+					}
+				appendVis += "</p>";
+			}
+		
+		$("#radio").append(appendVis);
+		//var id = '#part1';
+		//$(id).prop('checked', true);
 		}
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
+			
+			var appendVis = '<form action="#">';
+			for(var i = 0; i < radioVisualizationShot.length; i++){
+				appendVis += "<p>";
+					for (var j = 0; j < radioVisualizationShot[i].length; j++) {
+						console.log(radioVisualizationShot[i][j]);
+						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + '" value="' + radioVisualizationShot[i][j] + '" />';
+						appendVis += '<label for="' + radioVisualizationShot[i][j] + '">'+ radioVisualizationShot[i][j] + '</label>';
+					}
+				appendVis += "</p>";
+			}
+		
+		$("#radio").append(appendVis);
+		//var id = '#part1';
+		//$(id).prop('checked', true);
 		}
 		
 		$('#movie').prop('disabled', false);
 
 		oboerequest(JSON.stringify(queryVisualizations));
+		
+
 	});
 
 	$('#movie').on('change', function() {
@@ -203,11 +242,14 @@ function oboerequest(query, noContext) {
 				case "visualizations":
 					$("#visualization").empty();
 					$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
+					visualizationArray = [];
 					if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 						for (var i = 0; i < data.array[0].visualizations.length; i++) {
 							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
 									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+									visualizationArray.push(data.array[0].visualizations[i].className);
+									//console.log(data.array[0].visualizations[i].className);
 								}
 							}
 						}
@@ -218,6 +260,8 @@ function oboerequest(query, noContext) {
 							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
 									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+									visualizationArray.push(data.array[0].visualizations[i].className);
+									//console.log(data.array[0].visualizations[i].className);
 								}
 							}
 						}
