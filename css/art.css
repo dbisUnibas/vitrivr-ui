@@ -66,13 +66,14 @@ header, main, footer, body {
 /*
  * shots
  */
-.shot {
-	height: 500px;
-	overflow-y: auto;
-}
 
 #shots {
 	padding-top: 40px;
+}
+
+.scrollWithBar {
+	height: 500px;
+	overflow-y: auto;
 }
 
 /*

@@ -1,7 +1,19 @@
-var radioVisualizationMovie = [["Average", "Median", "Dominant"], ["Color"], ["Grid", "Gradient", "Stripe"], ["8", "Variable"], ["Square"]];
-var radioVisualizationShot  = [["Average", "Median", "Dominant"], ["Color", "Edge"], ["Grid", "Average"], ["8", "16", "Color"], ["Grid"], ["8", "16"]];
-console.log(radioVisualizationMovie);
+const beginStringVisualization = "org.vitrivr.cineast.art.modules.";
 
+const radioVisualizationMovie = [["Average", "Median", "Dominant"], ["Color"], ["Grid", "Gradient", "Stripe"], ["8", "Variable"], ["Square"]];
+const radioVisualizationShot = [["Average", "Median", "Dominant"], ["Color", "Edge"], ["Grid", "Average"], ["8", "16", "Color"], ["Grid"], ["8", "16"]];
+
+const queryMultimediaObjects = {
+	queryType : "getMultimediaobjects"
+};
+
+/*const queryVisualizationCategories = {
+ queryType : "getVisualizationCategories"
+ };*/
+
+const queryVisualizations = {
+	queryType : "getVisualizations"
+};
 
 var segmentsArray = [];
 var visualizationArray = [];
@@ -13,91 +25,86 @@ $(function() {
 		//$('select').prop('disabled', 'disabled');
 	});
 
-	var queryMultimediaObjects = {
-		queryType : "getMultimediaobjects"
-	};
-
-	/*var queryVisualizationCategories = {
-	 queryType : "getVisualizationCategories"
-	 };*/
-
-	var queryVisualizations = {
-		queryType : "getVisualizations"
-	};
-
 	$(document).ready(function() {
 		oboerequest(JSON.stringify(queryMultimediaObjects));
 		//oboerequest(JSON.stringify(queryVisualizationCategories));
 	});
-	
+
+	/**
+	 * Collection, Movie or Shot
+	 */
 	$('#type').on('change', function() {
 		$("#graph").empty();
 		$("#radio").empty();
-		
+
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
-			
+
 			var appendVis = '<form action="#">';
-			for(var i = 0; i < radioVisualizationMovie.length; i++){
+			for (var i = 0; i < radioVisualizationMovie.length; i++) {
 				appendVis += "<p>";
-					for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
-						console.log(radioVisualizationMovie[i][j]);
-						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + '" value="' + radioVisualizationMovie[i][j] + '" />';
-						appendVis += '<label for="' + radioVisualizationMovie[i][j] + '">'+ radioVisualizationMovie[i][j] + '</label>';
-					}
+				for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
+					//console.log(radioVisualizationMovie[i][j]);
+					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" />';
+					appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
+				}
 				appendVis += "</p>";
 			}
-		
-		$("#radio").append(appendVis);
-		//var id = '#part1';
-		//$(id).prop('checked', true);
+			appendVis += '</form>';
+
+			$("#radio").append(appendVis);
+			//var id = '#part1';
+			//$(id).prop('checked', true);
 		}
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
-			
+
 			var appendVis = '<form action="#">';
-			for(var i = 0; i < radioVisualizationShot.length; i++){
+			for (var i = 0; i < radioVisualizationShot.length; i++) {
 				appendVis += "<p>";
-					for (var j = 0; j < radioVisualizationShot[i].length; j++) {
-						console.log(radioVisualizationShot[i][j]);
-						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + '" value="' + radioVisualizationShot[i][j] + '" />';
-						appendVis += '<label for="' + radioVisualizationShot[i][j] + '">'+ radioVisualizationShot[i][j] + '</label>';
-					}
+				for (var j = 0; j < radioVisualizationShot[i].length; j++) {
+					//console.log(radioVisualizationShot[i][j]);
+					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + i + '" value="' + radioVisualizationShot[i][j] + '" />';
+					appendVis += '<label for="' + radioVisualizationShot[i][j] + i +'">' + radioVisualizationShot[i][j] + '</label>';
+				}
 				appendVis += "</p>";
 			}
-		
-		$("#radio").append(appendVis);
-		//var id = '#part1';
-		//$(id).prop('checked', true);
+			appendVis += '</form>';
+
+			$("#radio").append(appendVis);
+			//var id = '#part1';
+			//$(id).prop('checked', true);
 		}
-		
+
 		$('#movie').prop('disabled', false);
 
 		oboerequest(JSON.stringify(queryVisualizations));
-		
 
 	});
 
+	/**
+	 * Select Movie
+	 */
 	$('#movie').on('change', function() {
 		$("#graph").empty();
 		$('#shots').empty();
-		
+
 		segmentsArray = [];
-		
+
 		$('#visualization').prop('disabled', false);
-		
+
 		$('select').material_select();
-		
+
 		var movieID = $(this).val();
 		//console.log(movieID);
-		
+
 		var querySegmentIds = {
 			queryType : "getSegments",
 			multimediaobjectId : movieID
 		};
-		
+
 		oboerequest(JSON.stringify(querySegmentIds));
-		
+
 		if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
 		}
@@ -106,11 +113,22 @@ $(function() {
 		}
 	});
 
+	$(document).on('change', 'input[name=part0]', function() {
+		console.log("Here");
+		console.log($("input[name=part0]:checked").val());
+	});
+
+	/**
+	 * Select Visualization
+	 */
 	$('#visualization').on('change', function() {
 		$("#graph").empty();
 		$('#search-button').prop('disabled', false);
 	});
 
+	/**
+	 * Visualization Button
+	 */
 	$('#search-button').click(function() {
 		$("#graph").empty();
 		var movie = $('#movie').val();
@@ -124,7 +142,7 @@ $(function() {
 				visualization : visualization,
 				multimediaobjectId : movie
 			};
-			
+
 			oboerequest(JSON.stringify(queryArt));
 		}
 		if (type == "VISUALIZATION_SEGMENT") {
@@ -149,23 +167,23 @@ $(function() {
 	$('#search-button-d3').click(function() {
 		$("#graph").empty();
 		$("#graphd3").empty();
-		
+
 		var value = $('#d3').val();
 		switch (value) {
-			case "sunburst":
-				sunburst();
-				break;
-			case "streamgraph":
-				streamgraph();
-				break;
-			case "raindrops":
-				raindrops();
-				break;
-			case "forceDirectedGraph":
-				forceDirectedGraph();
-				break;
-			default:
-				break;
+		case "sunburst":
+			sunburst();
+			break;
+		case "streamgraph":
+			streamgraph();
+			break;
+		case "raindrops":
+			raindrops();
+			break;
+		case "forceDirectedGraph":
+			forceDirectedGraph();
+			break;
+		default:
+			break;
 		}
 	});
 
@@ -204,87 +222,87 @@ function oboerequest(query, noContext) {
 			searchRunning = false;
 
 			switch(Object.keys(data.array[0])[0]) {
-				case "multimediaobjects":
-					var movies = '';
-					data.array[0].multimediaobjects.sort(function(a, b) {
-				    	var textA = a.name.toUpperCase();
-					    var textB = b.name.toUpperCase();
-					    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-					});
-					for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
-						movies += '<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>';
+			case "multimediaobjects":
+				var movies = '';
+				data.array[0].multimediaobjects.sort(function(a, b) {
+					var textA = a.name.toUpperCase();
+					var textB = b.name.toUpperCase();
+					return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+				});
+				for (var i = 0; i < data.array[0].multimediaobjects.length; i++) {
+					movies += '<option value="' + data.array[0].multimediaobjects[i].videoid + '">' + data.array[0].multimediaobjects[i].name + '</option>';
+				}
+				$("#movie").append(movies);
+				$('select').material_select();
+				break;
+			case "segments":
+				var movieID = $('#movie').val();
+				var segs = '';
+				segs += '<form action="#" class="scrollWithBar">';
+				for (var i = 0; i < data.array[0].segments.length; i++) {
+					segs += '<label class="rad">';
+					segs += '<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
+					segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
+					segs += '</label>';
+					segmentsArray.push(data.array[0].segments[i]);
+				}
+				segs += '</form>';
+				$("#shots").append(segs);
+				var id = '#' + data.array[0].segments[0];
+				$(id).prop('checked', true);
+				break;
+			/*case "visualizationCategories":
+			 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
+			 $("#type").append('<option value="' + data.array[0].visualizationCategories[i] + '">' + data.array[0].visualizationCategories[i] + '</option>');
+			 }
+			 $('select').material_select();
+			 break;*/
+			case "visualizations":
+				$("#visualization").empty();
+				$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
+				visualizationArray = [];
+				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
+					for (var i = 0; i < data.array[0].visualizations.length; i++) {
+						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
+								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								visualizationArray.push(data.array[0].visualizations[i].className);
+								//console.log(data.array[0].visualizations[i].className);
+							}
+						}
 					}
-					$("#movie").append(movies);
 					$('select').material_select();
-					break;
-				case "segments":
-					var movieID = $('#movie').val();
-					var segs = '';
-					segs += '<form action="#">';
-					for (var i = 0; i < data.array[0].segments.length; i++) {
-						segs += '<label class="rad">';
-						segs += '<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
-						segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
-						segs += '</label>';
-						segmentsArray.push(data.array[0].segments[i]);
-					}
-					segs += '</form>';
-					$("#shots").append(segs);
-					var id = '#' + data.array[0].segments[0];
-					$(id).prop('checked', true);
-					break;
-				/*case "visualizationCategories":
-				 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
-				 $("#type").append('<option value="' + data.array[0].visualizationCategories[i] + '">' + data.array[0].visualizationCategories[i] + '</option>');
-				 }
-				 $('select').material_select();
-				 break;*/
-				case "visualizations":
-					$("#visualization").empty();
-					$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
-					visualizationArray = [];
-					if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
-						for (var i = 0; i < data.array[0].visualizations.length; i++) {
-							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
-								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
-									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
-									visualizationArray.push(data.array[0].visualizations[i].className);
-									//console.log(data.array[0].visualizations[i].className);
-								}
+				}
+				if ($('#type').val() == "VISUALIZATION_SEGMENT") {
+					for (var i = 0; i < data.array[0].visualizations.length; i++) {
+						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
+							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
+								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								visualizationArray.push(data.array[0].visualizations[i].className);
+								//console.log(data.array[0].visualizations[i].className);
 							}
 						}
-						$('select').material_select();
 					}
-					if ($('#type').val() == "VISUALIZATION_SEGMENT") {
-						for (var i = 0; i < data.array[0].visualizations.length; i++) {
-							for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
-								if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
-									$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
-									visualizationArray.push(data.array[0].visualizations[i].className);
-									//console.log(data.array[0].visualizations[i].className);
-								}
-							}
-						}
-						$('select').material_select();
-					}
-					$('#search-button').prop('disabled', true);
-	
-					break;
-				case "resultData":
-					if (data.array[0].resultType == "IMAGE") {
-						$("#graph").empty();
-						var picture = data.array[0].resultData;
-						$("#graph").append('<br \><br \><img class="materialboxed pixelated" id="result" src="' + picture + '" />');
-						
-						  $(document).ready(function(){
-						    $('.materialboxed').materialbox();
-						  });
-        
-					}
-					break;
-				default:
-					console.log(data.array[0]);
-					break;
+					$('select').material_select();
+				}
+				$('#search-button').prop('disabled', true);
+
+				break;
+			case "resultData":
+				if (data.array[0].resultType == "IMAGE") {
+					$("#graph").empty();
+					var picture = data.array[0].resultData;
+					$("#graph").append('<br \><br \><img class="materialboxed pixelated" id="result" src="' + picture + '" />');
+
+					$(document).ready(function() {
+						$('.materialboxed').materialbox();
+					});
+
+				}
+				break;
+			default:
+				console.log(data.array[0]);
+				break;
 			}
 		}).fail(function(data) {
 			console.log("FAIL");
