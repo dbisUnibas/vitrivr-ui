@@ -1,7 +1,7 @@
 const beginStringVisualization = "org.vitrivr.cineast.art.modules.";
 
-const radioVisualizationMovie = [["Average", "Median", "Dominant"], ["Color"], ["Grid", "Gradient", "Stripe"], ["8", "Variable"], ["Square"]];
-const radioVisualizationShot = [["Average", "Median", "Dominant"], ["Color", "Edge"], ["Grid", "Average"], ["8", "16", "Color"], ["Grid"], ["8", "16"]];
+const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
+const radioVisualizationShot = [["AverageColor", "MedianColor", "DominantEdge"], ["Grid8", "Grid16", "AverageColor"], ["Grid8", "Grid16"]];
 
 const queryMultimediaObjects = {
 	queryType : "getMultimediaobjects"
@@ -44,9 +44,15 @@ $(function() {
 			for (var i = 0; i < radioVisualizationMovie.length; i++) {
 				appendVis += "<p>";
 				for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
-					//console.log(radioVisualizationMovie[i][j]);
-					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" />';
-					appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
+					if(i != (radioVisualizationMovie.length -1)) {
+						//console.log(radioVisualizationMovie[i][j]);
+						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" />';
+						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
+					} else {
+						console.log(i);
+						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '"/>';
+						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
+					}	
 				}
 				appendVis += "</p>";
 			}
