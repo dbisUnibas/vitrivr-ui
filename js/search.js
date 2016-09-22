@@ -18,6 +18,10 @@ function getCategories(){
   		}			
   	}
   	
+  	categories.sort(function(a, b){
+  		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
+  	});
+  	
 	return categories;
 }
 
