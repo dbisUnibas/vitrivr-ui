@@ -57,37 +57,75 @@ const ERR_WHICH_COLOR = 'Please also say which color';
 
 
 var template = [
+
+
+    {comm:'(toggle) top bar', func: toggleTopbar, out: 'toggle top bar'},
+    {comm:'open top bar', func: toggleTopbar(), out: 'open top bar'},
+    {comm:'close top bar', func: toggleTopbar(), out: 'close top bar'},
+
+    {comm:'(toggle) sidebar', func: toggleSidebar, out: 'toggle sidebar'},
+    {comm:'open sidebar', func: toggleSidebar, out: 'open sidebar'},
+    {comm:'close sidebar', func: toggleSidebar, out: 'close sidebar'},
+
+    {comm:'add (a) (new) canvas', func: addCanvas, out: 'add a new canvas'},
+    {comm:'add (a) (new) sheet', func: addCanvas, out: 'add a new sheet'},
+
+    {comm:'increase size (of brush)', func: increasePenSize, out: 'increase size of brush'},
+    {comm:'increase size (of pen)', func: increasePenSize, out: 'increase size of pen'},
+    {comm:'decrease size (of brush)', func: decreasePenSize, out: 'decrease size of brush'},
+    {comm:'decrease size (of pen)', func: decreasePenSize, out: 'decrease size of pen'},
+    {comm:'select *color colour (pen)', func: selectColor, out: 'select _____ colour'},
+    {comm:'select *color colour (brush)', func: selectColor, out: 'select _____ colour'},
+
+    {comm:'fill canvas (number) :num with *color (colour)', func: fillCanvas, out: 'fill Canvas _____ with _____ colour'},
+    {comm:'download canvas (number) :num', func: downloadCanvas, out: 'download Canvas number _____'},
+    {comm:'delete canvas (number) :num', func: deleteCanvas, out: 'delete Canvas number _____'},
+    {comm:'clear canvas (number) :num', func: clearCanvas, out: 'clear canvas number _____'},
+
     {comm:'voice search *tag', func: voiceSearch_1, out: 'voice search:______'},
     {comm:'*tag1 voice search *tag2', func: voiceSearch_2, out: '______ voice search:______'},
-    {comm:'(toggle) (open) (close) top bar', func: toggleTopbar, out: 'toggle top bar'},
-    {comm:'search (the) (my) (Canvas) (sketch) (painting)', func: searchCanvasQuery, out: 'search my Canvas'},
-    {comm:'(do) (perform) query search', func: searchCanvasQuery, out: 'perform query search'},
-    {comm:'add (a) (new) Canvas (sheet)', func: addCanvas, out: 'add new Canvas'},
-    {comm:'split (video) (into sequences)', func: splitVideo, out: 'split video into sequences'},
-    {comm:'(toggle) (open) (close) sidebar', func: toggleSidebar, out: 'toggle sidebar'},
-    {comm:'increase size (of pen) (of brush)', func: increasePenSize, out: 'increase size of pen'},
-    {comm:'decrease size (of pen) (of brush)', func: decreasePenSize, out: 'decrease size of pen'},
-    {comm:'(show) (me) (move to) next (video) (container)', func: browseNext, out: 'show me next video container'},
-    {comm:'(show) (me) (move to) previous (video) (container)', func: browsePrevious, out: 'show me previous video container'},
-    {comm:'search Canvas *tag', func: searchParticularCanvas, out: 'search Canvas _____ and _____'},
+    {comm:'search (the) (my) canvas', func: searchCanvasQuery, out: 'search the canvas'},
+    {comm:'search', func: searchCanvasQuery, out: 'search'},
+    {comm:'search (the) (my) sketch', func: searchCanvasQuery, out: 'search the sketch'},
+    {comm:'search (the) (my) painting', func: searchCanvasQuery, out: 'search the sketch'},
+    {comm:'do query', func: searchCanvasQuery, out: 'do query'},
+    {comm:'perform query', func: searchCanvasQuery, out: 'perform query'},
+    {comm:'search canvas *tag', func: searchParticularCanvas, out: 'search canvas _____ and _____'},
+
+    {comm:'split', func: splitVideo, out: 'split'},
+    {comm:'split videos', func: splitVideo, out: 'split videos'},
+    {comm:'split videos into sequences', func: splitVideo, out: 'split videos into sequences'},
+    {comm:'split results', func: splitVideo, out: 'split results'},
+
+    {comm:'(show) (me) next (video) (container)', func: browseNext, out: 'show me next video container'},
+    {comm:'(move to) next (video) (container)', func: browseNext, out: 'move to next video container'},
+    {comm:'(show) (me) previous (video) (container)', func: browsePrevious, out: 'show me previous video container'},
+    {comm:'(move to) previous (video) (container)', func: browsePrevious, out: 'move to previous video container'},
+
     {comm:'(show) (me) colour sketch (tool) (option)', func: showColorSketch, out: 'show me colour sketch'},
     {comm:'(show) (me) motion sketch (tool) (option)', func: showMotionSketch, out: 'show me motion sketch'},
-    {comm:'select *color colour (pen) (brush)', func: selectColor, out: 'select _____ colour'},
-    {comm:'fill Canvas (number) :num with *color (colour)', func: fillCanvas, out: 'fill Canvas _____ with _____ colour'},
-    {comm:'download Canvas (number) :num', func: downloadCanvas, out: 'download Canvas number _____'},
-    {comm:'delete Canvas (number) :num', func: deleteCanvas, out: 'delete Canvas number _____'},
-    {comm:'clearcanvas (number) :num', func: clearCanvas, out: 'clearcanvas number _____'},
-    {comm:'clear Canvas (number) :num', func: clearCanvas, out: 'clear Canvas number _____'},
 
-    {comm:'play (this) (my) (video) (clip) (shot)', func: playVideo, out: 'play this video'},
-    {comm:'search (this) (my) (video) (clip) (shot) id', func: searchById, out: 'search this video ID'},
-    {comm:'include (this) (video) (clip) (shot)', func: positiveFeedback, out: 'include this video'},
-    {comm:'remove (this) (video) (clip) (shot)', func: negativeFeedback, out: 'remove this video'},
-    {comm:'search (my) (this) feedback', func: searchFeedback, out: 'search my feedback'},
-    {comm:'(put) (drop) (this) (image) (shot) on Canvas', func: dropOnCanvas, out: 'drop this shot on Canvas'},
-    {comm:'add (serial) numbers here', func: addNumbersHere, out: 'add numbers here'},
+    {comm:'play (this) (video) (clip)', func: playVideo, out: 'play this video clip'},
+    {comm:'play (this) (shot)', func: playVideo, out: 'play this shot'},
+
+    {comm:'search (video) id', func: searchById, out: 'search video ID'},
+    {comm:'search (clip) id', func: searchById, out: 'search clip ID'},
+    {comm:'search (shot) id', func: searchById, out: 'search shot ID'},
+
+    {comm:'include (this) (video)', func: positiveFeedback, out: 'include this video'},
+    {comm:'include (this) (clip)', func: positiveFeedback, out: 'include this clip'},
+    {comm:'include (this) (shot)', func: positiveFeedback, out: 'include this shot'},
+    {comm:'remove (this) (video)', func: negativeFeedback, out: 'remove this video'},
+    {comm:'remove (this) (clip)', func: negativeFeedback, out: 'remove this clip'},
+    {comm:'remove (this) (shot)', func: negativeFeedback, out: 'remove this shot'},
+
+    {comm:'search (my) feedback', func: searchFeedback, out: 'search my feedback'},
+    {comm:'search (this) feedback', func: searchFeedback, out: 'search this feedback'},
+
+    {comm:'(put) (drop) (this) (image) (shot) on Canvas', func: dropOnCanvas, out: 'drop this shot on canvas'},
+
+    {comm:'add (serial) numbers (here)', func: addNumbersHere, out: 'add numbers here'},
     {comm:'play first (video) (shot)', func: playFirstShot, out: 'play first shot'},
-
     {comm:'play (me) video (clip) (shot) (with) (serial) number :num', func: playVideoByNumber, out: 'play video shot number:______'},
     {comm:'search (me) video (clip) (shot) (with) (serial) number :num', func: searchVideoByNumber, out: 'search video number:______'},
     {comm:'(put) (drop) (image) (shot) number :num on Canvas', func: dropOnCanvasByNumber, out: 'drop shot number:______ on Canvas'},
@@ -111,7 +149,10 @@ var template = [
     {comm:'add it', func: followUpFeedback, out: 'add it'},
     {comm:'remove it', func: followUpFeedback, out: 'remove it'},
 
-    {comm:'(show) (display) (overview of) all commands', func: displayCommands, out: 'show all commands'},
+    {comm:'(show) all commands', func: displayCommands, out: 'show all commands'},
+    {comm:'(display) all commands', func: displayCommands, out: 'show all commands'},
+    {comm:'(overview of) all commands', func: displayCommands, out: 'show all commands'},
+
     {comm:'what can I say', func: displayCommands, out: 'what can I say'},
     {comm:'close this (window) (box)', func: closeWindow, out: 'close this window'},
     {comm:'replay (the) (video)', func: replayVideo, out: 'replay the video'},
@@ -141,7 +182,7 @@ function buildBaseCommands(){
 var baseCommands = buildBaseCommands();
 
 // stop words which get filtered out from unrecognized sentence
-var stopwords = ["a", "about", "above", "above", "across", "after", "afterwards", "against", "all", "almost", "alone", "along", "already", "also", "although", "always", "am", "among", "amongst", "amoungst", "amount", "an", "and", "another", "any", "anyhow", "anyone", "anything", "anyway", "anywhere", "are", "around", "as", "at", "back", "be", "became", "because", "become", "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom", "but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven", "else", "elsewhere", "empty", "enough", "etc", "eveno", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own", "part", "per", "perhaps", "please", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"];
+var stopwords = ["a", "the", "please"];
 
 // used in preprocessing to replace english number words with integers
 var englishNumbers = {

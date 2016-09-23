@@ -19,8 +19,7 @@ if (voiceMode) {
     var playingShotBox = null;    // used to store the object of playing video
     var feedbackCount = 0;        // keep counts of number of consecutive feedback response
 
-    var dictionary = {};            // dictionary used in feedback system
-    var commandID = [];             // maps commmands to their IDs in dictionary of feedback system
+    var dictionary = new Array();          // dictionary used in feedback system
 
     // declaring constants
     const VOICE_BOX_ID = "voice"
@@ -892,46 +891,31 @@ if (voiceMode) {
         $('#commands-modal > div > p').html(allCommands);
     }
 
+
+    const NGRAM = 3;
+
     /**
-     * Builds a dictionary using the 3-grams words of commands
-     * Each 3-gram is mapped to an array of IDs of commands containing that 3-gram
+     * Builds a dictionary using the N-grams words of commands
+     * Each N-gram is mapped to an array of IDs of commands containing that 3-gram
      */
     function buildDictionary() {
-        var number = 1;
-        var present = [];
-        for (var phrase in commands) {
-            phrase = phrase.replace(/[()]/g, '');
-            commandID[phrase] = number;
-            number++;
-        }
-        for (var phrase in commandID) {
+        //TODO: split commands
+        var commands = baseCommands;
 
-            var id = commandID[phrase];
-            var words = phrase.split(" ");
-            for (var i = 0; i < words.length; i++) {
+        for (var command in commands) {
+            var map = getSentenceNGramsMap(preProcess(command), NGRAM);
 
-                var key = words[i];
+            for (var key in map) {
+                var ngramcount = map[key];
+                var ngram = ngramcount.ngram;
 
-                for (var j = -2; j < key.length; j++) {
-                    var trigram;
-                    if (j == -2)
-                        trigram = "  " + key.charAt(j + 2);
-                    else if (j == -1)
-                        trigram = " " + key.substring(0, 2);
-                    else if (j == key.length - 2)
-                        trigram = key.substring(j, j + 2) + " ";
-                    else if (j == key.length - 1)
-                        trigram = key.charAt(j) + "  ";
-                    else
-                        trigram = key.substring(j, j + 3);
+                var count = ngramcount.count;
 
-                    if (!dictionary[trigram]) {    // for adding trigrams of words in dictionary with IDs
-                        dictionary[trigram] = [id];
-                    } else {
-                        if (dictionary[trigram].indexOf(id) == -1)
-                            dictionary[trigram].push(id);
-                    }
+                if (!dictionary[ngram]) {
+                    dictionary[ngram] = [];
                 }
+
+                dictionary[ngram].push({command: command, count: count});
             }
         }
     }
@@ -947,72 +931,126 @@ if (voiceMode) {
      * @return {String} Feedback command
      */
     function userInterfaceFeedback(sentence) {
-        sentence = sentence.trim();
-        var notRecognizedWords = sentence.split(" ");
-        var frequencyCommand = [];
-        var countTrigram = 0;
-        for (var phrase in commandID) {
+        var map = getSentenceNGramsMap(sentence, NGRAM);
 
-            var id = commandID[phrase];
-            frequencyCommand[id] = 0;
-        }
+        var prefilter = {};
 
-        for (var i = 0; i < notRecognizedWords.length; i++) {
+        for (var key in map) {
+            var ngramcount = map[key];
+            var ngram = ngramcount.ngram;
+            var detectedCommands = dictionary[ngram];
 
-            var key = notRecognizedWords[i];
+            for (var ckey in detectedCommands) {
+                var commandcount = detectedCommands[ckey];
+                var command = commandcount.command;
 
-            for (var j = -2; j < key.length; j++) {
-                var trigram;
-                if (j == -2) {
-                    trigram = "  " + key.charAt(j + 2);
-                } else if (j == -1) {
-                    trigram = " " + key.substring(0, 2);
-                } else if (j == key.length - 2) {
-                    trigram = key.substring(j, j + 2) + " ";
-                } else if (j == key.length - 1) {
-                    trigram = key.charAt(j) + "  ";
+                if (prefilter[command]) {
+                    prefilter[command] = {command: command, count: prefilter[command].count + 1};
                 } else {
-                    trigram = key.substring(j, j + 3);
-                }
-                if (dictionary[trigram]) {    // for trigrams of words of unrecognized sentence
-                    var IDArrayTrigram = dictionary[trigram];
-                    for (var k = 0; k < IDArrayTrigram.length; k++) {
-                        var id = IDArrayTrigram[k];
-                        frequencyCommand[id]++;
-                    }
+                    prefilter[command] = {command: command, count: 1};
                 }
             }
-            countTrigram += key.length + 2;
         }
 
-        var maximumFrequency = 0;
+        var maxCommand = undefined;
+        var maxScore = 0;
+
+        for (var key in prefilter) {
+            var result = prefilter[key];
+
+            var score = result.count / Object.keys(getSentenceNGramsMap(result.command, NGRAM)).length;
+            if (score > maxScore) {
+                maxCommand = result.command;
+                maxScore = score;
+            }
+        }
+
         var feedbackCommand;
-        for (var phrase in commands) {
-            var processedPhrase = phrase.replace(/[()]/g, '');  // removes '(' and ')'
-            var id = commandID[processedPhrase];
-            if (maximumFrequency < frequencyCommand[id]) {
-                maximumFrequency = frequencyCommand[id];
-                feedbackCommand = phrase;
-            }
-        }
-
-        if (maximumFrequency / countTrigram >= 0.8) {
-            var baseCommand = baseCommands[feedbackCommand];
-            if (QUERY_FOLLOW_UP.indexOf(baseCommand) == -1) {
-
-                SpeechKITT.setRecognizedSentence(baseCommand);
+        
+        if (maxScore >= 0.7) {
+            var baseCommand = commands[maxCommand];
+            if (QUERY_FOLLOW_UP.indexOf(maxCommand) == -1) {
+                SpeechKITT.setRecognizedSentence(maxCommand);
                 factor = 1;
             }
-            commands[feedbackCommand].apply();
+            baseCommand.apply();
             feedbackCommand = 1;
-        }
-
-        if (maximumFrequency / countTrigram <= 0.2) {
+        } else if (maxScore <= 0.2) {
             feedbackCommand = undefined;
+        } else {
+            feedbackCommand = maxCommand;
         }
 
         return feedbackCommand;
     }
+
+    /**
+     *
+     * @param sentence
+     * @param length
+     * @returns {{}}
+     */
+    function getSentenceNGramsMap(sentence, length) {
+        var sngram = getSentenceNGrams(sentence, length);
+
+        //TODO: filter out stop words
+
+        var map = {};
+
+        for (var i = 0; i < sngram.length; i++) {
+            if (sngram[i] in map) {
+                map[sngram[i]] = {ngram: map[sngram[i]], count: map[sngram[i]].count + 1};
+            } else {
+                map[sngram[i]] = {ngram: sngram[i], count: 1};
+            }
+        }
+
+        return map;
+    }
+
+
+    /**
+     *
+     * @param sentence
+     * @param length
+     * @returns {Array}
+     */
+    function getSentenceNGrams(sentence, length) {
+        var ngrams = [];
+        sentence = sentence.trim().toLowerCase().replace(/[^a-z ]/gi, '').split(' ');
+
+        for (var i = 0; i < sentence.length; i++) {
+            ngrams = ngrams.concat(getNGrams(sentence[i], length));
+        }
+
+        return ngrams;
+    }
+
+
+    /**
+     *
+     * @param word
+     * @param length
+     * @returns {Array}
+     */
+    function getNGrams(word, length) {
+        var ngrams = [];
+
+        word = " ".repeat(length - 1) + word + " ".repeat(length - 1);
+
+        for (var i = 0; i < word.length - (length - 1); i++) {
+            var tmpGram = '';
+
+            for (var j = 0; j < length; j++) {
+                tmpGram += word[i + j];
+            }
+
+            ngrams.push(tmpGram);
+        }
+
+        return ngrams;
+    }
+
 
     $(document).ready(function () {
 
@@ -1036,6 +1074,9 @@ if (voiceMode) {
 
         // instruction that is present on toggle button when it is ON
         SpeechKITT.setInstructionsText(INSTRUCTION);
+
+        // have speech button activated for 120 minutes
+        SpeechKITT.rememberStatus(120);
 
         // Define a stylesheet for toogle botton to use
         SpeechKITT.setStylesheet('css/flat-pomegranate.css');
