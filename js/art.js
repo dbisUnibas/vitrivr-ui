@@ -1,4 +1,4 @@
-const beginStringVisualization = "org.vitrivr.cineast.art.modules.";
+const beginStringVisualization = "org.vitrivr.cineast.art.modules.Visualization";
 
 const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
 const radioVisualizationShot = [["AverageColor", "MedianColor", "DominantEdge"], ["Grid8", "Grid16", "AverageColor"], ["Grid8", "Grid16"]];
@@ -46,11 +46,11 @@ $(function() {
 				for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
 					if(i != (radioVisualizationMovie.length -1)) {
 						//console.log(radioVisualizationMovie[i][j]);
-						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" />';
+						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled />';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
 					} else {
 						console.log(i);
-						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '"/>';
+						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled/>';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
 					}	
 				}
@@ -59,6 +59,7 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
+			$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
@@ -70,7 +71,7 @@ $(function() {
 				appendVis += "<p>";
 				for (var j = 0; j < radioVisualizationShot[i].length; j++) {
 					//console.log(radioVisualizationShot[i][j]);
-					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + i + '" value="' + radioVisualizationShot[i][j] + '" />';
+					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + i + '" value="' + radioVisualizationShot[i][j] + '" disabled />';
 					appendVis += '<label for="' + radioVisualizationShot[i][j] + i +'">' + radioVisualizationShot[i][j] + '</label>';
 				}
 				appendVis += "</p>";
@@ -78,6 +79,7 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
+			$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
@@ -119,9 +121,80 @@ $(function() {
 		}
 	});
 
+	/**
+	 * Select visualization with radiobuttons/checkboxes
+	 */
 	$(document).on('change', 'input[name=part0]', function() {
-		console.log("Here");
-		console.log($("input[name=part0]:checked").val());
+		//console.log($("input[name=part0]:checked").val());
+		var IDs = $("input[name=part1]").map(function() { return this.id; }).get();
+		var IDs2 = $("input[name=part2]").map(function() { return this.id; }).get();
+		var possibleValues = "";
+		for (var i = 0; i < IDs.length; i++) {
+			possibleValues += beginStringVisualization;
+			possibleValues += $("input[name=part0]:checked").val();
+			possibleValues += $("#" + IDs[i]).val();
+			for (var j = 0; j < visualizationArray.length; j++) {
+				if (visualizationArray[j].includes(possibleValues)) {
+					$("#" + IDs[i]).prop('disabled', false);
+					break;
+				} else {
+					$("#" + IDs[i]).prop('disabled', true);
+				}
+			}
+			possibleValues = "";
+		}
+		
+		for (var i = 0; i < IDs2.length; i++) {
+			$("#" + IDs2[i]).prop('disabled', true);
+		}
+		//console.log(IDs);
+		$('input[name=part1]').prop('checked', false);
+		$('input[name=part2]').prop('checked', false);
+		
+		$('#search-button').prop('disabled', true);
+	});
+	
+	$(document).on('change', 'input[name=part1]', function() {
+		//console.log($("input[name=part1]:checked").val());
+		var IDs = $("input[name=part2]").map(function() { return this.id; }).get();
+		var possibleValues = "";
+		
+		for (var i = 0; i < IDs.length; i++) {
+			possibleValues += beginStringVisualization;
+			possibleValues += $("input[name=part0]:checked").val();
+			possibleValues += $("input[name=part1]:checked").val();
+			possibleValues += $("#" + IDs[i]).val();
+			for (var j = 0; j < visualizationArray.length; j++) {
+				if (visualizationArray[j].includes(possibleValues)) {
+					$("#" + IDs[i]).prop('disabled', false);
+					break;
+				} else {
+					$("#" + IDs[i]).prop('disabled', true);
+				}
+			}
+			possibleValues = "";
+		}
+		
+		var checked = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
+		if(visualizationArray.indexOf(checked) != -1) {
+			$('#search-button').prop('disabled', false);
+		} else {
+			$('#search-button').prop('disabled', true);
+		}
+		
+		$('input[name=part2]').prop('checked', false);
+	});
+	
+	$(document).on('change', 'input[name=part2]', function() {
+		//console.log($("input[name=part2]:checked").val());
+		
+		var checked1 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
+		var checked2 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val() + $("input[name=part2]:checked").val();
+		if(visualizationArray.indexOf(checked1) != -1 || visualizationArray.indexOf(checked2)) {
+			$('#search-button').prop('disabled', false);
+		} else {
+			$('#search-button').prop('disabled', true);
+		}
 	});
 
 	/**
