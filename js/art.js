@@ -250,16 +250,25 @@ $(function() {
 			oboerequest(JSON.stringify(queryArt));
 		}
 		if (type == "VISUALIZATION_SEGMENT") {
-			var shot = $("input[name=shotIDs]:checked").val();
+			var shots = [];
+			
+			$("input[name=shotIDs]:checked").each(function(){
+			    shots.push($(this).val());
+			});
+			
+			if (shots.length != 0) {
+					var queryArt = {
+					queryType : "getArt",
+					visualizationType : type,
+					visualization : selectedVisualization,
+					segmentId : shots[0]
+				};
+	
+				oboerequest(JSON.stringify(queryArt));
+			} else {
+				Materialize.toast('Please select a shot!', 4000);
+			}
 
-			var queryArt = {
-				queryType : "getArt",
-				visualizationType : type,
-				visualization : selectedVisualization,
-				segmentId : shot
-			};
-
-			oboerequest(JSON.stringify(queryArt));
 		}
 
 	});
@@ -345,7 +354,7 @@ function oboerequest(query, noContext) {
 				segs += '<form action="#" class="scrollWithBar">';
 				for (var i = 0; i < data.array[0].segments.length; i++) {
 					segs += '<label class="rad">';
-					segs += '<input name="shotIDs" type="radio" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
+					segs += '<input name="shotIDs" type="checkbox" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
 					segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
 					segs += '</label>';
 					segmentsArray.push(data.array[0].segments[i]);
