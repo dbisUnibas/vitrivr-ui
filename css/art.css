@@ -56,7 +56,7 @@ header, main, footer, body {
 
 .rad > input + img {/* image */
 	cursor: pointer;
-	border: 2px solid transparent;
+	border: 2px solid #FFFFFF;
 }
 
 .rad > input:checked + img {/* checkbox clicked image style */
