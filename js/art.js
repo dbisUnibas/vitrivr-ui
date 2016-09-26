@@ -18,6 +18,8 @@ const queryVisualizations = {
 var segmentsArray = [];
 var visualizationArray = [];
 
+var selectedVisualization = "";
+
 $(function() {
 	$(".button-collapse").sideNav();
 	$(document).ready(function() {
@@ -59,7 +61,7 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			$('input[name=part0]').prop('disabled', false);
+			//$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
@@ -79,7 +81,7 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			$('input[name=part0]').prop('disabled', false);
+			//$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
@@ -99,7 +101,8 @@ $(function() {
 
 		segmentsArray = [];
 
-		$('#visualization').prop('disabled', false);
+		//$('#visualization').prop('disabled', false);
+		$('input[name=part0]').prop('disabled', false);
 
 		$('select').material_select();
 
@@ -125,6 +128,10 @@ $(function() {
 	 * Select visualization with radiobuttons/checkboxes
 	 */
 	$(document).on('change', 'input[name=part0]', function() {
+		$("#graph").empty();
+		
+		selectedVisualization = "";
+		
 		//console.log($("input[name=part0]:checked").val());
 		var IDs = $("input[name=part1]").map(function() { return this.id; }).get();
 		var IDs2 = $("input[name=part2]").map(function() { return this.id; }).get();
@@ -152,9 +159,15 @@ $(function() {
 		$('input[name=part2]').prop('checked', false);
 		
 		$('#search-button').prop('disabled', true);
+		
+		console.log(selectedVisualization);
 	});
 	
 	$(document).on('change', 'input[name=part1]', function() {
+		$("#graph").empty();
+		
+		selectedVisualization = "";
+		
 		//console.log($("input[name=part1]:checked").val());
 		var IDs = $("input[name=part2]").map(function() { return this.id; }).get();
 		var possibleValues = "";
@@ -178,32 +191,44 @@ $(function() {
 		var checked = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
 		if(visualizationArray.indexOf(checked) != -1) {
 			$('#search-button').prop('disabled', false);
+			selectedVisualization = checked;
 		} else {
 			$('#search-button').prop('disabled', true);
 		}
 		
 		$('input[name=part2]').prop('checked', false);
+		
+		console.log(selectedVisualization);
 	});
 	
 	$(document).on('change', 'input[name=part2]', function() {
-		//console.log($("input[name=part2]:checked").val());
+		$("#graph").empty();
 		
+		selectedVisualization = "";
+		
+		//console.log($("input[name=part2]:checked").val());
 		var checked1 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
 		var checked2 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val() + $("input[name=part2]:checked").val();
-		if(visualizationArray.indexOf(checked1) != -1 || visualizationArray.indexOf(checked2)) {
+		if(visualizationArray.indexOf(checked2) != -1) {
 			$('#search-button').prop('disabled', false);
+			selectedVisualization = checked2;
+		} else if(visualizationArray.indexOf(checked1) != -1) {
+			$('#search-button').prop('disabled', false);
+			selectedVisualization = checked1;
 		} else {
 			$('#search-button').prop('disabled', true);
 		}
+		
+		console.log(selectedVisualization);
 	});
 
 	/**
 	 * Select Visualization
 	 */
-	$('#visualization').on('change', function() {
+	/*$('#visualization').on('change', function() {
 		$("#graph").empty();
 		$('#search-button').prop('disabled', false);
-	});
+	});*/
 
 	/**
 	 * Visualization Button
@@ -212,13 +237,13 @@ $(function() {
 		$("#graph").empty();
 		var movie = $('#movie').val();
 		var type = $('#type').val();
-		var visualization = $('#visualization').val();
+		//var visualization = $('#visualization').val();
 
 		if (type == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			var queryArt = {
 				queryType : "getArt",
 				visualizationType : type,
-				visualization : visualization,
+				visualization : selectedVisualization,
 				multimediaobjectId : movie
 			};
 
@@ -230,7 +255,7 @@ $(function() {
 			var queryArt = {
 				queryType : "getArt",
 				visualizationType : type,
-				visualization : visualization,
+				visualization : selectedVisualization,
 				segmentId : shot
 			};
 
@@ -337,14 +362,14 @@ function oboerequest(query, noContext) {
 			 $('select').material_select();
 			 break;*/
 			case "visualizations":
-				$("#visualization").empty();
-				$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
+				//$("#visualization").empty();
+				//$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
 				visualizationArray = [];
 				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
-								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								//$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 								visualizationArray.push(data.array[0].visualizations[i].className);
 								//console.log(data.array[0].visualizations[i].className);
 							}
@@ -356,7 +381,7 @@ function oboerequest(query, noContext) {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
-								$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
+								//$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 								visualizationArray.push(data.array[0].visualizations[i].className);
 								//console.log(data.array[0].visualizations[i].className);
 							}
