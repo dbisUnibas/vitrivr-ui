@@ -47,19 +47,19 @@ header, main, footer, body {
 }
 
 /*
- * shots input without radio button
+ * shots input without checkboxes
  */
-.rad > input {/* HIDE RADIO */
+.rad > input { /* hide chekcbox */
 	visibility: hidden; /* Makes input not-clickable */
 	position: absolute; /* Remove input from document flow */
 }
 
-.rad > input + img {/* IMAGE STYLES */
+.rad > input + img {/* image */
 	cursor: pointer;
 	border: 2px solid transparent;
 }
 
-.rad > input:checked + img {/* (RADIO CHECKED) IMAGE STYLES */
+.rad > input:checked + img {/* checkbox clicked image style */
 	border: 5px solid #f44336;
 }
 
