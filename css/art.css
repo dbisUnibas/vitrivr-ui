@@ -105,6 +105,20 @@ header, main, footer, body {
 }
 
 /**
+ * 	Visualization selects
+ */
+
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+	padding-left: 25px;
+	margin: 10px;
+}
+
+[type="checkbox"] + label {
+    padding-left: 25px;
+    margin: 10px;
+}
+
+/**
  * 	imported from main.css
  */
 .thumbnail {
