@@ -8,23 +8,23 @@ var rf_positive = new Array();
 var rf_negative = new Array();
 var tags;
 
-
 function getCategories() {
 	var categories = [];
 
 	var ks = Object.keys(categoryConfig);
 
-	for (var i = 0, len = ks.length; i < len; i++) {
-  		var key = ks[i];	  					
-  		if(ScoreWeights[key] > 0){
-  			categories.push(key);
-  		}			
-  	}
-  	
-  	categories.sort(function(a, b){
-  		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
-  	});
-  	
+	for (var i = 0,
+	    len = ks.length; i < len; i++) {
+		var key = ks[i];
+		if (ScoreWeights[key] > 0) {
+			categories.push(key);
+		}
+	}
+
+	categories.sort(function(a, b) {
+		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
+	});
+
 	return categories;
 }
 
@@ -34,7 +34,6 @@ function getCategories() {
 function addTags(tagArray) {
 	tags = tagArray;
 }
-
 
 function sumWeights() {
 	var sum = 0;
