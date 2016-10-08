@@ -13,14 +13,18 @@ function getCategories() {
 	var categories = [];
 
 	var ks = Object.keys(categoryConfig);
-	for (var i = 0,
-	    len = ks.length; i < len; i++) {
-		var key = ks[i];
-		if (ScoreWeights[key] > 0) {
-			categories.push(key);
-		}
-	}
 
+	for (var i = 0, len = ks.length; i < len; i++) {
+  		var key = ks[i];	  					
+  		if(ScoreWeights[key] > 0){
+  			categories.push(key);
+  		}			
+  	}
+  	
+  	categories.sort(function(a, b){
+  		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
+  	});
+  	
 	return categories;
 }
 
