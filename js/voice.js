@@ -128,7 +128,7 @@ if (voiceMode) {
                 factor = 1;
             }
 
-            commands[feedbackCommand].apply();
+            commands[feedbackCommand].apply();	
             displayErrorMessage(OK);
         } else {
             factor = 0;
@@ -175,7 +175,7 @@ if (voiceMode) {
 
             displayErrorMessage(ERR_NOT_UNDERSTOOD, feedbackCount <= 3);
         } else if (feedbackCommand == 1) {
-            feedbackCount = 0;
+            feedbackCount = 0;			
             displayMessage(OK);
         } else {
             response = 0;
@@ -221,28 +221,16 @@ if (voiceMode) {
         return after.trim();
     }
 
-    /**
-     * This function ignores the speech before saying "voice search"
-     * The query printed in voice search query text box is the speech after saying "voice search"
-     *
-     * @param {string} tag1 String before "voice search"; Ignored
-     * @param {string} tag2 String after "voice search"; Will be used as voice search text query
-     */
-    function voiceSearch_2(tag1, tag2) {
-        $("#" + VOICE_TEXTBOX).html(tag2);
-        scrollTextBox();
-        $('#voiceSearchQuery').val(tag2);
-    }
 
     /**
-     * The function print the speech query after saying "voice query" in voice search query text box
+     * The function print the speech query after saying "text search" in text query box
      *
-     * @param {string} tag String after "voice search"; Will be used as voice search text query
+     * @param {string} tag String after the command; will be used as text query
      */
-    function voiceSearch_1(tag) {
+    function textSearch(tag) {
         $("#" + VOICE_TEXTBOX).html(tag);
         scrollTextBox();
-        $('#voiceSearchQuery').val(tag);
+        $('#textquery').val(tag);
     }
 
 
@@ -973,14 +961,14 @@ if (voiceMode) {
                 SpeechKITT.setRecognizedSentence(maxCommand);
                 factor = 1;
             }
-            baseCommand.apply();
+			baseCommand.apply();
             feedbackCommand = 1;
         } else if (maxScore <= 0.2) {
             feedbackCommand = undefined;
         } else {
             feedbackCommand = maxCommand;
         }
-
+			
         return feedbackCommand;
     }
 

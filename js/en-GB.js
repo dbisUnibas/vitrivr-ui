@@ -82,8 +82,13 @@ var template = [
     {comm:'delete canvas (number) :num', func: deleteCanvas, out: 'delete Canvas number _____'},
     {comm:'clear canvas (number) :num', func: clearCanvas, out: 'clear canvas number _____'},
 
-    {comm:'voice search *tag', func: voiceSearch_1, out: 'voice search:______'},
-    {comm:'*tag1 voice search *tag2', func: voiceSearch_2, out: '______ voice search:______'},
+    {comm:'search (me) for (the) (this) (following) text *tag', func: textSearch, out: 'search for text ______'},
+    {comm:'search (me) using (the) (this) (following) text *tag', func: textSearch, out: 'search using text ______'},
+    {comm:'search (me) with (the) (this) (following) text *tag', func: textSearch, out: 'search with text ______'},
+    {comm:'search (me) for (the) (this) (following) word *tag', func: textSearch, out: 'search for word ______'},
+    {comm:'search (me) using (the) (this) (following) word *tag', func: textSearch, out: 'search using word ______'},
+    {comm:'search (me) with (the) (this) (following) word *tag', func: textSearch, out: 'search with word ______'},
+		
     {comm:'search (the) (my) canvas', func: searchCanvasQuery, out: 'search the canvas'},
     {comm:'search', func: searchCanvasQuery, out: 'search'},
     {comm:'search (the) (my) sketch', func: searchCanvasQuery, out: 'search the sketch'},
