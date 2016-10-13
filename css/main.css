@@ -392,3 +392,6 @@ input[type="text"]:invalid{
     box-shadow: 0 1px 0 0 #f44336 !important;
 }
 
+.highlightedResultBox {
+	border: 4px solid #009688;
+}

@@ -1,3 +1,5 @@
+const NAVIGATION_COLOR = "#009688";        // boundary color of current browsing video container
+
 /**
  * pop up the error message
  *
@@ -365,7 +367,8 @@ function browseNext(unit) {
     } else if (searchRunning) {
         displayErrorMessage(ERR_WAIT_IN_PROGRESS);
     } else if (containerArray.length > 0) {
-        document.getElementById(containerArray[row].id).style = "";
+        $("#" + containerArray[row].id).removeClass("highlightedResultBox");
+		
         $('.serialnumber').remove();
 
         if (row < containerArray.length - unit) {
@@ -376,7 +379,7 @@ function browseNext(unit) {
         }
 
         $('html, body').animate({scrollTop: $("#" + containerArray[row].id).offset().top}, 800);
-        document.getElementById(containerArray[row].id).style = "border: 2px solid " + NAVIGATION_COLOR;
+        $("#" + containerArray[row].id).addClass("highlightedResultBox");
 
         addSerialNumber();
     }
@@ -400,7 +403,7 @@ function browsePrevious(unit) {
         displayErrorMessage(ERR_WAIT_IN_PROGRESS);
     } else if (containerArray.length > 0) {
 
-        document.getElementById(containerArray[row].id).style = "";
+        $("#" + containerArray[row].id).removeClass("highlightedResultBox");
         $('.serialnumber').remove();
 
         if (row >= unit) {
@@ -411,7 +414,7 @@ function browsePrevious(unit) {
         }
 
         $('html, body').animate({scrollTop: $("#" + containerArray[row].id).offset().top}, 800);
-        document.getElementById(containerArray[row].id).style = "border: 2px solid " + NAVIGATION_COLOR;
+        $("#" + containerArray[row].id).addClass("highlightedResultBox");
 
         addSerialNumber();
     }
