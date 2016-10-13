@@ -169,7 +169,7 @@ for(var key in shotInputs){
 		motion: shotInput.motion.getPaths(),
 		motionbackground: shotInput.motion.getBgPaths(),
 		categories: getCategories(),
-		subelements :  JSON.stringify(voiceText) + ", \n"
+		subelements :  voiceText
 	};
 
 	voiceText = new Array();
