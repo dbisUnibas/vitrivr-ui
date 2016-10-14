@@ -504,7 +504,7 @@ function totalShots() {
     if (shotBoxes.length == 0) {
         displayErrorMessage(ERR_NO_SHOT);
     } else {
-        displayErrorMessage("There are " + shotBoxes.length + " shots retrieved");
+        displayMessage("There are " + shotBoxes.length + " shots retrieved", true);
     }
 }
 
@@ -532,11 +532,11 @@ function totalSpecificShots(num) {
                 }
             }
             if (count == 0) {
-                displayErrorMessage("There is no shot with a score greater than " + num + "%");
+                displayMessage("There is no shot with a score greater than " + num + "%", true);
             } else if (count == 1) {
-                displayErrorMessage("There is 1 shot with a score greater than " + num + "%");
+                displayMessage("There is 1 shot with a score greater than " + num + "%", true);
             } else {
-                displayErrorMessage("There are " + count + " shots with a score greater than " + num + "%");
+                displayMessage("There are " + count + " shots with a score greater than " + num + "%", true);
             }
         } catch (e) {
             displayErrorMessage(ERR_SAY_SCORE);
