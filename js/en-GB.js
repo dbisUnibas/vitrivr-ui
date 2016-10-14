@@ -141,8 +141,10 @@ var template = [
     {comm:'search and play (this) (my) (video) (shot)', func: searchPlayVideo, out: 'search and play this video'},
 
     {comm:'show (me) (video) (shot) greater than (score) :num', func: showScoredVideo, out: 'show me video greater than score _____%'},
-    {comm:'total (number of) (shots) (videos) retrieved', func: totalShots, out: 'total number of shots retrieved'},
-    {comm:'total (number of) (shots) (videos) greater than (score) :num', func: totalSpecificShots, out: 'total number of shots greater than score _____%'},
+    {comm:'(what is) (the) total (number of) (shots) (videos) retrieved', func: totalShots, out: 'what is the total number of shots retrieved'},
+    {comm:'(count) (the) total (number of) (shots) (videos) retrieved', func: totalShots, out: 'count the total number of shots retrieved'},
+    {comm:'(what is) (the) total (number of) (shots) (videos) greater than (score) :num', func: totalSpecificShots, out: 'what is the total number of shots greater than score _____%'},
+    {comm:'(count) (the) total (number of) (shots) (videos) greater than (score) :num', func: totalSpecificShots, out: 'count total number of shots greater than score _____%'},
     {comm:'hide (all) (video) (shots) below (score) :num', func: hideSpecificShots, out: 'hide all shots below score _____%'},
     {comm:'show (all) (video) (shots) again', func: showHiddenShots, out: 'show all shots again'},
 
