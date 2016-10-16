@@ -2,6 +2,7 @@ const beginStringVisualization = "org.vitrivr.cineast.art.modules.Visualization"
 
 const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
 const radioVisualizationShot = [["AverageColor", "MedianColor", "DominantEdge"], ["Grid8", "Grid16", "AverageColor"], ["Grid8", "Grid16"]];
+const radioVisualizationMultipleShots = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
 
 const queryMultimediaObjects = {
 	queryType : "getMultimediaobjects"
@@ -38,6 +39,11 @@ $(function() {
 	$('#type').on('change', function() {
 		$("#graph").empty();
 		$("#radio").empty();
+		$("#shots").empty();
+		
+		if($('#movie').val() != null) {
+			addShots();
+		}
 
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
@@ -61,14 +67,8 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			
-			if($('#movie').val() != null) {
-				$('input[name=part0]').prop('disabled', false);
-			}
-			
-			//var id = '#part1';
-			//$(id).prop('checked', true);
 		}
+		
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
 
@@ -85,14 +85,38 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			
-			if($('#movie').val() != null) {
-				$('input[name=part0]').prop('disabled', false);
+		}
+		
+		if ($(this).val() == "VISUALIZATION_MULTIPLESEGMENTS") {
+			$('#shots').show();
+
+			var appendVis = '<form action="#">';
+			for (var i = 0; i < radioVisualizationMultipleShots.length; i++) {
+				appendVis += "<p>";
+				for (var j = 0; j < radioVisualizationMultipleShots[i].length; j++) {
+					if(i != (radioVisualizationMultipleShots.length -1)) {
+						//console.log(radioVisualizationMovie[i][j]);
+						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled />';
+						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
+					} else {
+						console.log(i);
+						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled/>';
+						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
+					}	
+				}
+				appendVis += "</p>";
 			}
+			appendVis += '</form>';
+
+			$("#radio").append(appendVis);
+		}
+		
+		if($('#movie').val() != null) {
+			$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
-
+		
 		$('#movie').prop('disabled', false);
 
 		oboerequest(JSON.stringify(queryVisualizations));
@@ -104,17 +128,13 @@ $(function() {
 	 */
 	$('#movie').on('change', function() {
 		$("#graph").empty();
-		$('#shots').empty();
+		$('#shots').empty();		
 
-		segmentsArray = [];
-
-		//$('#visualization').prop('disabled', false);
 		$('input[name=part0]').prop('disabled', false);
 
 		$('select').material_select();
 
 		var movieID = $(this).val();
-		//console.log(movieID);
 
 		var querySegmentIds = {
 			queryType : "getSegments",
@@ -122,13 +142,7 @@ $(function() {
 		};
 
 		oboerequest(JSON.stringify(querySegmentIds));
-
-		if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
-			$('#shots').hide();
-		}
-		if ($('#type').val() == "VISUALIZATION_SEGMENT") {
-			$('#shots').show();
-		}
+		   
 	});
 
 	/**
@@ -167,7 +181,7 @@ $(function() {
 		
 		$('#search-button').prop('disabled', true);
 		
-		console.log(selectedVisualization);
+		//console.log(selectedVisualization);
 	});
 	
 	$(document).on('change', 'input[name=part1]', function() {
@@ -205,7 +219,7 @@ $(function() {
 		
 		$('input[name=part2]').prop('checked', false);
 		
-		console.log(selectedVisualization);
+		//console.log(selectedVisualization);
 	});
 	
 	$(document).on('change', 'input[name=part2]', function() {
@@ -226,16 +240,8 @@ $(function() {
 			$('#search-button').prop('disabled', true);
 		}
 		
-		console.log(selectedVisualization);
+		//console.log(selectedVisualization);
 	});
-
-	/**
-	 * Select Visualization
-	 */
-	/*$('#visualization').on('change', function() {
-		$("#graph").empty();
-		$('#search-button').prop('disabled', false);
-	});*/
 
 	/**
 	 * Visualization Button
@@ -244,7 +250,6 @@ $(function() {
 		$("#graph").empty();
 		var movie = $('#movie').val();
 		var type = $('#type').val();
-		//var visualization = $('#visualization').val();
 
 		if (type == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			var queryArt = {
@@ -257,6 +262,20 @@ $(function() {
 			oboerequest(JSON.stringify(queryArt));
 		}
 		if (type == "VISUALIZATION_SEGMENT") {
+			var shot = $("input[name=shotIDs]:checked").val();
+
+			var queryArt = {
+				queryType : "getArt",
+				visualizationType : type,
+				visualization : selectedVisualization,
+				segmentId : shot
+			};
+
+			oboerequest(JSON.stringify(queryArt));
+
+
+		}
+		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
 			var shots = [];
 			
 			$("input[name=shotIDs]:checked").each(function(){
@@ -320,6 +339,44 @@ function hideProgress() {
 	$('#loading').hide();
 }
 
+function addShots() {
+	if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
+		$('#shots').hide();
+	}
+	if ($('#type').val() == "VISUALIZATION_SEGMENT") {
+		var movieID = $('#movie').val();
+		var segs = '';
+		segs += '<form action="#" class="scrollWithBar">';
+		for (var i = 0; i < segmentsArray.length; i++) {
+			segs += '<label class="rad">';
+			segs += '<input name="shotIDs" type="radio" id="' + segmentsArray[i] + '" value="' + segmentsArray[i] + '" />';
+			segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + segmentsArray[i] + '.' + thumbnailFileType + '" />';
+			segs += '</label>';
+		}
+		segs += '</form>';
+		$("#shots").append(segs);
+		var id = '#' + segmentsArray[0];
+		$(id).prop('checked', true);
+		$('#shots').show();
+	}
+	if ($('#type').val() == "VISUALIZATION_MULTIPLESEGMENTS") {
+		var movieID = $('#movie').val();	
+		var segs = '';
+		segs += '<form action="#" class="scrollWithBar">';
+		for (var i = 0; i < segmentsArray.length; i++) {
+			segs += '<label class="rad">';
+			segs += '<input name="shotIDs" type="checkbox" id="' + segmentsArray[i] + '" value="' + segmentsArray[i] + '" />';
+			segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + segmentsArray[i] + '.' + thumbnailFileType + '" />';
+			segs += '</label>';
+		}
+		segs += '</form>';
+		$("#shots").append(segs);
+		var id = '#' + segmentsArray[0];
+		$(id).prop('checked', true);
+		$('#shots').show();
+	}
+}
+
 function oboerequest(query, noContext) {
 	searchRunning = true;
 	showProgress(0);
@@ -356,20 +413,11 @@ function oboerequest(query, noContext) {
 				$('select').material_select();
 				break;
 			case "segments":
-				var movieID = $('#movie').val();
-				var segs = '';
-				segs += '<form action="#" class="scrollWithBar">';
+				segmentsArray = [];
 				for (var i = 0; i < data.array[0].segments.length; i++) {
-					segs += '<label class="rad">';
-					segs += '<input name="shotIDs" type="checkbox" id="' + data.array[0].segments[i] + '" value="' + data.array[0].segments[i] + '" />';
-					segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + data.array[0].segments[i] + '.' + thumbnailFileType + '" />';
-					segs += '</label>';
 					segmentsArray.push(data.array[0].segments[i]);
 				}
-				segs += '</form>';
-				$("#shots").append(segs);
-				var id = '#' + data.array[0].segments[0];
-				$(id).prop('checked', true);
+				addShots();
 				break;
 			/*case "visualizationCategories":
 			 for (var i = 0; i < data.array[0].visualizationCategories.length; i++) {
@@ -378,16 +426,12 @@ function oboerequest(query, noContext) {
 			 $('select').material_select();
 			 break;*/
 			case "visualizations":
-				//$("#visualization").empty();
-				//$("#visualization").append('<option value="notAvailable" disabled selected>Visualization</option>');
 				visualizationArray = [];
-				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
+				if ($('#type').val() == "VISUALIZATION_MULTIMEDIAOBJECT" || $('#type').val() == "VISUALIZATION_MULTIPLESEGMENTS") {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_MULTIMEDIAOBJECT") {
-								//$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 								visualizationArray.push(data.array[0].visualizations[i].className);
-								//console.log(data.array[0].visualizations[i].className);
 							}
 						}
 					}
@@ -397,9 +441,7 @@ function oboerequest(query, noContext) {
 					for (var i = 0; i < data.array[0].visualizations.length; i++) {
 						for (var j = 0; j < data.array[0].visualizations[i].visualizationTypes.length; j++) {
 							if (data.array[0].visualizations[i].visualizationTypes[j] == "VISUALIZATION_SEGMENT") {
-								//$("#visualization").append('<option value="' + data.array[0].visualizations[i].className + '">' + data.array[0].visualizations[i].displayName + '</option>');
 								visualizationArray.push(data.array[0].visualizations[i].className);
-								//console.log(data.array[0].visualizations[i].className);
 							}
 						}
 					}
