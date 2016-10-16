@@ -61,7 +61,11 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			//$('input[name=part0]').prop('disabled', false);
+			
+			if($('#movie').val() != null) {
+				$('input[name=part0]').prop('disabled', false);
+			}
+			
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
@@ -81,7 +85,10 @@ $(function() {
 			appendVis += '</form>';
 
 			$("#radio").append(appendVis);
-			//$('input[name=part0]').prop('disabled', false);
+			
+			if($('#movie').val() != null) {
+				$('input[name=part0]').prop('disabled', false);
+			}
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
