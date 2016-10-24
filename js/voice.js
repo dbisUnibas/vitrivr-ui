@@ -129,7 +129,7 @@ if (voiceMode) {
             }
 
             commands[feedbackCommand].apply();	
-            displayErrorMessage(OK);
+            displayMessage(MSG_OK);
         } else {
             factor = 0;
         }
@@ -145,7 +145,7 @@ if (voiceMode) {
         if (response == 0) {
             response = 1;
         } else {
-            displayErrorMessage(ERR_YES);
+            displayMessage(ERR_YES);
         }
     }
 
@@ -176,7 +176,7 @@ if (voiceMode) {
             displayErrorMessage(ERR_NOT_UNDERSTOOD, feedbackCount <= 3);
         } else if (feedbackCommand == 1) {
             feedbackCount = 0;			
-            displayMessage(OK);
+            displayMessage(MSG_OK);
         } else {
             response = 0;
             feedbackCount++;
@@ -256,7 +256,6 @@ if (voiceMode) {
             }
         } catch (e) {
             displayErrorMessage(ERR_WHICH_COLOR);
-            console.warn(e);
         }
     }
 
@@ -491,9 +490,6 @@ if (voiceMode) {
         } else {
             $('#rf-button').hide();
         }
-
-        console.log(rf_positive);
-        console.log(rf_negative);
     }
 
     /**
@@ -862,7 +858,6 @@ if (voiceMode) {
                 }
             } catch (e) {
                 displayErrorMessage(ERR_SAY_SCORE);
-                console.warn(e);
             }
         }
     }

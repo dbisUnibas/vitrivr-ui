@@ -32,16 +32,12 @@ function displayMessage(message, spoken) {
  * message to speak
  * @param {string} message The message to be spoken.
  */
-function speakErrorMessage(message){
-    responsiveVoice.speak("Error: " + message, PERSON);    // voice response of UI
-}
-
-/**
- * message to speak
- * @param {string} message The message to be spoken.
- */
 function speakMessage(message){
-    responsiveVoice.speak(message, PERSON);    // voice response of UI
+	var utt = new SpeechSynthesisUtterance();
+	utt.lang = LANGUAGE;
+	utt.text = message;
+	
+	speechSynthesis.speak(utt);
 }
 
 /**
@@ -159,7 +155,6 @@ function splitVideo() {
  */
 function searchParticularCanvases(arr) {
     try {
-        console.log("starting sketch-based search");
         clearResults();
         var query = "{\"queryType\":\"multiSketch\", \"query\":[";
 
@@ -222,7 +217,6 @@ function downloadCanvas(num) {
         window.location.href = image;
     } catch (e) {
         displayErrorMessage(ERR_CANVAS_NUMBER_MISSING);
-        console.warn(e);
     }
 }
 
@@ -243,7 +237,6 @@ function deleteCanvas(num) {
         destroyCanvas(id);
     } catch (e) {
         displayErrorMessage(ERR_CANVAS_NUMBER_MISSING);
-        console.warn(e);
     }
 }
 
@@ -268,7 +261,6 @@ function clearCanvas(num) {
             shotInputs[id].motion.clearPaths();
     } catch (e) {
         displayErrorMessage(ERR_CANVAS_NUMBER_MISSING);
-        console.warn(e);
     }
 }
 
@@ -346,7 +338,6 @@ function fillCanvas(num, color) {
     }
     catch (e) {
         displayErrorMessage(ERR_CHECK_VOICE);
-        console.warn(e);
     }
 }
 
@@ -483,7 +474,6 @@ function hideSpecificShots(num) {
             $('.hideshot').hide();
         } catch (e) {
             displayErrorMessage(ERR_SAY_SCORE);
-            console.warn(e);
         }
     }
 }
@@ -540,7 +530,6 @@ function totalSpecificShots(num) {
             }
         } catch (e) {
             displayErrorMessage(ERR_SAY_SCORE);
-            console.warn(e);
         }
     }
 }

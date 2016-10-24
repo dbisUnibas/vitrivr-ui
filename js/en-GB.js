@@ -30,9 +30,9 @@ const QUERY_FOLLOW_UP = ['even more', 'more', 'even further', 'further', 'one mo
 const PERSON = "UK English Female";   // accent of voice response by UI
 
 // Static error messages
+const MSG_OK = 'Ok';
 const ERR_WINDOW_OPEN = 'Window is open already';
 const ERR_VIDEO_PLAYING = 'There is no video playing';
-const OK = 'Ok';
 const ERR_YES = 'Please say yes just after my feedback';
 const ERR_NOT_UNDERSTOOD = "Sorry I haven't understood you";
 const ERR_NO_RESULTS = 'Query not executed as there is no video results retrieved';
