@@ -4,6 +4,8 @@ function sunburst() {
 	    height = 1000,
 	    radius = Math.min(width, height) / 2,
 	    color = d3.scale.category20c();
+	    
+	$("#graphd3").append('<form><input type="radio" id="size" name="mode" value="size"> <label for="size">Size</label><input type="radio" id="count" name="mode" value="count" checked> <label for="count">Count</label></form>');
 
 	var svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
 
