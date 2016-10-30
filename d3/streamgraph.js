@@ -1,75 +1,75 @@
 function streamgraph() {
 
-	var n = 20, // number of layers
-	    m = 200, // number of samples per layer
-	    stack = d3.layout.stack().offset("wiggle"),
-	    layers0 = stack(d3.range(n).map(function() {
-		return bumpLayer(m);
-	})),
-	    layers1 = stack(d3.range(n).map(function() {
-		return bumpLayer(m);
-	}));
+	var margin = {
+		top : 50,
+		right : 50,
+		bottom : 50,
+		left : 50
+	},
+	    width = 960 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
 
-	var width = 960,
-	    height = 500;
+	var test = {
+		"name" : "VisualizationStreamgraphAverageColor",
+		"multimediaobjet" : "11",
+		"colors" : ["rgb(255,0,0)", "rgb(255,255,0)", "rgb(0,34,56)"],
+		"data" : [[456, 456, 456], [74, 74, 74], [92, 92, 92]]
+	};
 
-	var x = d3.scale.linear().domain([0, m - 1]).range([0, width]);
+	var data = test["data"];
+	console.log(data);
 
-	var y = d3.scale.linear().domain([0, d3.max(layers0.concat(layers1), function(layer) {
-		return d3.max(layer, function(d) {
-			return d.y0 + d.y;
+	//get the max y of the domain, so that itll never go beyond screen
+	var sum = new Array(data.length);
+	//placeholder array
+	for (var x = 0; x < data.length; x++) {
+		sum[x] = 0;
+		for (var y = 0; y < data.length; y++) {
+			sum[x] += data[y][x];
+			//sum up values vertically
+		}
+	}
+
+	// permute the data
+	data = data.map(function(d) {
+		return d.map(function(p, i) {
+			return {
+				x : i,
+				y : p,
+				y0 : 0
+			};
 		});
-	})]).range([height, 0]);
+	});
 
-	var color = d3.scale.linear().range(["#aad", "#556"]);
+	/*var color = d3.scale.linear().range(["#0A3430", "#1E5846", "#3E7E56", "#6BA55F", "#A4CA64", "#E8ED69"]);*/
 
-	var area = d3.svg.area().x(function(d) {
-		return x(d.x);
+	console.log(test["colors"]);
+	var color = test["colors"];
+
+	var x = d3.scale.linear().range([0, width]).domain([0, data[0].length]);
+
+	var y = d3.scale.linear().range([height, 0]).domain([0, d3.max(sum)]);
+	//max y is the sum we calculated earlier
+
+	var svg = d3.select("#graphd3").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	var stack = d3.layout.stack().offset("wiggle");
+	//<-- creates a streamgraph
+
+	var layers = stack(data);
+
+	//vis type
+	var area = d3.svg.area().interpolate('cardinal').x(function(d, i) {
+		return x(i);
 	}).y0(function(d) {
 		return y(d.y0);
 	}).y1(function(d) {
 		return y(d.y0 + d.y);
 	});
 
-	var svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height);
-
-	svg.selectAll("path").data(layers0).enter().append("path").attr("d", area).style("fill", function() {
-		return color(Math.random());
+	svg.selectAll(".layer").data(layers).enter().append("path").attr("class", "layer").attr("d", function(d) {
+		return area(d);
+	}).style("fill", function(d, i) {
+		return color[i];
 	});
-
-	function transition() {
-		d3.selectAll("path").data(function() {
-			var d = layers1;
-			layers1 = layers0;
-			return layers0 = d;
-		}).transition().duration(2500).attr("d", area);
-	}
-
-	// Inspired by Lee Byron's test data generator.
-	function bumpLayer(n) {
-
-		function bump(a) {
-			var x = 1 / (.1 + Math.random()),
-			    y = 2 * Math.random() - .5,
-			    z = 10 / (.1 + Math.random());
-			for (var i = 0; i < n; i++) {
-				var w = (i / n - y) * z;
-				a[i] += x * Math.exp(-w * w);
-			}
-		}
-
-		var a = [],
-		    i;
-		for ( i = 0; i < n; ++i)
-			a[i] = 0;
-		for ( i = 0; i < 5; ++i)
-			bump(a);
-		return a.map(function(d, i) {
-			return {
-				x : i,
-				y : Math.max(0, d)
-			};
-		});
-	}
-
-} 
+}
