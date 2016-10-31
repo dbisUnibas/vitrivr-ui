@@ -309,7 +309,7 @@ $(function() {
 
 	});
 	
-	$('#clearShots').on('cahnge', function() {
+	$('#clearShots').on('change', function() {
 		shots = [];
 	});
 
