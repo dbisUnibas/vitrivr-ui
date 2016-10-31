@@ -283,11 +283,11 @@ $(function() {
 			});
 			
 			if (shots.length != 0) {
-					var queryArt = {
+				var queryArt = {
 					queryType : "getArt",
 					visualizationType : type,
 					visualization : selectedVisualization,
-					segmentId : shots[0]
+					segmentIds : shots
 				};
 	
 				oboerequest(JSON.stringify(queryArt));
