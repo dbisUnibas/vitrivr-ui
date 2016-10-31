@@ -1,8 +1,8 @@
 const beginStringVisualization = "org.vitrivr.cineast.art.modules.Visualization";
 
-const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
+const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square"]];
 const radioVisualizationShot = [["AverageColor", "MedianColor", "DominantEdge"], ["Grid8", "Grid16", "AverageColor"], ["Grid8", "Grid16"]];
-const radioVisualizationMultipleShots = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe"], ["Variable", "Square"]];
+const radioVisualizationMultipleShots = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square"]];
 
 const queryMultimediaObjects = {
 	queryType : "getMultimediaobjects"
@@ -514,6 +514,19 @@ function oboerequest(query, noContext) {
 						$('.materialboxed').materialbox();
 					});
 
+				}
+				if (data.array[0].resultType == "GRAPH_SUNBURST") {
+					$("#graph").empty();
+					var d3GraphSunburst = data.array[0].resultData;
+					//console.log(d3GraphSunburst);
+					sunburst(d3GraphSunburst);
+					
+				}
+				if (data.array[0].resultType == "GRAPH_STREAMGRAPH") {
+					$("#graph").empty();
+					var d3GraphStreamgraph = data.array[0].resultData;
+					console.log(d3GraphStreamgraph);
+					streamgraph(d3GraphStreamgraph);
 				}
 				break;
 			default:

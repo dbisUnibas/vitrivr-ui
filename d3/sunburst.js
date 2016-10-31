@@ -1,13 +1,15 @@
-function sunburst() {
+function sunburst(data) {
+	
+	//console.log(data);
 
 	var width = 800,
 	    height = 1000,
 	    radius = Math.min(width, height) / 2,
 	    color = d3.scale.category20c();
 	    
-	$("#graphd3").append('<form><input type="radio" id="size" name="mode" value="size"> <label for="size">Size</label><input type="radio" id="count" name="mode" value="count" checked> <label for="count">Count</label></form>');
+	$("#graph").append('<form><input type="radio" id="size" name="mode" value="size"> <label for="size">Size</label><input type="radio" id="count" name="mode" value="count" checked> <label for="count">Count</label></form>');
 
-	var svg = d3.select("#graphd3").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
+	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
 
 	var partition = d3.layout.partition().sort(null).size([2 * Math.PI, radius * radius]).value(function(d) {
 		return 1;
@@ -22,10 +24,17 @@ function sunburst() {
 	}).outerRadius(function(d) {
 		return Math.sqrt(d.y + d.dy);
 	});
+	
+	data = JSON.parse(data);
+	
+	burst(data);
 
-	d3.json("./TestdataD3/testSunburst.json", function(error, root) {
-		if (error)
-			throw error;
+	//d3.json("./TestdataD3/testSunburst.json", function(error, root) {
+	function burst(root) {	
+		/*if (error)
+			throw error;*/
+			
+		console.log(root);
 
 		var path = svg.datum(root).selectAll("path").data(partition.nodes).enter().append("path").attr("display", function(d) {
 			return d.depth ? null : "none";
@@ -44,7 +53,8 @@ function sunburst() {
 
 			path.data(partition.value(value).nodes).transition().duration(1500).attrTween("d", arcTween);
 		});
-	});
+	}
+	//});
 
 	// Stash the old values for transition.
 	function stash(d) {

@@ -1,22 +1,23 @@
-function streamgraph() {
+function streamgraph(graph) {
+	graph = JSON.parse(graph);
 
 	var margin = {
-		top : 50,
+		top : 300,
 		right : 50,
 		bottom : 50,
 		left : 50
 	},
-	    width = 960 - margin.left - margin.right,
+	    width = 1000 - margin.left - margin.right,
 	    height = 500 - margin.top - margin.bottom;
 
-	var test = {
+	/*var graph = {
 		"name" : "VisualizationStreamgraphAverageColor",
 		"multimediaobjet" : "11",
 		"colors" : ["rgb(255,0,0)", "rgb(255,255,0)", "rgb(0,34,56)"],
 		"data" : [[456, 456, 456], [74, 74, 74], [92, 92, 92]]
-	};
+	};*/
 
-	var data = test["data"];
+	var data = graph["data"];
 	console.log(data);
 
 	//get the max y of the domain, so that itll never go beyond screen
@@ -41,17 +42,15 @@ function streamgraph() {
 		});
 	});
 
-	/*var color = d3.scale.linear().range(["#0A3430", "#1E5846", "#3E7E56", "#6BA55F", "#A4CA64", "#E8ED69"]);*/
-
-	console.log(test["colors"]);
-	var color = test["colors"];
+	console.log(graph["colors"]);
+	var color = graph["colors"];
 
 	var x = d3.scale.linear().range([0, width]).domain([0, data[0].length]);
 
 	var y = d3.scale.linear().range([height, 0]).domain([0, d3.max(sum)]);
 	//max y is the sum we calculated earlier
 
-	var svg = d3.select("#graphd3").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	var svg = d3.select("#graph").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	var stack = d3.layout.stack().offset("wiggle");
 	//<-- creates a streamgraph
