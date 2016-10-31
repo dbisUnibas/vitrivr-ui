@@ -485,7 +485,7 @@ function oboerequest(query, noContext) {
 				if (data.array[0].resultType == "IMAGE") {
 					$("#graph").empty();
 					var picture = data.array[0].resultData;
-					$("#graph").append('<br \><br \><img class="materialboxed pixelated" id="result" src="' + picture + '" />');
+					$("#graph").append('<br \><br \><img class="materialboxed pixelated centered" id="result" src="' + picture + '" />');
 
 					$(document).ready(function() {
 						$('.materialboxed').materialbox();

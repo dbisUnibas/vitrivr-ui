@@ -39,6 +39,10 @@ header, main, footer, body {
 	margin-right: auto;
 }
 
+.materialboxed {
+	display: inline-block;
+}
+
 /*
  * sidebar
  */
@@ -49,7 +53,7 @@ header, main, footer, body {
 /*
  * shots input without checkboxes
  */
-.rad > input { /* hide chekcbox */
+.rad > input {/* hide chekcbox */
 	visibility: hidden; /* Makes input not-clickable */
 	position: absolute; /* Remove input from document flow */
 }
@@ -84,38 +88,19 @@ header, main, footer, body {
 	margin-top: 20px;
 }
 
-/*
- * d3 graphs
- */
-#graphd3 {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	margin: auto;
-	position: relative;
-	width: 960px;
-}
-
-.links line {
-	stroke: #999;
-	stroke-opacity: 0.6;
-}
-
-.nodes circle {
-	stroke: #fff;
-	stroke-width: 1.5px;
-}
-
 /**
  * 	Visualization selects
  */
 
-[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+[type="radio"]:not(:checked) +
+label, [type="radio"]:checked + label {
 	padding-left: 25px;
 	margin: 10px;
 }
 
 [type="checkbox"] + label {
-    padding-left: 25px;
-    margin: 10px;
+	padding-left: 25px;
+	margin: 10px;
 }
 
 /**
