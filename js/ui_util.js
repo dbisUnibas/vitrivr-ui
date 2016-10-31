@@ -188,6 +188,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'<span class="material-icons playbutton">play_arrow</span>' +
 		'<span class="material-icons relevanceFeedback relevanceFeedback-add">add</span>' +
 		'<span class="material-icons relevanceFeedback">remove</span>' +
+		(showCategoryWeights ? '<span class="material-icons showCategoryWeights">help</span>' : '') +
 	//	'<span class="material-icons showid">textsms</span>' +
 	//	'<span class="material-icons load_video">movie</span>' +
 		'</div>' +
@@ -203,6 +204,9 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	$('#s' + shotInfo.shotid + '>span>div>.playbutton').on('click', prepare_playback);
 	$('#s' + shotInfo.shotid + '>span>div>.searchbutton').on('click', similaritySearch);
 	$('#s' + shotInfo.shotid + '>span>div>.relevanceFeedback').on('click', relevanceFeedback);
+	if(showCategoryWeights){
+		$('#s' + shotInfo.shotid + '>span>div>.showCategoryWeights').on('click', showScoreComposition);
+	}
 	//$('#s' + shotInfo.shotid + '>span>div>.showid').on('click', showVideoId);
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
 }
@@ -394,6 +398,26 @@ function relevanceFeedback(event){
 	
 	console.log(rf_positive);
 	console.log(rf_negative);
+}
+
+function showScoreComposition(event){
+	var _this = $(this);
+	var shotBox = _this.parent().parent().parent();
+	var shotId = parseInt(shotBox.attr('id').substring(1));
+
+	var scores = Scores[shotId];
+	var categories = Object.keys(scores);
+
+	var list = '<ul>';
+
+	for(var i = 0; i < categories.length; ++i){
+		var cat = categories[i];
+		list += '<li>' + cat + ': ' + scores[cat] + '</li>';
+	}
+	list += '</ul>';
+
+	Materialize.toast(list, 5000);
+
 }
 
 function prepare_playback(event){
