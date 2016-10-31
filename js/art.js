@@ -292,7 +292,7 @@ $(function() {
 	
 				oboerequest(JSON.stringify(queryArt));
 			} else {
-				Materialize.toast('Please select a shot!', 4000);
+				Materialize.toast('Please select at minimum 2 shots!', 4000);
 			}
 
 		}
