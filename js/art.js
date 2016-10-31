@@ -49,6 +49,7 @@ $(function() {
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
 			$('#clearShots').hide();
+			shots = [];
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationMovie.length; i++) {
@@ -74,6 +75,7 @@ $(function() {
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
 			$('#clearShots').hide();
+			shots = [];
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationShot.length; i++) {
@@ -93,6 +95,9 @@ $(function() {
 		if ($(this).val() == "VISUALIZATION_MULTIPLESEGMENTS") {
 			$('#shots').show();
 			$('#clearShots').show();
+			if (shots.length == 0) {
+				$('#clearShots').prop('disabled', 'true');
+			}
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationMultipleShots.length; i++) {
@@ -131,11 +136,11 @@ $(function() {
 	 * Select Movie
 	 */
 	$('#movie').on('change', function() {
-		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
+		/*if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
 			$("input[name=shotIDs]:checked").each(function(){
 			    shots.push($(this).val());
 			});
-		}
+		}*/
 		
 		$("#graph").empty();
 		$('#shots').empty();		
@@ -272,7 +277,7 @@ $(function() {
 			oboerequest(JSON.stringify(queryArt));
 		}
 		if (type == "VISUALIZATION_SEGMENT") {
-			var shot = $("input[name=shotIDs]:checked").val();
+			var shot = $("input[name=shotID]:checked").val();
 
 			var queryArt = {
 				queryType : "getArt",
@@ -288,9 +293,11 @@ $(function() {
 		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
 			//var shots = [];
 			
-			$("input[name=shotIDs]:checked").each(function(){
-			    shots.push($(this).val());
-			});
+			/*$("input[name=shotIDs]:checked").each(function(){
+				if (shots.indexOf($(this).val()) == -1) {
+					shots.push($(this).val());
+				}    
+			});*/
 			
 			if (shots.length > 1) {
 				var queryArt = {
@@ -309,8 +316,40 @@ $(function() {
 
 	});
 	
-	$('#clearShots').on('change', function() {
+	/**
+	 * Clear ShotIDs Array
+	 */
+	$('#clearShots').click(function() {
 		shots = [];
+		
+		$("input[name=shotIDs]:checked").each(function(){ 
+			$(this).prop('checked', false);  
+		});
+		
+		$('#clearShots').prop('disabled', true);
+		
+	});
+	
+	/**
+	 * add ShotIDs to array or delete them
+	 */
+	$(document).on('change', 'input[name=shotIDs]', function() {
+		if($(this).is(":not(:checked)")) {
+			if (shots.indexOf($(this).val()) != -1) {
+				shots.splice(shots.indexOf($(this).val()), 1);
+			}
+		}
+		if($(this).is(":checked")) {
+			shots.push($(this).val());
+		}
+		
+		console.log(shots);
+
+		if (shots.length != 0) {
+			$('#clearShots').prop('disabled', false);
+		} else {
+			$('#clearShots').prop('disabled', true);
+		}
 	});
 
 	$('#d3').on('change', function() {
@@ -363,7 +402,7 @@ function addShots() {
 		segs += '<form action="#" class="scrollWithBar">';
 		for (var i = 0; i < segmentsArray.length; i++) {
 			segs += '<label class="rad">';
-			segs += '<input name="shotIDs" type="radio" id="' + segmentsArray[i] + '" value="' + segmentsArray[i] + '" />';
+			segs += '<input name="shotID" type="radio" id="' + segmentsArray[i] + '" value="' + segmentsArray[i] + '" />';
 			segs += '<img class="thumbnail pixelated" src="' + thumbnailHost + '' + movieID + '/' + segmentsArray[i] + '.' + thumbnailFileType + '" />';
 			segs += '</label>';
 		}
