@@ -18,7 +18,7 @@ const queryVisualizations = {
 
 var segmentsArray = [];
 var visualizationArray = [];
-
+var shots = [];
 var selectedVisualization = "";
 
 $(function() {
@@ -26,6 +26,7 @@ $(function() {
 	$(document).ready(function() {
 		$('select').material_select();
 		//$('select').prop('disabled', 'disabled');
+		$('#clearShots').hide();
 	});
 
 	$(document).ready(function() {
@@ -47,6 +48,7 @@ $(function() {
 
 		if ($(this).val() == "VISUALIZATION_MULTIMEDIAOBJECT") {
 			$('#shots').hide();
+			$('#clearShots').hide();
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationMovie.length; i++) {
@@ -71,6 +73,7 @@ $(function() {
 		
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
+			$('#clearShots').hide();
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationShot.length; i++) {
@@ -89,6 +92,7 @@ $(function() {
 		
 		if ($(this).val() == "VISUALIZATION_MULTIPLESEGMENTS") {
 			$('#shots').show();
+			$('#clearShots').show();
 
 			var appendVis = '<form action="#">';
 			for (var i = 0; i < radioVisualizationMultipleShots.length; i++) {
@@ -127,6 +131,12 @@ $(function() {
 	 * Select Movie
 	 */
 	$('#movie').on('change', function() {
+		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
+			$("input[name=shotIDs]:checked").each(function(){
+			    shots.push($(this).val());
+			});
+		}
+		
 		$("#graph").empty();
 		$('#shots').empty();		
 
@@ -276,7 +286,7 @@ $(function() {
 
 		}
 		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
-			var shots = [];
+			//var shots = [];
 			
 			$("input[name=shotIDs]:checked").each(function(){
 			    shots.push($(this).val());
@@ -297,6 +307,10 @@ $(function() {
 
 		}
 
+	});
+	
+	$('#clearShots').on('cahnge', function() {
+		shots = [];
 	});
 
 	$('#d3').on('change', function() {
