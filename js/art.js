@@ -157,7 +157,6 @@ $(function() {
 		};
 
 		oboerequest(JSON.stringify(querySegmentIds));
-		   
 	});
 
 	/**
@@ -343,7 +342,6 @@ $(function() {
 			shots.push($(this).val());
 		}
 		
-		console.log(shots);
 
 		if (shots.length != 0) {
 			$('#clearShots').prop('disabled', false);
@@ -424,9 +422,12 @@ function addShots() {
 		}
 		segs += '</form>';
 		$("#shots").append(segs);
-		//var id = '#' + segmentsArray[0];
-		//$(id).prop('checked', true);
 		$('#shots').show();
+		
+		//check if shots were selcted previously
+		for (var i=0; i<shots.length; i++) {
+			$('#'+shots[i]).prop('checked', true);  
+		}	
 	}
 }
 
