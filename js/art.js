@@ -41,8 +41,8 @@ $(function() {
 		$("#graph").empty();
 		$("#radio").empty();
 		$("#shots").empty();
-		
-		if($('#movie').val() != null) {
+
+		if ($('#movie').val() != null) {
 			addShots();
 		}
 
@@ -55,7 +55,7 @@ $(function() {
 			for (var i = 0; i < radioVisualizationMovie.length; i++) {
 				appendVis += "<p>";
 				for (var j = 0; j < radioVisualizationMovie[i].length; j++) {
-					if(i != (radioVisualizationMovie.length -1)) {
+					if (i != (radioVisualizationMovie.length - 1)) {
 						//console.log(radioVisualizationMovie[i][j]);
 						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled />';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
@@ -63,7 +63,7 @@ $(function() {
 						console.log(i);
 						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled/>';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
-					}	
+					}
 				}
 				appendVis += "</p>";
 			}
@@ -71,7 +71,7 @@ $(function() {
 
 			$("#radio").append(appendVis);
 		}
-		
+
 		if ($(this).val() == "VISUALIZATION_SEGMENT") {
 			$('#shots').show();
 			$('#clearShots').hide();
@@ -83,7 +83,7 @@ $(function() {
 				for (var j = 0; j < radioVisualizationShot[i].length; j++) {
 					//console.log(radioVisualizationShot[i][j]);
 					appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationShot[i][j] + i + '" value="' + radioVisualizationShot[i][j] + '" disabled />';
-					appendVis += '<label for="' + radioVisualizationShot[i][j] + i +'">' + radioVisualizationShot[i][j] + '</label>';
+					appendVis += '<label for="' + radioVisualizationShot[i][j] + i + '">' + radioVisualizationShot[i][j] + '</label>';
 				}
 				appendVis += "</p>";
 			}
@@ -91,7 +91,7 @@ $(function() {
 
 			$("#radio").append(appendVis);
 		}
-		
+
 		if ($(this).val() == "VISUALIZATION_MULTIPLESEGMENTS") {
 			$('#shots').show();
 			$('#clearShots').show();
@@ -103,7 +103,7 @@ $(function() {
 			for (var i = 0; i < radioVisualizationMultipleShots.length; i++) {
 				appendVis += "<p>";
 				for (var j = 0; j < radioVisualizationMultipleShots[i].length; j++) {
-					if(i != (radioVisualizationMultipleShots.length -1)) {
+					if (i != (radioVisualizationMultipleShots.length - 1)) {
 						//console.log(radioVisualizationMovie[i][j]);
 						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled />';
 						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
@@ -111,7 +111,7 @@ $(function() {
 						console.log(i);
 						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled/>';
 						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
-					}	
+					}
 				}
 				appendVis += "</p>";
 			}
@@ -119,13 +119,13 @@ $(function() {
 
 			$("#radio").append(appendVis);
 		}
-		
-		if($('#movie').val() != null) {
+
+		if ($('#movie').val() != null) {
 			$('input[name=part0]').prop('disabled', false);
 			//var id = '#part1';
 			//$(id).prop('checked', true);
 		}
-		
+
 		$('#movie').prop('disabled', false);
 
 		oboerequest(JSON.stringify(queryVisualizations));
@@ -137,13 +137,13 @@ $(function() {
 	 */
 	$('#movie').on('change', function() {
 		/*if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
-			$("input[name=shotIDs]:checked").each(function(){
-			    shots.push($(this).val());
-			});
-		}*/
-		
+		 $("input[name=shotIDs]:checked").each(function(){
+		 shots.push($(this).val());
+		 });
+		 }*/
+
 		$("#graph").empty();
-		$('#shots').empty();		
+		$('#shots').empty();
 
 		$('input[name=part0]').prop('disabled', false);
 
@@ -164,12 +164,16 @@ $(function() {
 	 */
 	$(document).on('change', 'input[name=part0]', function() {
 		$("#graph").empty();
-		
+
 		selectedVisualization = "";
-		
+
 		//console.log($("input[name=part0]:checked").val());
-		var IDs = $("input[name=part1]").map(function() { return this.id; }).get();
-		var IDs2 = $("input[name=part2]").map(function() { return this.id; }).get();
+		var IDs = $("input[name=part1]").map(function() {
+			return this.id;
+		}).get();
+		var IDs2 = $("input[name=part2]").map(function() {
+			return this.id;
+		}).get();
 		var possibleValues = "";
 		for (var i = 0; i < IDs.length; i++) {
 			possibleValues += beginStringVisualization;
@@ -185,28 +189,30 @@ $(function() {
 			}
 			possibleValues = "";
 		}
-		
+
 		for (var i = 0; i < IDs2.length; i++) {
 			$("#" + IDs2[i]).prop('disabled', true);
 		}
 		//console.log(IDs);
 		$('input[name=part1]').prop('checked', false);
 		$('input[name=part2]').prop('checked', false);
-		
+
 		$('#search-button').prop('disabled', true);
-		
+
 		//console.log(selectedVisualization);
 	});
-	
+
 	$(document).on('change', 'input[name=part1]', function() {
 		$("#graph").empty();
-		
+
 		selectedVisualization = "";
-		
+
 		//console.log($("input[name=part1]:checked").val());
-		var IDs = $("input[name=part2]").map(function() { return this.id; }).get();
+		var IDs = $("input[name=part2]").map(function() {
+			return this.id;
+		}).get();
 		var possibleValues = "";
-		
+
 		for (var i = 0; i < IDs.length; i++) {
 			possibleValues += beginStringVisualization;
 			possibleValues += $("input[name=part0]:checked").val();
@@ -222,38 +228,38 @@ $(function() {
 			}
 			possibleValues = "";
 		}
-		
+
 		var checked = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
-		if(visualizationArray.indexOf(checked) != -1) {
+		if (visualizationArray.indexOf(checked) != -1) {
 			$('#search-button').prop('disabled', false);
 			selectedVisualization = checked;
 		} else {
 			$('#search-button').prop('disabled', true);
 		}
-		
+
 		$('input[name=part2]').prop('checked', false);
-		
+
 		//console.log(selectedVisualization);
 	});
-	
+
 	$(document).on('change', 'input[name=part2]', function() {
 		$("#graph").empty();
-		
+
 		selectedVisualization = "";
-		
+
 		//console.log($("input[name=part2]:checked").val());
 		var checked1 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val();
 		var checked2 = beginStringVisualization + $("input[name=part0]:checked").val() + $("input[name=part1]:checked").val() + $("input[name=part2]:checked").val();
-		if(visualizationArray.indexOf(checked2) != -1) {
+		if (visualizationArray.indexOf(checked2) != -1) {
 			$('#search-button').prop('disabled', false);
 			selectedVisualization = checked2;
-		} else if(visualizationArray.indexOf(checked1) != -1) {
+		} else if (visualizationArray.indexOf(checked1) != -1) {
 			$('#search-button').prop('disabled', false);
 			selectedVisualization = checked1;
 		} else {
 			$('#search-button').prop('disabled', true);
 		}
-		
+
 		//console.log(selectedVisualization);
 	});
 
@@ -287,17 +293,16 @@ $(function() {
 
 			oboerequest(JSON.stringify(queryArt));
 
-
 		}
 		if (type == "VISUALIZATION_MULTIPLESEGMENTS") {
 			//var shots = [];
-			
+
 			/*$("input[name=shotIDs]:checked").each(function(){
-				if (shots.indexOf($(this).val()) == -1) {
-					shots.push($(this).val());
-				}    
-			});*/
-			
+			 if (shots.indexOf($(this).val()) == -1) {
+			 shots.push($(this).val());
+			 }
+			 });*/
+
 			if (shots.length > 1) {
 				var queryArt = {
 					queryType : "getArt",
@@ -305,7 +310,7 @@ $(function() {
 					visualization : selectedVisualization,
 					segmentIds : shots
 				};
-	
+
 				oboerequest(JSON.stringify(queryArt));
 			} else {
 				Materialize.toast('Please select at minimum 2 shots!', 4000);
@@ -314,66 +319,38 @@ $(function() {
 		}
 
 	});
-	
+
 	/**
 	 * Clear ShotIDs Array
 	 */
 	$('#clearShots').click(function() {
 		shots = [];
-		
-		$("input[name=shotIDs]:checked").each(function(){ 
-			$(this).prop('checked', false);  
+
+		$("input[name=shotIDs]:checked").each(function() {
+			$(this).prop('checked', false);
 		});
-		
+
 		$('#clearShots').prop('disabled', true);
-		
+
 	});
-	
+
 	/**
 	 * add ShotIDs to array or delete them
 	 */
 	$(document).on('change', 'input[name=shotIDs]', function() {
-		if($(this).is(":not(:checked)")) {
+		if ($(this).is(":not(:checked)")) {
 			if (shots.indexOf($(this).val()) != -1) {
 				shots.splice(shots.indexOf($(this).val()), 1);
 			}
 		}
-		if($(this).is(":checked")) {
+		if ($(this).is(":checked")) {
 			shots.push($(this).val());
 		}
-		
 
 		if (shots.length != 0) {
 			$('#clearShots').prop('disabled', false);
 		} else {
 			$('#clearShots').prop('disabled', true);
-		}
-	});
-
-	$('#d3').on('change', function() {
-		$('#search-button-d3').prop('disabled', false);
-	});
-
-	$('#search-button-d3').click(function() {
-		$("#graph").empty();
-		$("#graphd3").empty();
-
-		var value = $('#d3').val();
-		switch (value) {
-		case "sunburst":
-			sunburst();
-			break;
-		case "streamgraph":
-			streamgraph();
-			break;
-		case "raindrops":
-			raindrops();
-			break;
-		case "forceDirectedGraph":
-			forceDirectedGraph();
-			break;
-		default:
-			break;
 		}
 	});
 
@@ -411,7 +388,7 @@ function addShots() {
 		$('#shots').show();
 	}
 	if ($('#type').val() == "VISUALIZATION_MULTIPLESEGMENTS") {
-		var movieID = $('#movie').val();	
+		var movieID = $('#movie').val();
 		var segs = '';
 		segs += '<form action="#" class="scrollWithBar">';
 		for (var i = 0; i < segmentsArray.length; i++) {
@@ -423,11 +400,11 @@ function addShots() {
 		segs += '</form>';
 		$("#shots").append(segs);
 		$('#shots').show();
-		
+
 		//check if shots were selcted previously
-		for (var i=0; i<shots.length; i++) {
-			$('#'+shots[i]).prop('checked', true);  
-		}	
+		for (var i = 0; i < shots.length; i++) {
+			$('#' + shots[i]).prop('checked', true);
+		}
 	}
 }
 
@@ -520,7 +497,7 @@ function oboerequest(query, noContext) {
 					var d3GraphSunburst = data.array[0].resultData;
 					//console.log(d3GraphSunburst);
 					sunburst(d3GraphSunburst);
-					
+
 				}
 				if (data.array[0].resultType == "GRAPH_STREAMGRAPH") {
 					$("#graph").empty();
