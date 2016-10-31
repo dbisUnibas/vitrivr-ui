@@ -282,7 +282,7 @@ $(function() {
 			    shots.push($(this).val());
 			});
 			
-			if (shots.length != 0) {
+			if (shots.length > 1) {
 				var queryArt = {
 					queryType : "getArt",
 					visualizationType : type,
@@ -371,8 +371,8 @@ function addShots() {
 		}
 		segs += '</form>';
 		$("#shots").append(segs);
-		var id = '#' + segmentsArray[0];
-		$(id).prop('checked', true);
+		//var id = '#' + segmentsArray[0];
+		//$(id).prop('checked', true);
 		$('#shots').show();
 	}
 }
