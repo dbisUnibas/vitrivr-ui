@@ -144,7 +144,9 @@ function getTags(query, noContext) {
 					
 				}
 				word ="";
-			}	
+			}
+			Materialize.toast('Tags loaded!', 4000);
+			$('#multiple-input').prop('disabled', false);	
 		}).fail(function(data) {
 			console.log("FAIL");
 			console.log(data);
@@ -294,6 +296,7 @@ $(function() {
 	 */
 	$('#neuralnetsearchbutton').on('click', function(event) {
 		if (!NNload) {
+			$('#multiple-input').prop('disabled', true);
 			setAvailableTags();
 			NNload = true;
 		}
