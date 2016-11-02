@@ -36,7 +36,7 @@ function sunburst(data) {
 		/*if (error)
 			throw error;*/
 			
-		console.log(root);
+		//console.log(root);
 
 		var path = svg.datum(root).selectAll("path").data(partition.nodes).enter().append("path").attr("display", function(d) {
 			return d.depth ? null : "none";

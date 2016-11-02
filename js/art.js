@@ -60,7 +60,6 @@ $(function() {
 						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled />';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
 					} else {
-						console.log(i);
 						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMovie[i][j] + i + '" value="' + radioVisualizationMovie[i][j] + '" disabled/>';
 						appendVis += '<label for="' + radioVisualizationMovie[i][j] + i + '">' + radioVisualizationMovie[i][j] + '</label>';
 					}
@@ -108,7 +107,6 @@ $(function() {
 						appendVis += '<input name="part' + i + '" type="radio" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled />';
 						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
 					} else {
-						console.log(i);
 						appendVis += '<input name="part' + i + '" type="checkbox" class="filled-in" id="' + radioVisualizationMultipleShots[i][j] + i + '" value="' + radioVisualizationMultipleShots[i][j] + '" disabled/>';
 						appendVis += '<label for="' + radioVisualizationMultipleShots[i][j] + i + '">' + radioVisualizationMultipleShots[i][j] + '</label>';
 					}
@@ -313,7 +311,7 @@ $(function() {
 
 				oboerequest(JSON.stringify(queryArt));
 			} else {
-				Materialize.toast('Please select at minimum 2 shots!', 4000);
+				Materialize.toast('Please select at minimum 2 shots!', 4000, 'red');
 			}
 
 		}
@@ -425,8 +423,8 @@ function oboerequest(query, noContext) {
 			headers : headers
 		}).done(function(data) {
 			hideProgress();
-			console.log(data);
-			console.log(data.array[0]);
+			//console.log(data);
+			//console.log(data.array[0]);
 			searchRunning = false;
 
 			switch(Object.keys(data.array[0])[0]) {
@@ -442,6 +440,7 @@ function oboerequest(query, noContext) {
 				}
 				$("#movie").append(movies);
 				$('select').material_select();
+				Materialize.toast('Movies loaded.', 2000);
 				break;
 			case "segments":
 				segmentsArray = [];
@@ -502,12 +501,22 @@ function oboerequest(query, noContext) {
 				if (data.array[0].resultType == "GRAPH_STREAMGRAPH") {
 					$("#graph").empty();
 					var d3GraphStreamgraph = data.array[0].resultData;
-					console.log(d3GraphStreamgraph);
+					//console.log(d3GraphStreamgraph);
 					streamgraph(d3GraphStreamgraph);
 				}
 				break;
+			case "type":
+				if(data.array[0].type == "error") {
+					console.warn(data);
+					Materialize.toast(data.array[0].msg, 5000, 'red');
+				} else {
+					console.warn("type not recognized" + JSON.stringify(data));
+					console.log(data.array[0]);
+				}
+				break;
 			default:
-				console.log(data.array[0]);
+				console.warn("type not recognized" + JSON.stringify(data));
+				//console.log(data.array[0]);
 				break;
 			}
 		}).fail(function(data) {

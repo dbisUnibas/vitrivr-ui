@@ -18,7 +18,7 @@ function streamgraph(graph) {
 	};*/
 
 	var data = graph["data"];
-	console.log(data);
+	//console.log(data);
 
 	//get the max y of the domain, so that itll never go beyond screen
 	var sum = new Array(data.length);
@@ -42,7 +42,7 @@ function streamgraph(graph) {
 		});
 	});
 
-	console.log(graph["colors"]);
+	//console.log(graph["colors"]);
 	var color = graph["colors"];
 
 	var x = d3.scale.linear().range([0, width]).domain([0, data[0].length]);
