@@ -108,6 +108,7 @@ function setAvailableTags() {
  *get tags from DB 
  */
 function getTags(query, noContext) {
+	searchRunning = true;
 	if (noContext === undefined) {
 		noContext = false;
 	}
@@ -146,7 +147,8 @@ function getTags(query, noContext) {
 				word ="";
 			}
 			Materialize.toast('Tags loaded!', 4000);
-			$('#multiple-input').prop('disabled', false);	
+			$('#multiple-input').prop('disabled', false);
+			searchRunning = false;	
 		}).fail(function(data) {
 			console.log("FAIL");
 			console.log(data);
