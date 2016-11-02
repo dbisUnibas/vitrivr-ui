@@ -1,5 +1,7 @@
 function sunburst(data) {
 	
+	var first = true;
+	
 	//console.log(data);
 
 	var width = 800,
@@ -43,6 +45,15 @@ function sunburst(data) {
 			return ("rgb("+d.color+")");
 			//return color((d.children ? d : d.parent).name);
 		}).style("fill-rule", "evenodd").each(stash);
+		
+		if (first && $("#size").is(":checked")) {
+			var value = function(d) {
+				return d.size;
+			};		
+
+			path.data(partition.value(value).nodes).transition().duration(1500).attrTween("d", arcTween);
+			first = false;
+		}
 
 		d3.selectAll("input").on("change", function change() {
 			var value = this.value === "count" ? function() {
