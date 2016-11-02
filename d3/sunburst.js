@@ -7,7 +7,7 @@ function sunburst(data) {
 	    radius = Math.min(width, height) / 2,
 	    color = d3.scale.category20c();
 	    
-	$("#graph").append('<form><input type="radio" id="size" name="mode" value="size"> <label for="size">Size</label><input type="radio" id="count" name="mode" value="count" checked> <label for="count">Count</label></form>');
+	$("#graph").append('<form><input type="radio" id="size" name="mode" value="size" checked> <label for="size">Size</label><input type="radio" id="count" name="mode" value="count"> <label for="count">Count</label></form>');
 
 	var svg = d3.select("#graph").append("svg").attr("width", width).attr("height", height).append("g").attr("transform", "translate(" + width / 2 + "," + height * .52 + ")");
 
