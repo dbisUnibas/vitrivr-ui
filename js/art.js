@@ -1,8 +1,8 @@
 const beginStringVisualization = "org.vitrivr.cineast.art.modules.Visualization";
 
-const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square"]];
+const radioVisualizationMovie = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square", "Real"]];
 const radioVisualizationShot = [["AverageColor", "MedianColor", "DominantEdge"], ["Grid8", "Grid16", "AverageColor"], ["Grid8", "Grid16"]];
-const radioVisualizationMultipleShots = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square"]];
+const radioVisualizationMultipleShots = [["AverageColor", "MedianColor", "DominantColor"], ["Grid8", "Gradient", "Stripe", "Sunburst", "Streamgraph"], ["Variable", "Square", "Real"]];
 
 const queryMultimediaObjects = {
 	queryType : "getMultimediaobjects"
