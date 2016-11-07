@@ -3,6 +3,7 @@ const thumbnailHost = "thumbnails/";
 const videoHost = "collection/";
 const thumbnailFileType = "jpg";
 const maxFrameGap = 250;
+const showCategoryWeights = true;
 const categoryConfig = {
 
 	globalcolor : {
