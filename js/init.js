@@ -1,5 +1,8 @@
 videojs.options.flash.swf = "video-js.swf";
 var shotStartTime = 0;
+var listTags = {};
+var tags = {concepts: []};
+var NNload = false;
 
 function setUpCategories(){
 	var ks = Object.keys(categoryConfig);
@@ -12,18 +15,31 @@ function setUpCategories(){
   			key + '-weight">' + 
   			(categoryConfig[key]['displayName'] || key) + ':</label><div id="' + 
   			key + '-weight" ></div></div>');
-  		
-  		noUiSlider.create($('#' + key + '-weight').get(0), {
-			start : 100 * ScoreWeights[key],
-			step : 1,
-			range : {
-				'min' : 0,
-				'max' : 100
-			},
-			format : wNumb({
-				decimals : 0
-			})
-		});
+  		if (key == 'neuralnet') {
+  			noUiSlider.create($('#' + key + '-weight').get(0), {
+				start : 100 * ScoreWeights[key],
+				step : 100,
+				range : {
+					'min' : 0,
+					'max' : 100
+				},
+				format : wNumb({
+					decimals : 0
+				})
+			});
+  		} else {
+	  		noUiSlider.create($('#' + key + '-weight').get(0), {
+				start : 100 * ScoreWeights[key],
+				step : 1,
+				range : {
+					'min' : 0,
+					'max' : 100
+				},
+				format : wNumb({
+					decimals : 0
+				})
+			});
+		}
 		
 		$('#' + key + '-weight').get(0).noUiSlider.on('change', buildSliderCallback(key));
 	}
@@ -77,6 +93,71 @@ function readSliders() {
 		
 }
 
+/**
+ *set tags for NN 
+ */
+function setAvailableTags() {
+	var queryLabels = {
+		queryType : "getLabels"
+	};
+	
+	getTags(JSON.stringify(queryLabels));
+}
+
+/**
+ *get tags from DB 
+ */
+function getTags(query, noContext) {
+	searchRunning = true;
+	if (noContext === undefined) {
+		noContext = false;
+	}
+	try {
+		var headers = {
+			'Content-Type' : 'application/x-www-form-urlencoded'
+		};
+		oboe({
+			url : cineastHost, //see config.js
+			method : 'POST',
+			body : "query=" + query,
+			headers : headers
+		}).done(function(data) {
+			console.log(data);
+			console.log(data.array[0]);
+			var word = "";
+			
+			for (var i = 0; i < data.array[0].concepts.length; i++) {
+				var ks = Object.keys(listTags);
+				for (var j = 0; j < data.array[0].concepts[i].length; j++) {
+					word += data.array[0].concepts[i][j].toUpperCase();
+					if (ks.indexOf(word) == -1) {
+						listTags[word] = [];
+						var elem = {};
+						elem["id"] = data.array[0].concepts[i];
+						elem["text"] = data.array[0].concepts[i];
+						listTags[word].push(elem);
+					} else {
+						var elem = {};
+						elem["id"] = data.array[0].concepts[i];
+						elem["text"] = data.array[0].concepts[i];
+						listTags[word].push(elem);
+					}
+					
+				}
+				word ="";
+			}
+			Materialize.toast('Tags loaded!', 4000);
+			$('#multiple-input').prop('disabled', false);
+			searchRunning = false;	
+		}).fail(function(data) {
+			console.log("FAIL");
+			console.log(data);
+			searchRunning = false;
+		});
+	} catch(e) {
+		console.warn(e.message + " | " + e.lineNumber);
+	}
+}
 
 $(function() {
 	/*  sliders  */
@@ -139,11 +220,29 @@ $(function() {
 	}); 
 
 	
+	
 	/*  buttons  */
 	$("#btnAddCanvas").click(function(e) {
 		e.preventDefault();
 		newShotInput();
 	});
+	
+	/**
+	 *click event on autocompletion 
+	 */
+	$("#multiple-input").click(function(event) {
+		var enteredTags = multiple.value;
+		tags["concepts"] = [];
+		console.log(tags["concepts"]);
+		console.log(enteredTags);
+		for (var i = 0; i < enteredTags.length; i++) {
+			tags.concepts.push(enteredTags[i].id);
+			console.log(tags["concepts"]);
+		}
+  });
+	
+
+
 
 	$('#btnShowSidebar').click(function() {
 		if ($('#sidebar').hasClass('open') && $('#sidebarextension').hasClass('open')) {
@@ -168,6 +267,10 @@ $(function() {
 		$('.objectsketch').hide();
 		$('#color-tool-pane').show();
 		$('#motion-tool-pane').hide();
+		$('#query-container-pane').show();
+		$('#btnAddCanvas').show();
+		$('#autocomplete').hide();
+		$('#chip-tags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
@@ -179,11 +282,39 @@ $(function() {
 		$('.objectsketch').show();
 		$('#color-tool-pane').hide();
 		$('#motion-tool-pane').show();
+		$('#query-container-pane').show();
+		$('#btnAddCanvas').show();
+		$('#autocomplete').hide();
+		$('#chip-tags').hide();
 		$('#sidebarextension').removeClass('open');
 		$('#btnShowSidebar').removeClass('open');
 		$(this).siblings().removeClass('active');
 		$(this).addClass('active');
 
+	});
+	
+	/**
+	 *Button for Neural Net 
+	 */
+	$('#neuralnetsearchbutton').on('click', function(event) {
+		if (!NNload) {
+			$('#multiple-input').prop('disabled', true);
+			setAvailableTags();
+			NNload = true;
+		}
+		$('.motionsketch').hide();
+		$('.objectsketch').hide();
+		$('#color-tool-pane').hide();
+		$('#motion-tool-pane').hide();
+		$('#query-container-pane').hide();
+		$('#btnAddCanvas').hide();
+		$('#autocomplete').show();
+		$('#chip-tags').show();
+		$('#sidebarextension').removeClass('open');
+		$('#btnShowSidebar').removeClass('open');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		
 	});
 	
 	
@@ -245,5 +376,22 @@ $(function() {
 	
 	$('#btnShowSidebar').click();
 	setTimeout(function(){$('#btnShowTopbar').click();}, 500);
+	
 
+	/**
+	 *multiple autocompletion 
+	 */  	
+  	var multiple = $('#multiple-input').materialize_autocomplete({
+            multiple: {
+                enable: true
+            },
+            appender: {
+                el: '.ac-users'
+            },
+            dropdown: {
+                el: '#multiple-dropdown'
+            }
+        });
+        
+    multiple.resultCache = listTags;       
 });

@@ -6,51 +6,63 @@ var ScoreWeights = {};
 
 var rf_positive = new Array();
 var rf_negative = new Array();
+var tags;
 
-function getCategories(){
+function getCategories() {
 	var categories = [];
-	
+
 	var ks = Object.keys(categoryConfig);
-	for (var i = 0, len = ks.length; i < len; i++) {
-  		var key = ks[i];	  					
-  		if(ScoreWeights[key] > 0){
-  			categories.push(key);
-  		}			
-  	}
-  	
-  	categories.sort(function(a, b){
-  		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
-  	});
-  	
+
+	for (var i = 0,
+	    len = ks.length; i < len; i++) {
+		var key = ks[i];
+		if (ScoreWeights[key] > 0) {
+			categories.push(key);
+		}
+	}
+
+	categories.sort(function(a, b) {
+		return (categoryConfig[a].queryOrder || 0) - (categoryConfig[b].queryOrder || 0);
+	});
+
 	return categories;
 }
 
-function sumWeights(){
+/**
+ *Add tags to global variable for query
+ */
+function addTags(tagArray) {
+	tags = tagArray;
+}
+
+function sumWeights() {
 	var sum = 0;
-	
+
 	var ks = Object.keys(categoryConfig);
-	for (var i = 0, len = ks.length; i < len; i++) {
-  		var key = ks[i];
-  		sum += parseInt(ScoreWeights[key]);
-  	}
-	
+	for (var i = 0,
+	    len = ks.length; i < len; i++) {
+		var key = ks[i];
+		sum += parseInt(ScoreWeights[key]);
+	}
+
 	return sum > 0 ? sum : 1;
 }
 
-function normalizeScoreWeights(){
+function normalizeScoreWeights() {
 
 	var sum = sumWeights();
 
-	if(sum > 0){
+	if (sum > 0) {
 		var ks = Object.keys(categoryConfig);
-		for (var i = 0, len = ks.length; i < len; i++) {
-	  		var key = ks[i];
-	  		ScoreWeights[key] /= sum;
-	  	}
+		for (var i = 0,
+		    len = ks.length; i < len; i++) {
+			var key = ks[i];
+			ScoreWeights[key] /= sum;
+		}
 	}
 }
 
-function clearResults(){
+function clearResults() {
 	Videos = {};
 	Shots = {};
 	Scores = {};
@@ -59,38 +71,34 @@ function clearResults(){
 	$('#rf-button').hide();
 }
 
-function search(id, positive, negative){
+function search(id, positive, negative) {
 	clearResults();
-	if(id === undefined || id < 0){
-		if(positive === undefined){ //sketch query
+	if (id === undefined || id < 0) {
+		if (positive === undefined) {//sketch query
 			console.log("starting sketch-based search");
 			oboerequest(buildQuery());
-		}else{//relevance feedback
+		} else {//relevance feedback
 			console.log("starting relevance feedback");
 			oboerequest(buildRFQuery());
 			rf_positive = new Array();
 			rf_negative = new Array();
 		}
-	}else{ //id lookup
+	} else {//id lookup
 		console.log("starting id-based search");
 		oboerequest(buildIdQuery(id));
 	}
 
 }
 
-
 function buildIdQuery(id) {
 
 	var query = {
-		queryType: "query",
-		query:[
-			{
-				id: id.toString(),
-				categories: getCategories()
-			}
-		]
+		queryType : "query",
+		query : [{
+			id : id.toString(),
+			categories : getCategories()
+		}]
 	};
-
 
 	return JSON.stringify(query);
 
@@ -99,24 +107,24 @@ function buildIdQuery(id) {
 function buildRFQuery() {
 
 	var query = {
-		queryType: "query"
+		queryType : "query"
 	};
 
 	var elements = new Array();
 
-	for(var key in rf_positive){
+	for (var key in rf_positive) {
 		elements.push({
-			id: rf_positive[key].toString(),
-			weight: 1,
-			categories: getCategories()
+			id : rf_positive[key].toString(),
+			weight : 1,
+			categories : getCategories()
 		});
 	}
 
-	for(var key in rf_negative){
+	for (var key in rf_negative) {
 		elements.push({
-			id: rf_negative[key].toString(),
-			weight: -1,
-			categories: getCategories()
+			id : rf_negative[key].toString(),
+			weight : -1,
+			categories : getCategories()
 		});
 	}
 
@@ -129,14 +137,14 @@ function buildContextQuery() {
 
 	var shotids = new Array();
 
-	for(var key in Shots){
+	for (var key in Shots) {
 		shotids.push(Shots[key].shotid);
 	}
 
 	var query = {
-		queryType: "context",
-		query: {
-			shotidlist: shotids.toString()
+		queryType : "context",
+		query : {
+			shotidlist : shotids.toString()
 		}
 	};
 
@@ -144,51 +152,52 @@ function buildContextQuery() {
 
 }
 
-function buildVideoQuery(shotid){
+function buildVideoQuery(shotid) {
 
 	var query = {
-		queryType: "video",
-		query: {
-			shotid: shotid.toString()
+		queryType : "video",
+		query : {
+			shotid : shotid.toString()
 		}
 	};
 
 	return JSON.stringify(query);
 }
 
-function buildQuery(){
+function buildQuery() {
 
-var query = {
-	queryType: "query",
+	var query = {
+		queryType : "query",
 
-};
-
-var containers = new Array();
-
-
-for(var key in shotInputs){
-	var shotInput = shotInputs[key];
-
-	var container = {
-		img : shotInput.color.getDataURL(),
-		motion: shotInput.motion.getPaths(),
-		motionbackground: shotInput.motion.getBgPaths(),
-		categories: getCategories()
 	};
 
-	containers.push(container);
+	var containers = new Array();
+
+	for (var key in shotInputs) {
+		var shotInput = shotInputs[key];
+
+		var container = {
+			img : shotInput.color.getDataURL(),
+			motion : shotInput.motion.getPaths(),
+			motionbackground : shotInput.motion.getBgPaths(),
+			categories : getCategories(),
+			tags : tags
+		};
+
+		containers.push(container);
+
+	}
+
+	query.query = containers;
+	console.log(query);
+
+	return JSON.stringify(query);
 
 }
 
-query.query = containers;
-
-return JSON.stringify(query);
-
-}
-
-function getResultName(){
+function getResultName() {
 	var resultName = $('#resultset-filter-selection>p>input:checked').attr('id');
-	if(resultName == 'no-filter' || resultName === undefined){
+	if (resultName == 'no-filter' || resultName === undefined) {
 		resultName = null;
 	}
 	return resultName;
@@ -197,7 +206,7 @@ function getResultName(){
 function oboerequest(query, noContext) {
 	searchRunning = true;
 	showProgress(0);
-	if(noContext === undefined){
+	if (noContext === undefined) {
 		noContext = false;
 	}
 	try {
@@ -212,14 +221,14 @@ function oboerequest(query, noContext) {
 		}).done(function(data) {
 			console.log("request done");
 
-			for(key in Videos){
+			for (key in Videos) {
 				sortVideoContainer(key);
 				updateVideoScore(key);
 			}
 
 			sortVideos();
-				$('#sequence-segmentation-button').show();
-				hideProgress();
+			$('#sequence-segmentation-button').show();
+			hideProgress();
 
 			searchRunning = false;
 
@@ -231,7 +240,7 @@ function oboerequest(query, noContext) {
 
 				console.warn(data);
 				Materialize.toast(data.msg, 5000, 'orange');
-				
+
 				break;
 
 			case "result":
@@ -256,22 +265,22 @@ function oboerequest(query, noContext) {
 				break;
 
 			case "batch":
-				switch(data.inner){
-					case "result":
+				switch(data.inner) {
+				case "result":
 
-						addResults(data.array);
+					addResults(data.array);
 
-						break;
-					case "shot":
+					break;
+				case "shot":
 
-						addShots(data.array);
+					addShots(data.array);
 
-						break;
-					case "video":
+					break;
+				case "video":
 
-						addVideos(data.array);
+					addVideos(data.array);
 
-						break;
+					break;
 				}
 
 				break;
@@ -279,7 +288,7 @@ function oboerequest(query, noContext) {
 			default:
 				console.warn("type not recognized" + JSON.stringify(data));
 			}
-		}).fail(function(data){
+		}).fail(function(data) {
 			console.log("FAIL");
 			console.log(data);
 			hideProgress();
@@ -290,24 +299,25 @@ function oboerequest(query, noContext) {
 	}
 }
 
-function addVideos(videoArray){
-	for(var iter = 0; iter < videoArray.length; ++iter){
+function addVideos(videoArray) {
+	for (var iter = 0; iter < videoArray.length; ++iter) {
 		var data = videoArray[iter];
-		if(!(data.videoid in Videos)){
+		if (!(data.videoid in Videos)) {
 			Videos[data.videoid] = data;
 			addVideoContainer(data.videoid);
 		}
 	}
 }
 
-function addShots(shotArray){
+function addShots(shotArray) {
 	var videosToSort = {};
-	for(var iter = 0; iter < shotArray.length; ++iter){
+	for (var iter = 0; iter < shotArray.length; ++iter) {
 		var data = shotArray[iter];
-		if(!(data.shotid in Shots)){
+		if (!(data.shotid in Shots)) {
 			Shots[data.shotid] = data;
 			addShotContainer(data);
-			videosToSort[data.videoid] = undefined; //adding empty key to map
+			videosToSort[data.videoid] = undefined;
+			//adding empty key to map
 			if (!(data.shotid in Scores)) {
 				var scoreContainer = {};
 				for (var key in ScoreWeights) {
@@ -318,20 +328,20 @@ function addShots(shotArray){
 		}
 	}
 	var videoIdArray = Object.keys(videosToSort);
-	for(var i = 0; i < videoIdArray.length; ++i){
+	for (var i = 0; i < videoIdArray.length; ++i) {
 		sortVideoContainer(videoIdArray[i]);
 	}
 }
 
-function addResults(resultArray){
+function addResults(resultArray) {
 
-	if(resultArray.length < 1){
+	if (resultArray.length < 1) {
 		return;
 	}
 
 	var shotsToUpdateScore = {};
 
-	for(var iter = 0; iter < resultArray.length; ++iter){
+	for (var iter = 0; iter < resultArray.length; ++iter) {
 		var data = resultArray[iter];
 		if (!(data.shotid in Scores)) {
 			var scoreContainer = {};
@@ -349,7 +359,7 @@ function addResults(resultArray){
 
 	var shotIdsToUpdateScore = Object.keys(shotsToUpdateScore);
 	var weightSum = sumWeights();
-	for(var i = 0; i < shotIdsToUpdateScore.length; ++i){
+	for (var i = 0; i < shotIdsToUpdateScore.length; ++i) {
 		var scoreContainer = Scores[shotIdsToUpdateScore[i]];
 
 		var score = 0;
@@ -369,28 +379,29 @@ function addResults(resultArray){
 
 }
 
-function requestEntireVideo(shotid){
+function requestEntireVideo(shotid) {
 	$('#v' + Shots[shotid].videoid).addClass('highlightedVideo');
 	oboerequest(buildVideoQuery(shotid), true);
 }
 
-function updateVideoScore(videoid){
+function updateVideoScore(videoid) {
 	var score = 0;
 	var arr = Array();
-	$('#v' + videoid + ' > .shotbox').each(function(){
+	$('#v' + videoid + ' > .shotbox').each(function() {
 		var data_score = $(this).data('score');
-		if(data_score !== undefined && parseFloat(data_score) > 0){
+		if (data_score !== undefined && parseFloat(data_score) > 0) {
 			arr.push(parseFloat(data_score));
 		}
 	});
 
-	for(var i = 0; i < arr.length; ++i){
+	for (var i = 0; i < arr.length; ++i) {
 		score = Math.max(score, arr[i]);
 	}
 
-	if(score != score){
+	if (score != score) {
 		score = 0;
 	}
 
-	$('#v' + videoid).data('score', score).attr('data-score', score); //second part is necessary to write score to html
+	$('#v' + videoid).data('score', score).attr('data-score', score);
+	//second part is necessary to write score to html
 }

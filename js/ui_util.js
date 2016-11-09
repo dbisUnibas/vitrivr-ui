@@ -10,7 +10,6 @@ function newShotInput() {
 	container.addClass('query-input-container');
 	container.attr('id', id);
 	container.hide();
-	
 
 	var color = $('<canvas>');
 	color.addClass('queryinput').addClass('colorsketch');
@@ -22,43 +21,50 @@ function newShotInput() {
 	motion.attr('width', '360').attr('height', '288');
 	container.append(motion);
 
+	/**
+	 *NeuralNet
+	 */
+	/*var neuralNet = $('<div>');
+	neuralNet.addClass('queryinput').addClass('neuralNet');
+	container.append(neuralNet);*/
+
 	/*var objects = $('<div>');
-	objects.addClass('queryinput').addClass('objectsketch').addClass('dropzone');
-	container.append(objects);*/
-	
+	 objects.addClass('queryinput').addClass('objectsketch').addClass('dropzone');
+	 container.append(objects);*/
+
 	var concepts = $('<canvas>');
 	concepts.addClass('queryinput').addClass('objectsketch');
 	concepts.attr('width', '360').attr('height', '288');
 	container.append(concepts);
-	
-/*
-	var audio = $('<div>');
-	audio.addClass('queryinput').addClass('audiosketch');
-	audio.append('<audio id="audio_' + id + '" src="" controls=""></audio>');
-	var recordButton = $('<button id="record_' + id + '" class="waves-effect waves-light btn btn-large red" style="width: 300px">' + 
-	'<i class="material-icons left">mic_none</i>Record' + 
-	'</button>');
-	
-	recordButton.click(function(){
-		var button = $(this);
-		if(button.data('recording')){
-			button.data('recording', false);
-			button.html('<i class="material-icons left">mic_none</i>Record');
-			Fr.voice.export(function(url){
-				button.prev().attr("src", url);
-			}, function(base64){
-				button.parent().parent().data('audio', base64);
-			});
-			Fr.voice.stop();
-		}else{
-			button.data('recording', true);
-			button.html('<i class="material-icons left">mic</i>Recording...');
-			Fr.voice.record(false);
-		}
-	});
-	
-	audio.append(recordButton);
-	container.append(audio);*/
+
+	/*
+	 var audio = $('<div>');
+	 audio.addClass('queryinput').addClass('audiosketch');
+	 audio.append('<audio id="audio_' + id + '" src="" controls=""></audio>');
+	 var recordButton = $('<button id="record_' + id + '" class="waves-effect waves-light btn btn-large red" style="width: 300px">' +
+	 '<i class="material-icons left">mic_none</i>Record' +
+	 '</button>');
+
+	 recordButton.click(function(){
+	 var button = $(this);
+	 if(button.data('recording')){
+	 button.data('recording', false);
+	 button.html('<i class="material-icons left">mic_none</i>Record');
+	 Fr.voice.export(function(url){
+	 button.prev().attr("src", url);
+	 }, function(base64){
+	 button.parent().parent().data('audio', base64);
+	 });
+	 Fr.voice.stop();
+	 }else{
+	 button.data('recording', true);
+	 button.html('<i class="material-icons left">mic</i>Recording...');
+	 Fr.voice.record(false);
+	 }
+	 });
+
+	 audio.append(recordButton);
+	 container.append(audio);*/
 
 	var colorcanvas = new sketchCanvas(color);
 	colorcanvas.setLineWidth($('#draw-radius').get(0).noUiSlider.get());
@@ -102,9 +108,8 @@ function newShotInput() {
 			e.preventDefault();
 			destroyCanvas(id);
 		}
-	}
-	]);
-	
+	}]);
+
 	context.attach('#' + id + '>.motionsketch', [{
 		header : 'Layer'
 	}, {
@@ -124,44 +129,43 @@ function newShotInput() {
 			e.preventDefault();
 			destroyCanvas(id);
 		}
-	}
-	]);
-	
+	}]);
+
 	/*context.attach('#' + id + '>.objectsketch', [{
-		header : 'Layer'
+	header : 'Layer'
 	}, {
-		text : 'Clear',
-		action : function(e) {
-			e.preventDefault();
-			$('#' + id + '>.objectsketch').empty();
-		}
+	text : 'Clear',
+	action : function(e) {
+	e.preventDefault();
+	$('#' + id + '>.objectsketch').empty();
+	}
 	},{
-		header : 'Canvas'
+	header : 'Canvas'
 	}, {
-		text : 'Delete',
-		action : function(e) {
-			e.preventDefault();
-			destroyCanvas(id);
-		}
+	text : 'Delete',
+	action : function(e) {
+	e.preventDefault();
+	destroyCanvas(id);
+	}
 	}
 	]);*/
-	
+
 	/*context.attach('#' + id + '>.audiosketch', [{
-		header : 'Layer'
+	header : 'Layer'
 	}, {
-		text : 'Clear',
-		action : function(e) {
-			e.preventDefault();
-			$('#' + id).data('audio', undefined);
-		}
+	text : 'Clear',
+	action : function(e) {
+	e.preventDefault();
+	$('#' + id).data('audio', undefined);
+	}
 	}, {
-		header : 'Canvas'
+	header : 'Canvas'
 	}, {
-		text : 'Delete',
-		action : function(e) {
-			e.preventDefault();
-			destroyCanvas(id);
-		}
+	text : 'Delete',
+	action : function(e) {
+	e.preventDefault();
+	destroyCanvas(id);
+	}
 	}
 	]);*/
 
@@ -172,11 +176,11 @@ function newShotInput() {
 	return id;
 }
 
-function addVideoContainer(id){
+function addVideoContainer(id) {
 	return $('#results').append('<div id="v' + id + '" class="videocontainer"> </div>');
 }
 
-function addShotContainer(shotInfo, containerId){ //TODO optimize
+function addShotContainer(shotInfo, containerId) {//TODO optimize
 	containerId = containerId || shotInfo.videoid;
 	$('#v' + containerId).append(
 		
@@ -189,7 +193,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 		'<span class="material-icons relevanceFeedback relevanceFeedback-add">add</span>' +
 		'<span class="material-icons relevanceFeedback">remove</span>' +
 		(showCategoryWeights ? '<span class="material-icons showCategoryWeights">help</span>' : '') +
-	//	'<span class="material-icons showid">textsms</span>' +
+		//	'<span class="material-icons showid">textsms</span>' +
 	//	'<span class="material-icons load_video">movie</span>' +
 		'</div>' +
 		'<div class="bottomhoverbox">' +
@@ -211,7 +215,7 @@ function addShotContainer(shotInfo, containerId){ //TODO optimize
 	//$('#s' + shotInfo.shotid + '>span>div>.load_video').on('click', load_video);
 }
 
-function updateScoreInShotContainer(id, score){
+function updateScoreInShotContainer(id, score) {
 	var container = $('#s' + id);
 	container.css('background-color', scoreToColor(score));
 	container.data('score', score);
@@ -237,34 +241,32 @@ function scoreToColor(pct) {
 	return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 
-
-function sortVideoContainer(videoid){
-	try{
+function sortVideoContainer(videoid) {
+	try {
 		tinysort('#v' + videoid + '>.shotbox', {
 			data : 'startframe',
 			order : 'asc'
 		});
-	}catch (e){
+	} catch (e) {
 		console.warn(e);
 	}
 }
 
-function sortVideos(){
-	try{
+function sortVideos() {
+	try {
 		tinysort('#results>.videocontainer', {
 			data : 'score',
 			order : 'desc'
 		});
-	}catch (e){
+	} catch (e) {
 		//console.warn(e);
 	}
 }
 
-
 function updateScores(segmentedVideos) {
 	readSliders();
 	var weightSum = sumWeights();
-	
+
 	for (var key in Shots) {
 		var shotId = Shots[key].shotid;
 
@@ -274,36 +276,37 @@ function updateScores(segmentedVideos) {
 			score += scoreContainer[key] * ScoreWeights[key];
 		}
 		updateScoreInShotContainer(shotId, score / weightSum);
-		
+
 	}
 
 	segmentedVideos = segmentedVideos || false;
-	if(segmentedVideos){
+	if (segmentedVideos) {
 		var ids = new Array();
 		$('#results>.videocontainer').each(function(index) {
-		  ids.push($(this).attr('id').substring(1));
+			ids.push($(this).attr('id').substring(1));
 		});
-		for(var key in ids){
+		for (var key in ids) {
 			updateVideoScore(ids[key]);
 		}
-	}else{
+	} else {
 		for (var key in Videos) {
-		sortVideoContainer(key);
-		updateVideoScore(key);
+			sortVideoContainer(key);
+			updateVideoScore(key);
 		}
 	}
-	
 
 	sortVideos();
 }
 
-function sequenceSegmentation(){
+function sequenceSegmentation() {
 	$('#sequence-segmentation-button').hide();
-	for(var key in Videos){
+	for (var key in Videos) {
 		var videoId = Videos[key].videoid;
 		var ids = new Array();
-		$('#v' + videoId + '>.shotbox').each(function(){ids.push(parseInt($(this).attr('id').substring(1)));});
-		if(ids.length > 1){
+		$('#v' + videoId + '>.shotbox').each(function() {
+			ids.push(parseInt($(this).attr('id').substring(1)));
+		});
+		if (ids.length > 1) {
 			$('#v' + videoId).empty();
 			var segmentCounter = 0;
 			var currentContainerId = videoId + '_' + (segmentCounter++);
@@ -311,10 +314,10 @@ function sequenceSegmentation(){
 			var currentShotInfo = Shots[ids[0]];
 			var lastShotInfo = currentShotInfo;
 			addShotContainer(currentShotInfo, currentContainerId);
-			for(var i = 1; i < ids.length; ++i){
+			for (var i = 1; i < ids.length; ++i) {
 				lastShotInfo = currentShotInfo;
 				currentShotInfo = Shots[ids[i]];
-				if((currentShotInfo.start - lastShotInfo.end) > maxFrameGap){
+				if ((currentShotInfo.start - lastShotInfo.end) > maxFrameGap) {
 					currentContainerId = videoId + '_' + (segmentCounter++);
 					addVideoContainer(currentContainerId);
 				}
@@ -322,13 +325,13 @@ function sequenceSegmentation(){
 			}
 			$('#v' + videoId).remove();
 		}
-		
+
 	}
 	updateScores(true);
-	
+
 }
 
-function playShot(event){
+function playShot(event) {
 	var shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var shotInfo = Shots[shotId];
@@ -337,65 +340,62 @@ function playShot(event){
 	shotStartTime = shotInfo.start / 25;
 	var player = videojs('videoPlayer');
 
-	
-  $('#video-modal').openModal({
-  	in_duration: 0,
-  	out_duration: 0,
-  	ready: function(){
-		player.src(path);
-  	},
-  	complete:function(){
-  		player.pause();
-  	}
-  });
+	$('#video-modal').openModal({
+		in_duration : 0,
+		out_duration : 0,
+		ready : function() {
+			player.src(path);
+		},
+		complete : function() {
+			player.pause();
+		}
+	});
 }
 
-function similaritySearch(event){
+function similaritySearch(event) {
 	var shotBox = $(this).parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	search(shotId);
 }
 
-
-function relevanceFeedback(event){
+function relevanceFeedback(event) {
 	var _this = $(this);
 	var shotBox = _this.parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	var positive = _this.hasClass('relevanceFeedback-add');
-	
-	if(positive){
-		if($.inArray(shotId, rf_positive) >= 0){ //remove
+
+	if (positive) {
+		if ($.inArray(shotId, rf_positive) >= 0) {//remove
 			_this.css('color', 'white');
-			remove_element(rf_positive,shotId);
-		}else{ //add
-			if($.inArray(shotId, rf_negative) >= 0){
-				remove_element(rf_negative,shotId);
+			remove_element(rf_positive, shotId);
+		} else {//add
+			if ($.inArray(shotId, rf_negative) >= 0) {
+				remove_element(rf_negative, shotId);
 				_this.next().css('color', 'white');
 			}
 			rf_positive.push(shotId);
 			_this.css('color', 'green');
 		}
-	}else{//negative
-		if($.inArray(shotId, rf_negative) >= 0){ //remove
+	} else {//negative
+		if ($.inArray(shotId, rf_negative) >= 0) {//remove
 			_this.css('color', 'white');
-			remove_element(rf_negative,shotId);
-		}else{ //add
-			if($.inArray(shotId, rf_positive) >= 0){
-				remove_element(rf_positive,shotId);
+			remove_element(rf_negative, shotId);
+		} else {//add
+			if ($.inArray(shotId, rf_positive) >= 0) {
+				remove_element(rf_positive, shotId);
 				_this.prev().css('color', 'white');
 			}
 			rf_negative.push(shotId);
 			_this.css('color', 'red');
 		}
 	}
-	
-	if(rf_positive.length > 0){
+
+	if (rf_positive.length > 0) {
 		$('#rf-button').show();
-	}else{
+	} else {
 		$('#rf-button').hide();
 	}
-	
-	
+
 	console.log(rf_positive);
 	console.log(rf_negative);
 }
@@ -430,91 +430,83 @@ function prepare_playback(event){
 	var videoInfo = Videos[shotInfo.videoid];
 	shotStartTime = shotInfo.start / (videoInfo.frames / videoInfo.seconds);
 	var player = videojs('videoPlayer');
-		
-   $('#video-modal').openModal({
-  	in_duration: 0,
-  	out_duration: 0,
-  	ready: function(){
-		player.src(path);
-  	},
-  	complete:function(){
-  		player.pause();
-  	}
-  });
+
+	$('#video-modal').openModal({
+		in_duration : 0,
+		out_duration : 0,
+		ready : function() {
+			player.src(path);
+		},
+		complete : function() {
+			player.pause();
+		}
+	});
 }
 
-function load_video(event){
+function load_video(event) {
 	var _this = $(this);
 	var shotBox = _this.parent().parent().parent();
 	var shotId = parseInt(shotBox.attr('id').substring(1));
 	requestEntireVideo(shotId);
 }
 
-function addResultSetFilter(resultSetName){
-	$('#resultset-filter-selection').append(
-		'<p><input class="with-gap" name="result-set" type="radio" id="' + 
-		resultSetName + 
-		'"/><label for="' +
-		resultSetName + 
-		'">' +
-		resultSetName +
-		'</label></p>'
-      	);
+function addResultSetFilter(resultSetName) {
+	$('#resultset-filter-selection').append('<p><input class="with-gap" name="result-set" type="radio" id="' + resultSetName + '"/><label for="' + resultSetName + '">' + resultSetName + '</label></p>');
 }
+
 var progressCounter = 0;
-function showProgress(progress){
+function showProgress(progress) {
 	$('#loading').show();
 	$('#loading>.determinate').css('width', Math.round(100 * progress) + '%');
 	progressCounter = progress;
 }
 
-function hideProgress(){
+function hideProgress() {
 	$('#loading').hide();
 }
 
-function getNumberOfShotInputs(){
+function getNumberOfShotInputs() {
 	return Object.keys(shotInputs).length;
 }
 
 function destroyCanvas(id) {
-	context.destroy('#' + id + '>.colorsketch' );
-	context.destroy('#' + id + '>.motionsketch' );
-	context.destroy('#' + id + '>.objectsketch' );
-	context.destroy('#' + id + '>.audiosketch' );
-	
+	context.destroy('#' + id + '>.colorsketch');
+	context.destroy('#' + id + '>.motionsketch');
+	context.destroy('#' + id + '>.objectsketch');
+	context.destroy('#' + id + '>.audiosketch');
 	delete shotInputs[id];
 	$('#' + id).slideUp(200, function() {
 		$('#' + id).remove();
-		if(getNumberOfShotInputs() == 0){
+		if (getNumberOfShotInputs() == 0) {
 			newShotInput();
 		}
 	});
 }
 
-function showSketchSuggestions(shotInputId){
+function showSketchSuggestions(shotInputId) {
 	var suggestionPanel = $('#sketchSuggestionPanel');
-	if(suggestionPanel.is(":visible")){
+	if (suggestionPanel.is(":visible")) {
 		suggestionPanel.hide();
 	}
-	
+
 	var top = $('#shotInput_' + shotInputId).offset().top + 340;
 	suggestionPanel.css('top', top);
 	suggestionPanel.fadeIn(200);
 	hideSketchSuggestionsTimer();
 }
 
-function hideSketchSuggestions(callback){
+function hideSketchSuggestions(callback) {
 	clearTimeout(hideSketchSuggestionsTimeOut);
-	$('#sketchSuggestionPanel').fadeOut(200, function(){
+	$('#sketchSuggestionPanel').fadeOut(200, function() {
 		$(this).empty();
-		if(callback !== undefined){
+		if (callback !== undefined) {
 			callback();
 		}
 	});
-	
+
 }
 
-function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
+function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId) {
 	var suggestionPanel = $('#sketchSuggestionPanel');
 	var suggestion = $('<div>');
 	var imageUrl = 'img/sketch/' + id + '.png';
@@ -523,8 +515,8 @@ function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
 	var img = $('<img width="250" height="250" src="' + previewUrl + '" />');
 	suggestion.append(img);
 	suggestion.append('<div>' + name + '</div>');
-	
-	img.click(function(e){
+
+	img.click(function(e) {
 		var sketchImage = $('<img width="' + width + '" height="' + height + '" src="' + imageUrl + '" />');
 		sketchImage.addClass('autoCompletedImage');
 		sketchImage.css('top', dy).css('left', dx);
@@ -536,34 +528,34 @@ function addSketchSuggestion(name, id, width, height, dx, dy, shtoInputId){
 		shotInputs['shotInput_' + shtoInputId].concept.clear();
 		shotInputs['shotInput_' + shtoInputId].conceptList.push(Math.floor(id / 80));
 		startSearchTimeOut();
-		if(ScoreWeights.concept == 0){
+		if (ScoreWeights.concept == 0) {
 			readSliders();
 			var val = 50;
 			$('#concept-weight').get(0).noUiSlider.set(val);
-			
+
 			readSliders();
 			var sum = sumWeights();
-			if(sum > 100){
+			if (sum > 100) {
 				var scale = (100 - val) / (sum - ScoreWeights.concept);
 				$('#global-color-weight').get(0).noUiSlider.set(ScoreWeights.globalcolor * scale);
 				$('#local-color-weight').get(0).noUiSlider.set(ScoreWeights.localcolor * scale);
 				$('#edge-weight').get(0).noUiSlider.set(ScoreWeights.edge * scale);
 				$('#motion-weight').get(0).noUiSlider.set(ScoreWeights.motion * scale);
 			}
-		
-		updateScores(true);
-		
+
+			updateScores(true);
+
 		}
-		
+
 	});
-	
-	
+
 	suggestionPanel.append(suggestion);
-	
+
 }
+
 var hideSketchSuggestionsTimeOut;
 
-function hideSketchSuggestionsTimer(){
+function hideSketchSuggestionsTimer() {
 	clearTimeout(hideSketchSuggestionsTimeOut);
 	hideSketchSuggestionsTimeOut = setTimeout(hideSketchSuggestions, 10000);
 }

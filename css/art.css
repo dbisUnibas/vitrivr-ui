@@ -1,0 +1,128 @@
+/*
+ * handling fixed sidebar
+ */
+header, main, footer, body {
+	padding-left: 400px;
+}
+
+@media only screen and (max-width: 992px) {
+	header, main, footer, body {
+		padding-left: 0;
+	}
+}
+
+/*
+ * resizing images
+ */
+.pixelated {
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: pixelated;
+}
+
+/*
+ * result image
+ */
+#graph {
+	width: 100%;
+}
+
+#graph img {
+	min-width: 400px;
+	min-height: 20px;
+	max-width: 90%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.materialboxed {
+	display: inline-block;
+}
+
+/*
+ * sidebar
+ */
+.side-nav {
+	width: 400px;
+}
+
+/*
+ * shots input without checkboxes
+ */
+.rad > input {/* hide chekcbox */
+	visibility: hidden; /* Makes input not-clickable */
+	position: absolute; /* Remove input from document flow */
+}
+
+.rad > input + img {/* image */
+	cursor: pointer;
+	border: 2px solid #FFFFFF;
+}
+
+.rad > input:checked + img {/* checkbox clicked image style */
+	border: 5px solid #f44336;
+}
+
+/*
+ * shots
+ */
+
+#shots {
+	padding-top: 40px;
+}
+
+.scrollWithBar {
+	height: 500px;
+	overflow-y: auto;
+}
+
+/*
+ * selects
+ */
+.input-field {
+	margin: 10px;
+	margin-top: 20px;
+}
+
+/**
+ * 	Visualization selects
+ */
+
+[type="radio"]:not(:checked) +
+label, [type="radio"]:checked + label {
+	padding-left: 25px;
+	margin: 10px;
+}
+
+[type="checkbox"] + label {
+	padding-left: 25px;
+	margin: 10px;
+}
+
+/**
+ * 	imported from main.css
+ */
+.thumbnail {
+	max-width: 180px;
+	max-height: 100%;
+	margin-left: 10px;
+	background-image: url('../img/loading.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+#loading {
+	display: none;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	z-index: 1005;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+

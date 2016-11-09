@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>vitrivr-Art</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="utf-8" />
+
+		<link rel="shortcut icon" href="favicon.ico">
+
+		<!--Materialize -->
+		<link type="text/css" rel="stylesheet" href="css/materialize0.97.7.min.css" media="screen,projection"/>
+		<!--Materialize Design Icons -->
+		<link type="text/css" rel="stylesheet" href="css/materialdesignicons.css" media="all"/>
+		<!--Material Icons -->
+		<link type="text/css" rel="stylesheet" href="css/material-icons.css" media="all"/>
+		<!-- Art css-->
+		<link type="text/css" rel="stylesheet" href="css/art.css"/>
+		<!--Colorpicker -->
+		<!--<link type="text/css" rel="stylesheet" href="css/spectrum.css" media="screen,projection" />-->
+		<!-- -->
+		<!--<link type="text/css" rel="stylesheet" href="css/context.standalone.css" media="screen,projection" />-->
+		<!--Range Slider -->
+		<!--<link type="text/css" rel="stylesheet" href="css/nouislider.css" media="screen,projection" />-->
+		<!--Video Framework CSS -->
+		<!--<link type="text/css" rel="stylesheet" href="video-js.css" media="screen,projection" />-->
+		<!--Main -->
+		<!--<link type="text/css" rel="stylesheet" href="css/main.css"  media="screen,projection"/>-->
+
+		<!--Main Config -->
+		<script type="text/javascript" src="js/config.js"></script>
+		<!--JQuery -->
+		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+		<!--JS Drag and Drop -->
+		<!---<script type="text/javascript" src="js/interact.min.js"></script>-->
+		<!--Rigth Click for menu -->
+		<!---<script type="text/javascript" src="js/context.js"></script>-->
+		<!--Streaming -->
+		<script type="text/javascript" src="js/oboe-browser.js"></script>
+		<!--Motion Canvas -->
+		<!--<script type="text/javascript" src="js/motionCanvas.js"></script>-->
+		<!--Sketch Canvas -->
+		<!--<script type="text/javascript" src="js/sketchCanvas.js"></script>-->
+		<!--Materialize -->
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<!--Colorpicker -->
+		<!--<script type="text/javascript" src="js/spectrum.js"></script>-->
+		<!--Range Slider -->
+		<!--<script type="text/javascript" src="js/nouislider.js"></script>-->
+		<!--Tinysort for Sorting Results -->
+		<!--<script type="text/javascript" src="js/tinysort.js"></script>-->
+		<!--Video Framework -->
+		<!---<script type="text/javascript" src="video.js"></script>-->
+		<!--Art from Data-->
+		<script type="text/javascript" src="js/art.js"></script>
+
+		<!--D3.js-->
+
+		<script type="text/javascript" src="js/d3_3.5.17.min.js"></script>
+		<script type="text/javascript" src="js/d3_4.2.2.min.js"></script>
+
+		<!-- Have to be edited
+		<script type="text/javascript" src="js/search.js"></script>
+		<script type="text/javascript" src="js/ui_util.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
+		-->
+	</head>
+
+	<body>
+		<div class="progress" id="loading">
+			<div class="indeterminate"></div>
+		</div>
+
+		<div class="container">
+			<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
+			<ul id="slide-out" class="side-nav fixed">
+				<li>
+					<div class="input-field col s12">
+						<select id="type">
+							<option value="" disabled selected>Type</option>
+							<option value="VISUALIZATION_MULTIMEDIAOBJECT">Movie</option>
+							<option value="VISUALIZATION_SEGMENT">Shot</option>
+							<option value="VISUALIZATION_MULTIPLESEGMENTS">Multiple-Shots</option>
+						</select>
+						<label>Type selection</label>
+					</div>
+				</li>
+				<li>
+					<div class="input-field col s12">
+						<select id="movie" disabled>
+							<option value="" disabled selected>Movie</option>
+						</select>
+						<label>Movie selection</label>
+					</div>
+				</li>
+				<li>
+					<div class="col s12" id="radio"></div>
+				</li>
+
+				<button id="search-button" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
+					<i class="material-icons left">visibility</i>Visualize
+				</button>
+				<br />
+				<br />
+				<button id="clearShots" class="waves-effect waves-light btn btn-large red" style="width: 100%" disabled>
+					Clear Shot-Selection
+				</button>
+			</ul>
+
+			<div class="row">
+				<div id="shots" class="shot"></div>
+			</div>
+			<div class="row">
+				<div id="graph" class="col s12"></div>
+			</div>
+		</div>
+		<!--d3 graphs-->
+		<script src="./d3/sunburst.js"></script>
+		<script src="./d3/streamgraph.js"></script>
+		<script src="./d3/forceDirectedGraph.js"></script>
+		<script src="./d3/raindrops.js"></script>
+
+	</body>
+</html>

@@ -28,6 +28,8 @@
 		<script type="text/javascript" src="js/tinysort.js"></script>
 		<script type="text/javascript" src="video.js"></script>
 		
+		<script type="text/javascript" src="./js/jquery.materialize-autocomplete.js"></script>
+		
 
 		<script type="text/javascript" src="js/search.js"></script>
 		<script type="text/javascript" src="js/ui_util.js"></script>
@@ -68,6 +70,10 @@
 				<li id="motionsketchbutton">
 					<span><i class="mdi mdi-run"> </i></span>
 				</li>
+				<!-- Neural net button -->
+				<li id="neuralnetsearchbutton">
+					<span><i class="mdi mdi-emoticon-cool"> </i></span>
+				</li>
 				<!--<li>
 					<span id="filterbutton"><i class="mdi mdi-filter"> </i></span>
 				</li>-->
@@ -99,6 +105,31 @@
 					<button id="fgbgswitch-button" class="waves-effect waves-light btn btn-small red" style="width: 100%">Foreground</button>
 				</div>
 			</div>
+			
+			<!--Autocompletion for NN -->
+			<div class="row">
+                <div class="input-field col s12" id="autocomplete">
+                    <div class="autocomplete" id="multiple-autocomplete">
+                        
+                        <div class="ac-input">
+                            <input type="text" id="multiple-input" placeholder="Please input tags" data-activates="multiple-dropdown" data-beloworigin="true" autocomplete="off">
+                        </div>
+                        
+                        <ul id="multiple-dropdown" class="dropdown-content ac-dropdown"></ul>
+                        <input type="hidden" name="multipleHidden" />
+                    </div>
+                    <label class="active" for="multiple-input">Multiple autocomplete: </label>
+                </div>
+            </div>
+            
+            <!--Display entered Tag as chips -->
+            <div class="row">
+            	<div class="input-field col s12">
+            		<div class="ac-users" id="chip-tags"></div>
+            	</div>
+            </div>
+			
+			
 
 			<div id="query-container-pane" ></div>
 			<button id="btnAddCanvas" class="btn-floating btn-large waves-effect waves-light red">
@@ -132,6 +163,7 @@
 			</div>
 
 		</div>
+		
 	</body>
 
 </html>
