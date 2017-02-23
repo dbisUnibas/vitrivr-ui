@@ -1033,6 +1033,17 @@ if (voiceMode) {
 
         return ngrams;
     }
+	
+   /**
+    *
+    * @param word
+    * @param length
+    * @returns {Array}
+    */
+    function helloMessage() {
+         displayMessage("Hey! How may I help you?", true)
+     }
+	
 
 
     $(document).ready(function () {

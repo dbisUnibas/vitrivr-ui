@@ -166,7 +166,9 @@ var template = [
     {comm:'close this (window) (box)', func: closeWindow, out: 'close this window'},
     {comm:'replay (the) (video)', func: replayVideo, out: 'replay the video'},
     {comm:'pause (the) (video)', func: pauseVideo, out: 'pause the video'},
-    {comm:'start (the) (video)', func: startVideo, out: 'start the video'}
+    {comm:'start (the) (video)', func: startVideo, out: 'start the video'},
+	
+    {comm:'hey retriever', func: helloMessage, out: 'hey vitreevr'}
 ];
 
 // voice queries/commands linked to their corresponding functions
