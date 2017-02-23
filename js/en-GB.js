@@ -77,7 +77,9 @@ var template = [
     {comm:'select *color colour (pen)', func: selectColor, out: 'select _____ colour'},
     {comm:'select *color colour (brush)', func: selectColor, out: 'select _____ colour'},
 
-    {comm:'fill canvas (number) :num with *color (colour)', func: fillCanvas, out: 'fill Canvas _____ with _____ colour'},
+    {comm:'fill Canvas with *color (color)', func: fillCanvasColor, out: 'fill canvas with _____ color'},
+    {comm:'fill Canvas (number) :num with *color (color)', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
+    {comm:'fill Canvas (number) :num with (color) *color ', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
     {comm:'download canvas (number) :num', func: downloadCanvas, out: 'download Canvas number _____'},
     {comm:'delete canvas (number) :num', func: deleteCanvas, out: 'delete Canvas number _____'},
     {comm:'clear canvas (number) :num', func: clearCanvas, out: 'clear canvas number _____'},

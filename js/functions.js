@@ -307,6 +307,9 @@ function changePenSize(unit) {
     }
 }
 
+function fillCanvasColor(color) {
+	fillCanvasNumColor(1, color);
+}
 
 /**
  * Fills a particular canvas with the color in voice query
@@ -316,7 +319,7 @@ function changePenSize(unit) {
  * @param {Integer} num Canvas number that is to filled with color
  * @param {String} color Name of the color in voice query
  */
-function fillCanvas(num, color) {
+function fillCanvasNumColor(num, color) {
     try {
         fillColor = color.replace(/\s/g, '');  // removes the spaces
         fillColor = fillColor.toLowerCase();
@@ -327,6 +330,9 @@ function fillCanvas(num, color) {
             return;
         }
         var canvas = $(".query-input-container");
+        if (num == undefined) {
+            num = 1;
+        }
         if (num > canvas.length) {
             displayErrorMessage("Canvas " + num + " is not present");
             return;

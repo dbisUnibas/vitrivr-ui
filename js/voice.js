@@ -956,7 +956,7 @@ if (voiceMode) {
                 SpeechKITT.setRecognizedSentence(maxCommand);
                 factor = 1;
             }
-			baseCommand.apply();
+							
             feedbackCommand = 1;
         } else if (maxScore <= 0.2) {
             feedbackCommand = undefined;
