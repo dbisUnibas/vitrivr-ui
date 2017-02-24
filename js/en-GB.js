@@ -22,8 +22,8 @@ const QUERY_ADDCANVAS = 'add (a) (new) Canvas (sheet)';
 const QUERY_ADDVIDEO = 'add it';
 const QUERY_REMOVEVIDEO = 'remove it';
 
-const QUERY_VOICE_SEARCH = "voice search *tag";
-const QUERY_VOICE_SEARCH_2 = "*tag1 voice search *tag2";
+const QUERY_VOICE_SEARCH = "text search *tag";
+const QUERY_VOICE_SEARCH_2 = "*tag1 text search *tag2";
 
 const QUERY_FOLLOW_UP = ['even more', 'more', 'even further', 'further', 'one more', 'again one more', 'One More', 'yes'];
 
