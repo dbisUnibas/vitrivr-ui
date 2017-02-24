@@ -956,8 +956,13 @@ if (voiceMode) {
                 SpeechKITT.setRecognizedSentence(maxCommand);
                 factor = 1;
             }
-							
-            feedbackCommand = 1;
+			
+			if(maxCommand.includes(":") || maxCommand.includes("*") ){
+				feedbackCommand = maxCommand;
+			} else {
+				baseCommand.apply();							
+	            feedbackCommand = 1;				
+			}
         } else if (maxScore <= 0.2) {
             feedbackCommand = undefined;
         } else {
