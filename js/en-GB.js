@@ -25,7 +25,7 @@ const QUERY_REMOVEVIDEO = 'remove it';
 const QUERY_VOICE_SEARCH = "text search *tag";
 const QUERY_VOICE_SEARCH_2 = "*tag1 text search *tag2";
 
-const QUERY_FOLLOW_UP = ['even more', 'more', 'even further', 'further', 'one more', 'again one more', 'One More', 'yes'];
+const QUERY_FOLLOW_UP = ['even more', 'more', 'even further', 'further', 'one more', 'again one more', 'one more', 'yes'];
 
 const PERSON = "UK English Female";   // accent of voice response by UI
 
@@ -60,8 +60,8 @@ var template = [
 
 
     {comm:'(toggle) top bar', func: toggleTopbar, out: 'toggle top bar'},
-    {comm:'open top bar', func: toggleTopbar(), out: 'open top bar'},
-    {comm:'close top bar', func: toggleTopbar(), out: 'close top bar'},
+    {comm:'open top bar', func: toggleTopbar, out: 'open top bar'},
+    {comm:'close top bar', func: toggleTopbar, out: 'close top bar'},
 
     {comm:'(toggle) sidebar', func: toggleSidebar, out: 'toggle sidebar'},
     {comm:'open sidebar', func: toggleSidebar, out: 'open sidebar'},
@@ -77,9 +77,9 @@ var template = [
     {comm:'select *color colour (pen)', func: selectColor, out: 'select _____ colour'},
     {comm:'select *color colour (brush)', func: selectColor, out: 'select _____ colour'},
 
-    {comm:'fill Canvas with *color (color)', func: fillCanvasColor, out: 'fill canvas with _____ color'},
-    {comm:'fill Canvas (number) :num with *color (color)', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
-    {comm:'fill Canvas (number) :num with (color) *color ', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
+    {comm:'fill canvas with *color (color)', func: fillCanvasColor, out: 'fill canvas with _____ color'},
+    {comm:'fill canvas (number) :num with *color (color)', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
+    {comm:'fill canvas (number) :num with (color) *color ', func: fillCanvasNumColor, out: 'fill canvas _____ with _____ color'},
     {comm:'download canvas (number) :num', func: downloadCanvas, out: 'download Canvas number _____'},
     {comm:'delete canvas (number) :num', func: deleteCanvas, out: 'delete Canvas number _____'},
     {comm:'clear canvas (number) :num', func: clearCanvas, out: 'clear canvas number _____'},
